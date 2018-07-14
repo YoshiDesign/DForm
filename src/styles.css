@@ -1,1 +1,116 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+input { margin:10px 0; }
+body  { margin:0 0 0 0; padding:0;}
+.list-label {
+    padding:5px;
+    margin:5px;
+}
+
+.main-window{
+    z-index:1000;
+    display: flex;
+}
+
+.main-window > div{
+    width:100%;
+    border:1px solid;
+    flex: 1;
+}
+
+.housing {
+
+    background: rgb(206, 255, 206);
+    padding: 10px;
+    width: auto;
+    height: 200px;
+    border: 3px solid rgba(0,0,0,.2);
+    align-content: center;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+
+}
+
+.outer {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 200px;
+    
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-align-items: center;
+    align-items: stretch;
+
+}
+
+.disable-main{
+    overflow: hidden;
+}
+
+/* + Button */
+.form-option-btn {
+    width:100%;
+    padding:2px;
+    background-color:white;
+}
+.form-option-btn span {
+    font-variant:small-caps;
+    font-size:2em;
+    letter-spacing:3px;
+}
+.form-option-btn .left {
+    text-align: left;
+    float:left;
+
+}
+
+.form-option-btn .plus {
+    /* The plus symbol */
+    text-align:right;
+    float:right;
+    outline: none;
+    color: #2118a8;
+    font-weight: 100;
+}
+
+#oplus{
+    float:right;
+    width:75px;
+    flex:0;
+    border:none;
+}
+#add_row {
+    float:right;
+    /* padding: 0px 28px 8px; */
+    font-size: 4em;
+    width: auto;
+    background: transparent;
+    border: none;
+    
+    line-height: 1;
+    
+}
+
+/* Sidebar */
+#sidebar {
+
+}
+
+#asRowCol {
+
+    position:absolute;
+
+}

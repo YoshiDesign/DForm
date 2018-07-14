@@ -1,0 +1,69 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!-- class main-app currently unreferenced in styles -->
+
+  
+  <div class="main-window">
+      
+      
+  
+      <div class="selection-window" id="sidebar">
+          <label class="list-label">Form Fields</label>
+  
+          <button class="form-option-btn" id="text"
+              (click)="toggleAdd($event,'text')"
+          >      <span class="left">Text</span>           <span class="plus">&oplus;</span></button>
+
+          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'text')">      <span class="left">Checkbox</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="password" (click)="toggleAdd($event,'password')">  <span class="left">Password</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="color"    (click)="toggleAdd($event,'color')">     <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="date"     (click)="toggleAdd($event,'date')">      <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="datetime" (click)="toggleAdd($event,'datetime')">  <span class="left">Datetime</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="email"    (click)="toggleAdd($event,'email')">     <span class="left">Email</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="file"     (click)="toggleAdd($event,'file')">      <span class="left">File</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="month"    (click)="toggleAdd($event,'month')">     <span class="left">Month</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number')">    <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range')">     <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="search"   (click)="toggleAdd($event,'search')">    <span class="left">Search</span>        <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="tel"      (click)="toggleAdd($event,'tel')">       <span class="left">Tel</span>           <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time')">      <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="url"      (click)="toggleAdd($event,'url')">       <span class="left">URL</span>           <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="week"     (click)="toggleAdd($event,'week')">      <span class="left">Week</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="textarea" (click)="toggleAdd($event,'textarea')">  <span class="left">Textarea</span>      <span class="plus">&oplus;</span></button>
+          
+      </div>
+  
+      <div class="main-app" id="view-form">
+  
+          <form action="" id="template-form">
+
+          </form>
+  
+      </div>
+  
+  
+      <div class="main-app" id="return">
+          <div class="final-container">
+            <button (click)="toCapcha()">Finalize</button>
+          </div>
+      </div>
+  
+  </div> <!-- MAIN WINDOW -->
+
+  <script type="text/javascript">
+
+    function renderCapcha() {
+      var captchaContainer = null;
+      var loadCaptcha = function() {
+        captchaContainer = grecaptcha.render('captcha_container', {
+          'sitekey' : 'Your sitekey',
+          'callback' : function(response) {
+            console.log(response);
+          }
+        });
+      };
+    }
+
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=toCapcha&render=explicit" async defer></script>
+  
