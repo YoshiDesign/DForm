@@ -31,18 +31,24 @@ export class RenderableItemComponent implements OnInit {
       return;
     }
     var newInput  = null;
+    var auxNodes  = null; // i.e. <option> units
     var encapsul  = document.createElement("P");
     var label     = document.createElement("LABEL");
+
     this.openEditor(identifiedBy);
+
     if (elem != "textarea" && elem != "select"){
       
       newInput = document.createElement("INPUT");
-      // this.setAttrs(1);
+
       console.log(`EVENT ${event.target.test}`);
       console.log(`${elem}`);
-    } else{
+    } else if (elem == "textarea"){
       newInput = document.createElement("TEXTAREA");
       console.log(`${elem}`);
+    } else {
+      newInput = document.createElement("SELECT");
+      // BUILD-SELECT FUNTION
     }
 
     // Determine type
@@ -58,36 +64,22 @@ export class RenderableItemComponent implements OnInit {
   
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
 
-  openEditor = (idBy):void => {
-    var editorWindow = document.getElementById("edit-Window");
-    switch (idBy) {
-      case "nameField":
-        console.log("TEXT TYPE");
-        break;
-      case "passwdField":
-        console.log("PW TYPE");
-        break;
-      case "emailField":
-        console.log("EMAIL TYPE");
-        break;
-      case "telField":
-        break;
+  openEditor = (idBy : string):void => {
+    var editorWindow = document.getElementById("in-editor");
+    let newEditor = JSON.parse(String(Editor(idBy))) || null;
+    if (newEditor == null) return;
+    editorWindow.innerHTML = newEditor[idBy];
+
+    console.log(newEditor);
     
-    
-      default:
-        break;
-    }
   }
 
 
   
-  
-  
-  changeTest(e){
+  changeLabel(e){
 
     console.log("changeDetected");
   }
-
 
 
 

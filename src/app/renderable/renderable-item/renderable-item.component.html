@@ -9,13 +9,14 @@
       <div class="selection-window" id="sidebar">
           <label class="list-label">Form Fields</label>
                                                             <!-- toggleAdd(E, type, identifiedBy, class) -->
-          <button class="form-option-btn" id="text"     (click)="toggleAdd($event,'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="text"     (click)="toggleAdd($event,'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="email"     (click)="toggleAdd($event,'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="password" (click)="toggleAdd($event,'password', 'passwdField')">  <span class="left">Password</span>           <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="email"     (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="password" (click)="toggleAdd($event, 'password', 'passwdField')">  <span class="left">Password</span>           <span class="plus">&oplus;</span></button>
+
+          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span> <input (keyup)="changeLabel($event)" id="labeler" type="text"/>     <span class="plus">&oplus;</span></button>
 
           <button class="form-option-btn" id="tel"     (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span> <input (keyup)="changeTest($event)" id="labeler" type="text"/>     <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="color"    (click)="toggleAdd($event,'color')">     <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="date"     (click)="toggleAdd($event,'date')">      <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
@@ -31,6 +32,7 @@
           <button class="form-option-btn" id="url"      (click)="toggleAdd($event,'url')">       <span class="left">URL</span>           <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="week"     (click)="toggleAdd($event,'week')">      <span class="left">Week</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea" (click)="toggleAdd($event,'textarea')">  <span class="left">Textarea</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select')">  <span class="left">SelectBox</span>      <span class="plus">&oplus;</span></button>
           
       </div>
   
@@ -49,7 +51,9 @@
       </div>
   
       <div class="main-app" id="edit-Window">
-        
+        <div id="in-editor">
+
+        </div>
       </div>
   
   </div> <!-- MAIN WINDOW -->
