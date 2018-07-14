@@ -8,13 +8,14 @@
   
       <div class="selection-window" id="sidebar">
           <label class="list-label">Form Fields</label>
-  
-          <button class="form-option-btn" id="text"
-              (click)="toggleAdd($event,'text')"
-          >      <span class="left">Text</span>           <span class="plus">&oplus;</span></button>
+                                                            <!-- toggleAdd(E, type, identifiedBy, class) -->
+          <button class="form-option-btn" id="text"     (click)="toggleAdd($event,'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"     (click)="toggleAdd($event,'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="email"     (click)="toggleAdd($event,'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="password" (click)="toggleAdd($event,'password', 'passwdField')">  <span class="left">Password</span>           <span class="plus">&oplus;</span></button>
 
-          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'text')">      <span class="left">Checkbox</span>      <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="password" (click)="toggleAdd($event,'password')">  <span class="left">Password</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="tel"     (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span> <input (keyup)="changeTest($event)" id="labeler" type="text"/>     <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="color"    (click)="toggleAdd($event,'color')">     <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="date"     (click)="toggleAdd($event,'date')">      <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
@@ -35,17 +36,20 @@
   
       <div class="main-app" id="view-form">
   
-          <form action="" id="template-form">
-
+        <div id="consult-form-container" style="background-color:#343e79;max-width:1120px;padding:15px 40px;color:#fff;">
+          <form id="lead-gen-form-input" method="POST" action="/lead-gen-handler.php">
+            <input type="hidden" name="listrak_source" value="2403731" />
+            <input type="hidden" name="listrak_external_id" value="13064" />
+            <input type="hidden" name="description" value="Back to Homeschool" />
+            <input type="hidden" name="lead_source" value="Demme Learning Blog" />
+            <input type="hidden" id="referral_url" name="referral_url" value="">
           </form>
+        </div>
   
       </div>
   
-  
-      <div class="main-app" id="return">
-          <div class="final-container">
-            <button (click)="toCapcha()">Finalize</button>
-          </div>
+      <div class="main-app" id="edit-Window">
+        
       </div>
   
   </div> <!-- MAIN WINDOW -->
