@@ -53,11 +53,19 @@ export class RenderableItemComponent implements OnInit {
     let auxNodes : Element; // i.e. <option> units
     let encap    : Element = document.createElement("P");
     let label    : Element = document.createElement("LABEL");
-    let input    : Element = document.createElement("INPUT");
+    if (elem == "select")
+      var input : Element = document.createElement("SELECT");
+    else if (elem == "textarea")
+      var input : Element = document.createElement("TEXTAREA");
+    else
+      var input : Element = document.createElement("INPUT");
+
+
     console.log(`MAKEFIELD WITH ELEM = ${elem}`);
     console.log(`MAKEFIELD WITH idBy = ${idBy}`);
     
     switch (idBy) {
+
       case "nameField":
         console.log("ENCAP" + encap);
         input.setAttribute('type', elem);
@@ -77,7 +85,7 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
-      case "passwField":
+      case "passwdField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
@@ -113,6 +121,23 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
+      case "fileField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+
+      case "selectField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+      case "textareaField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+
       default:
         break;
     }
@@ -120,25 +145,25 @@ export class RenderableItemComponent implements OnInit {
   }
 
   openEditor = (idBy : string, form : Element):void => {
-
+    var editor       = new (Editor);
     var editorWindow = document.getElementById("in-editor");
-    let newEditor = JSON.parse(String(Editor(idBy))) || null; // Contains an object of templates to render in the editor pane
+    let newEditorEls = JSON.parse(String(editor.editorNodes(idBy))) || null; // Contains an object of templates to render in the editor pane
     
     // null == undefined
-    if (newEditor == null) {
+    if (newEditorEls == null) {
       editorWindow.innerHTML = "";
       return;
     }
 
     // Apply Template to right
-    editorWindow.innerHTML = newEditor[idBy];
+    editorWindow.innerHTML = newEditorEls[idBy];
 
     if (editorWindow.innerHTML)
     {
       let inField = document.getElementById("labeling");
       inField.addEventListener('input', (e)=>{this.changeLabel(e, idBy, form)} );
     } else return;
-    console.log(newEditor);
+    console.log(newEditorEls);
 
   }
 
@@ -164,7 +189,7 @@ export class RenderableItemComponent implements OnInit {
 
 
 
-  toCapcha() {
+  toCapcha(form : Element) {
     /*
        Recaptcha factory function
        Gets called post form completion
