@@ -10,11 +10,8 @@ import Editor from '../../html/htmleditor';
 export class RenderableItemComponent implements OnInit {
 
   public renderer: Renderer;
-  public form : Element;
   
-  constructor() {
-    this.form = document.getElementById('lead-gen-form-input');
-  }
+  constructor() {}
 
   ngOnInit() {
     this.renderer = new Renderer();
@@ -33,20 +30,17 @@ export class RenderableItemComponent implements OnInit {
     }
 
     let newInput : Element; // Encapsulated per the spec.
+    var form = document.getElementById('lead-gen-form-input');
     
     // Create Editor View
-    this.openEditor(identifiedBy, this.form);
+    this.openEditor(identifiedBy, form);
 
     // Returns a formatted input view
     newInput = this.makeField(identifiedBy, elem);
 
-
-    // Determine type
-   
-
     // Send new input to the bottom of the form
-    this.form.appendChild(newInput);
-    console.log(this.form);
+    form.appendChild(newInput);
+    console.log(form);
 
     console.log(elem);
     event.stopPropagation();
@@ -60,9 +54,12 @@ export class RenderableItemComponent implements OnInit {
     let encap    : Element = document.createElement("P");
     let label    : Element = document.createElement("LABEL");
     let input    : Element = document.createElement("INPUT");
-
+    console.log(`MAKEFIELD WITH ELEM = ${elem}`);
+    console.log(`MAKEFIELD WITH idBy = ${idBy}`);
+    
     switch (idBy) {
       case "nameField":
+        console.log("ENCAP" + encap);
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
@@ -179,7 +176,7 @@ export class RenderableItemComponent implements OnInit {
     reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');
 
   // append our completed captcha to the form
-    this.form.appendChild(reCapchaElement);
+    form.appendChild(reCapchaElement);
 
   }
 

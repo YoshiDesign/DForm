@@ -25,7 +25,7 @@ export default function HTMLeditors(idBy : string) : string {
             }`);
 
         default:
-            break;
+            return null;
     }
 
 }
