@@ -6,7 +6,7 @@ export default function HTMLeditors(idBy : string) : string {
         case "nameField":
             return String(`{
                 "nameField" : 
-                    "<input type='text' placeholder='' (keyup)='changeLabel($event)'>"
+                    "<label></label><input id='labeling' type='text' placeholder='Edit Label'><hr>"
             }`);
             // break;
         case "passwdField":
@@ -15,13 +15,15 @@ export default function HTMLeditors(idBy : string) : string {
         case "emailField":
             return String(`{
                 "emailField" : 
-                    "<input type='email' placeholder='' (keyup)='changeLabel($event)'>"
+                    "<label></label><input id='labeling' type='text' value='' placeholder='Edit Label'>"
             }`);
             // break;
         case "checkboxField":
-            return null;
-  
-  
+            return String(`{
+                "checkboxField" : 
+                    "<label></label><input id='labeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'><hr>"
+            }`);
+
         default:
             break;
     }
