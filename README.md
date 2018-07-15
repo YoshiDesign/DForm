@@ -2,4 +2,4 @@
 
 Just run `npm install` && `ng serve`
 
-Open on port 4200
+Open from localhost:4200
