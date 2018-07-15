@@ -127,11 +127,18 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
+      case "radioField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+        
       case "selectField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
+
       case "textareaField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
