@@ -2,6 +2,26 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 input { margin:10px 0; }
 body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
+
+.active {
+    border:1px solid rgb(13, 132, 201);
+    color:rgb(13, 132, 201);
+}
+.modal-html-view {
+    display: none;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:rgba(0,0,0,0.35);
+}
+.exit {
+    
+}
+.dim-screen {
+    overflow:hidden;
+}
 .list-label {
     padding:5px;
     margin:5px;
@@ -105,9 +125,9 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     display:-webkit-flex;
 }
 #edit-Window .math-spell-switch {
-    -webkit-flex: 0.35;  /* Safari 6.1+ */
-    -ms-flex: 0.35;  /* IE 10 */    
-    flex: 0.35;
+    -webkit-flex: 1;  /* Safari 6.1+ */
+    -ms-flex: 1;  /* IE 10 */    
+    flex: 1;
 }
 #edit-Window #execs {
     -webkit-flex: 1;  /* Safari 6.1+ */
@@ -154,7 +174,25 @@ button.inline {
     float:right;
     display:inline;
 }
+
 .math-spell-switch li:hover {
     border:1px solid rgb(13, 132, 201);
     color:rgb(13, 132, 201);
+}
+.math-spell-switch li.active:hover {
+    border:1px solid rgb(13, 132, 201);
+    color:white;
+}
+
+
+@media(max-width : 1100px)
+{
+    .main-window {
+        margin:0;
+    }
+    
+    #edit-Window {
+        margin: 0px 0px 0px 15px;
+    }
+
 }

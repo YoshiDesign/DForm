@@ -1,7 +1,6 @@
 export default class HTMLeditors {
     /**
-    *   Future Extensibility - The JSON keys in editorNodes 
-    *   are currently free parking; arbitrary and non-referenced.
+    *   Relationships between our selected form and its available options / subsets
     */
     constructor(){}
 
@@ -9,25 +8,32 @@ export default class HTMLeditors {
         switch (idBy) {
             // These ID's should become classes upon extension
             case "nameField":
-                return String(`{
-                    "nameField" : 
-                        "<input id='nglabeling' type='text' placeholder='Edit Label'>"
-                }`);
+                let x = document.createElement("INPUT");
+                x.setAttribute("id", "nglabeling");
+                x.setAttribute("type", "text");
+                x.setAttribute("placeholder", "Edit Label");
+                console.log("XXXXX" + x.id);
+                return x;
+                // return String(`{
+                //     "nameField" : 
+                //         "<input id='nglabeling' type='text' placeholder='Edit Label' >"
+                        
+                // }`);
                 // break;
-            case "passwdField":
-                return null;
-                // break;
-            case "emailField":
-                return String(`{
-                    "emailField" : 
-                        "<input id='nglabeling' type='text' value='' placeholder='Edit Label'>"
-                }`);
-                // break;
-            case "checkboxField":
-                return String(`{
-                    "checkboxField" : 
-                        "<input id='nglabeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'>"
-                }`);
+            // case "passwdField":
+            //     return null;
+            //     // break;
+            // case "emailField":
+            //     return String(`{
+            //         "emailField" : 
+            //             "<input id='nglabeling' type='text' value='' placeholder='Edit Label'>"
+            //     }`);
+            //     // break;
+            // case "checkboxField":
+            //     return String(`{
+            //         "checkboxField" : 
+            //             "<input id='nglabeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'>"
+            //     }`);
 
             default:
                 return null;
@@ -35,60 +41,74 @@ export default class HTMLeditors {
 
     }
 
-    // public selectOptions : NodeList = [
-    //         "<option value='None'>Select State</option>",
-    //         "<option value='INTL'>International Customer</option>",
-    //         "<option value='AL'>Alabama</option>",
-    //         "<option value='AK'>Alaska</option>",
-    //         "<option value='AZ'>Arizona</option>",
-    //         "<option value='AR'>Arkansas</option>",
-    //         "<option value='CA'>California</option>",
-    //         "<option value='CO'>Colorado</option>",
-    //         "<option value='CT'>Connecticut</option>",
-    //         "<option value='DE'>Delaware</option>",
-    //         "<option value='DC'>District Of Columbia</option>",
-    //         "<option value='FL'>Florida</option>",
-    //         "<option value='GA'>Georgia</option>",
-    //         "<option value='HI'>Hawaii</option>",
-    //         "<option value='ID'>Idaho</option>",
-    //         "<option value='IL'>Illinois</option>",
-    //         "<option value='IN'>Indiana</option>",
-    //         "<option value='IA'>Iowa</option>",
-    //         "<option value='KS'>Kansas</option>",
-    //         "<option value='KY'>Kentucky</option>",
-    //         "<option value='LA'>Louisiana</option>",
-    //         "<option value='ME'>Maine</option>",
-    //         "<option value='MD'>Maryland</option>",
-    //         "<option value='MA'>Massachusetts</option>",
-    //         "<option value='MI'>Michigan</option>",
-    //         "<option value='MN'>Minnesota</option>",
-    //         "<option value='MS'>Mississippi</option>",
-    //         "<option value='MO'>Missouri</option>",
-    //         "<option value='MT'>Montana</option>",
-    //         "<option value='NE'>Nebraska</option>",
-    //         "<option value='NV'>Nevada</option>",
-    //         "<option value='NH'>New Hampshire</option>",
-    //         "<option value='NJ'>New Jersey</option>",
-    //         "<option value='NM'>New Mexico</option>",
-    //         "<option value='NY'>New York</option>",
-    //         "<option value='NC'>North Carolina</option>",
-    //         "<option value='ND'>North Dakota</option>",
-    //         "<option value='OH'>Ohio</option>",
-    //         "<option value='OK'>Oklahoma</option>",
-    //         "<option value='OR'>Oregon</option>",
-    //         "<option value='PA'>Pennsylvania</option>",
-    //         "<option value='RI'>Rhode Island</option>",
-    //         "<option value='SC'>South Carolina</option>",
-    //         "<option value='SD'>South Dakota</option>",
-    //         "<option value='TN'>Tennessee</option>",
-    //         "<option value='TX'>Texas</option>",
-    //         "<option value='UT'>Utah</option>",
-    //         "<option value='VT'>Vermont</option>",
-    //         "<option value='VA'>Virginia</option>",
-    //         "<option value='WA'>Washington</option>",
-    //         "<option value='WV'>West Virginia</option>",
-    //         "<option value='WI'>Wisconsin</option>",
-    //         "<option value='WY'>Wyoming</option>",
-    // ]
+    public selectOptions = {
+        // Locale Select box by state
+        "None":"Select State",
+        'INTL':"International Customer",
+        'AL':"Alabama",
+        'AK':"Alaska",
+        'AZ':"Arizona",
+        'AR':"Arkansas",
+        'CA':"California",
+        'CO':"Colorado",
+        'CT':"Connecticut",
+        'DE':"Delaware",
+        'DC':"District Of Columbia",
+        'FL':"Florida",
+        'GA':"Georgia",
+        'HI':"Hawaii",
+        'ID':"Idaho",
+        'IL':"Illinois",
+        'IN':"Indiana",
+        'IA':"Iowa",
+        'KS':"Kansas",
+        'KY':"Kentucky",
+        'LA':"Louisiana",
+        'ME':"Maine",
+        'MD':"Maryland",
+        'MA':"Massachusetts",
+        'MI':"Michigan",
+        'MN':"Minnesota",
+        'MS':"Mississippi",
+        'MO':"Missouri",
+        'MT':"Montana",
+        'NE':"Nebraska",
+        'NV':"Nevada",
+        'NH':"New Hampshire",
+        'NJ':"New Jersey",
+        'NM':"New Mexico",
+        'NY':"New York",
+        'NC':"North Carolina",
+        'ND':"North Dakota",
+        'OH':"Ohio",
+        'OK':"Oklahoma",
+        'OR':"Oregon",
+        'PA':"Pennsylvania",
+        'RI':"Rhode Island",
+        'SC':"South Carolina",
+        'SD':"South Dakota",
+        'TN':"Tennessee",
+        'TX':"Texas",
+        'UT':"Utah",
+        'VT':"Vermont",
+        'VA':"Virginia",
+        'WA':"Washington",
+        'WV':"West Virginia",
+        'WI':"Wisconsin",
+        'WY':"Wyoming"
+    }
 
+    public styles = {
+        "major" : `
+            width:90%;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #fff;
+            height: 40px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;
+            font-size: 25px;`,
+        
+    }
 }

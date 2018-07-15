@@ -4,16 +4,27 @@
   
   <div class="main-window">
       
+    <div class="modal-html-view">
+      <div class="html-container">
+        <span class="exit">&otimes;;</span>
+        <pre class="pretty-print">
+
+        </pre>
+      </div>
+    </div>
       
   
       <div class="selection-window" id="sidebar">
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, type, identifiedBy, class) -->
           <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"     (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="tel"     (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
+          <hr>
+          <label class="list-label" for="">Marketing</label>
+          <button class="form-option-btn" id="schools-widget"    (click)="toggleWidget($event,'schools', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
@@ -58,7 +69,8 @@
         <span class="math-spell-switch">
             <ul class="list-group">
                 <li class="list-group-item">S.Y.S.</li>
-                <li class="list-group-item">M.U.S.</li>
+                <li class="active list-group-item">M.U.S.</li>
+                <span style="position:relative; top:12px; right:10px; font-weight: 500;">Styles</span>
               </ul>
         </span>
         <span id="execs">
