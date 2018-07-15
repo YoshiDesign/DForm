@@ -14,11 +14,12 @@ export class RenderableItemComponent implements OnInit {
   public illegalInputScript : RegExp;
   
   constructor() {}
-
+  
   ngOnInit() {
     this.editor = new Editor;
-    this.illegalInputEvent = /"^on+$"/;
-    this.illegalInputScript = /"[<script>]"/;
+    // Use when allowing HTML
+    // this.illegalInputEvent = /"\bon[A-Z]+"/;
+    // this.illegalInputScript = /"\b<script>"/;
     this.form = document.getElementById('lead-gen-form-input');
   }
 
@@ -82,6 +83,12 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
+      case "checkboxField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+
       case "emailField":
         label.textContent = "Email";
         input.setAttribute('type', elem);
@@ -89,8 +96,7 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
-      case "telField":
-        label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
+      case "dateField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
@@ -103,7 +109,13 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(input);
         return encap;
 
-      case "checkboxField":
+      case "fileField":
+        input.setAttribute('type', elem);
+        encap.appendChild(label);
+        encap.appendChild(input);
+        return encap;
+      
+      case "numberField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
@@ -114,66 +126,63 @@ export class RenderableItemComponent implements OnInit {
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
-
+        
       case "rangeField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
 
-      case "dateField":
+      case "selectField":
+        // Populate our select box
+        let places = this.editor.selectOptions;
+        var option = document.createElement("OPTION");
+
+        for (let i in places){
+          // Recycling a clone
+          let newOption = <HTMLElement> option.cloneNode();
+          newOption.setAttribute("value", <string> i);
+          newOption.innerText = <string> places[i];
+          input.appendChild(newOption);
+        }
+
+        label.textContent = "State";
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
+        
         return encap;
-
+        
       case "timeField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
 
-      case "fileField":
+        case "radioField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
-
-      case "radioField":
+   
+      case "telField":
+        label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
-        
-      case "selectField":
-        let getLocale = new Editor;
-        let places = getLocale.selectOptions;
-        for (let i in places){
-          // Recycling variable to append locale to select box. places[loc] = Literal location name
-          var newOption = document.createElement("OPTION");
-          newOption.setAttribute("value", <string> i);
-          newOption.innerText = <string> places[i];
-          input.appendChild(newOption);
-        }
-        label.textContent = "State";
-        input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        console.log(`LOCALE ITEMS : ${places}`);
-        
-        return encap;
-
+          
       case "textareaField":
         input.setAttribute('type', elem);
         encap.appendChild(label);
         encap.appendChild(input);
         return encap;
-
-      default:
+        
+        default:
         console.log("Improbability Alert : failing quietly");
         return null;
+      }
     }
-  }
 
   openEditor = (idBy : string) : void => {
     
@@ -182,14 +191,20 @@ export class RenderableItemComponent implements OnInit {
     // let newEditorEls = JSON.parse(<string>this.editor.editorNodes(idBy)) || null;
 
     let newEditorEls = this.editor.editorNodes(idBy);
+    console.log("NEW EDITOR ELS" + newEditorEls);
 
     // null == undefined
     if (newEditorEls == null) {
       editorWindow.innerHTML = "<span>No editing options</span>";
       return;
     }
-    
+
     // Apply Template to right
+    if (editorWindow.innerHTML){
+      var oldNode = document.getElementById("nglabeling");
+      oldNode.remove();
+    }
+
     editorWindow.appendChild(newEditorEls);
 
     if (editorWindow.innerHTML)
@@ -204,7 +219,7 @@ export class RenderableItemComponent implements OnInit {
     } 
     else return;
 
-    console.log(newEditorEls);
+    console.log(newEditorEls + " : success");
 
   }
 
@@ -230,6 +245,16 @@ export class RenderableItemComponent implements OnInit {
     
     console.log("changeDetected");
   }
+  makeWidget(event : Event, widget : string) : void {
+    let build;
+    switch(widget){
+
+      case "school" :
+        build = document.createElement("DIV");
+
+    }
+
+  }
 
   addCapcha() : void {
     /*
@@ -250,17 +275,8 @@ export class RenderableItemComponent implements OnInit {
     this.addCapcha()
     return 0;
   }
-  setStyle(attribute) {
 
-    var style = attribute;
 
-  }
-  setAttrs(element) {
-    return 0;
-  }
-  toScreen() {
-    return 0;
-  }
 
 
 }

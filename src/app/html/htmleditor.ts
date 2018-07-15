@@ -5,38 +5,26 @@ export default class HTMLeditors {
     constructor(){}
 
     public editorNodes = (idBy) => {
+
+        let x = document.createElement("INPUT");
+
         switch (idBy) {
             // These ID's should become classes upon extension
-            case "nameField":
-                let x = document.createElement("INPUT");
+            case "toBeDecided":
+                
                 x.setAttribute("id", "nglabeling");
                 x.setAttribute("type", "text");
                 x.setAttribute("placeholder", "Edit Label");
                 console.log("XXXXX" + x.id);
                 return x;
-                // return String(`{
-                //     "nameField" : 
-                //         "<input id='nglabeling' type='text' placeholder='Edit Label' >"
-                        
-                // }`);
-                // break;
-            // case "passwdField":
-            //     return null;
-            //     // break;
-            // case "emailField":
-            //     return String(`{
-            //         "emailField" : 
-            //             "<input id='nglabeling' type='text' value='' placeholder='Edit Label'>"
-            //     }`);
-            //     // break;
-            // case "checkboxField":
-            //     return String(`{
-            //         "checkboxField" : 
-            //             "<input id='nglabeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'>"
-            //     }`);
 
             default:
-                return null;
+                x = document.createElement("INPUT");
+                x.setAttribute("id", "nglabeling");
+                x.setAttribute("type", "text");
+                x.setAttribute("placeholder", "Edit Label");
+                console.log("XXXXX" + x.id + " " + idBy);
+                return x;
         }
 
     }

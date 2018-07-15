@@ -24,7 +24,7 @@
           <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label" for="">Marketing</label>
-          <button class="form-option-btn" id="schools-widget"    (click)="toggleWidget($event,'schools', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="schools-widget"    (click)="makeWidget($event, 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
@@ -63,9 +63,9 @@
   <div class="option-wrapper">
     <div id="edit-Window">
         <h3 id="editor-title">Options</h3>
-        <span id="in-editor">
+        <div id="in-editor">
           
-        </span>
+        </div>
         <span class="math-spell-switch">
             <ul class="list-group">
                 <li class="list-group-item">S.Y.S.</li>
