@@ -13,7 +13,7 @@
           <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"     (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="tel"     (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">SelectBox</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
@@ -51,7 +51,7 @@
 
   <div class="option-wrapper">
     <div id="edit-Window">
-        <h3 id="editor-title">Edit Label</h3>
+        <h3 id="editor-title">Options</h3>
         <span id="in-editor">
           
         </span>
@@ -64,7 +64,7 @@
         <span id="execs">
           <button type="button" class="inline btn btn-outline-danger">Clear</button>
           <button type="button" class="inline btn btn-outline-dark">Remove</button>
-          <button type="button" class="inline btn btn-outline-primary">Create HTML</button>
+          <button type="button" class="inline btn btn-outline-primary">&lsaquo; HTML &rsaquo;</button>
         </span>
         <hr>
     </div>

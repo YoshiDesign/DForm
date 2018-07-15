@@ -9,16 +9,17 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 
 #in-editor {
     padding:15px;
-    width:100%
+    width:100%;
+    height:25px;
 }
 .main-window{
-    height:500px;
+    height:585px;
     z-index:1000;
     display: flex;
-    background: blanchedalmond;
+    background: lemonchiffon;
     margin:auto 175px;
 }
-.selection-window *:hover {
+.selection-window button:hover {
     background:rgb(0, 0, 0);
     color:rgb(0,255,55);
 }
@@ -79,19 +80,23 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 /* Selection Buttons */
 #sidebar {
     flex: 0.5;
-    height:500px;
+    height:585px;
     overflow-y:scroll;
 }
 /* The middle renderer view */
 #view-form {
     flex:1.5;
     padding:15px;
+    height:585px;
+    overflow-y:scroll;
 }
 /* bottom bar */
 .option-wrapper {
     background:lavenderblush;
-    position:relative;
-    padding:2px
+    position:absolute;
+    padding:2px;
+    bottom:0;
+    width:100%;
 }
 /* bottom left*/
 #edit-Window {
@@ -135,6 +140,9 @@ button.inline {
 /* Inserted dynamically - bottom left */
 #nglabeling {
     display:inline;
+    position:relative;
+    font-size:12px;
+    bottom:12px;
 }
 
 /*  */
@@ -145,4 +153,8 @@ button.inline {
 .math-spell-switch * {
     float:right;
     display:inline;
+}
+.math-spell-switch li:hover {
+    border:1px solid rgb(13, 132, 201);
+    color:rgb(13, 132, 201);
 }
