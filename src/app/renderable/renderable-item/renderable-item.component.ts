@@ -8,13 +8,10 @@ import Editor from '../../html/htmleditor';
   styleUrls: ['./renderable-item.component.css']
 })
 export class RenderableItemComponent implements OnInit {
-
-  public renderer: Renderer;
   
   constructor() {}
 
   ngOnInit() {
-    this.renderer = new Renderer();
     
   }
 
@@ -38,11 +35,9 @@ export class RenderableItemComponent implements OnInit {
     // Returns a formatted input view
     newInput = this.makeField(identifiedBy, elem);
 
-    // Send new input to the bottom of the form
+    // Send new input to the next available field
     form.appendChild(newInput);
-    console.log(form);
 
-    console.log(elem);
     event.stopPropagation();
   }
   
@@ -53,13 +48,13 @@ export class RenderableItemComponent implements OnInit {
     let auxNodes : Element; // i.e. <option> units
     let encap    : Element = document.createElement("P");
     let label    : Element = document.createElement("LABEL");
+
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
     else if (elem == "textarea")
       var input : Element = document.createElement("TEXTAREA");
     else
       var input : Element = document.createElement("INPUT");
-
 
     console.log(`MAKEFIELD WITH ELEM = ${elem}`);
     console.log(`MAKEFIELD WITH idBy = ${idBy}`);
@@ -167,7 +162,7 @@ export class RenderableItemComponent implements OnInit {
 
     if (editorWindow.innerHTML)
     {
-      let inField = document.getElementById("labeling");
+      let inField = document.getElementById("nglabeling");
       inField.addEventListener('input', (e)=>{this.changeLabel(e, idBy, form)} );
     } else return;
     console.log(newEditorEls);

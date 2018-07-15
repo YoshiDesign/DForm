@@ -1,15 +1,17 @@
 export default class HTMLeditors {
     /**
-    *   Future Optimization - Each JSON key is currently free parking; arbitrary
+    *   Future Extensibility - The JSON keys in editorNodes 
+    *   are currently free parking; arbitrary and non-referenced.
     */
     constructor(){}
 
     public editorNodes = (idBy) => {
         switch (idBy) {
+            // These ID's should become classes upon extension
             case "nameField":
                 return String(`{
                     "nameField" : 
-                        "<label></label><input id='labeling' type='text' placeholder='Edit Label'><hr>"
+                        "<input id='nglabeling' type='text' placeholder='Edit Label'>"
                 }`);
                 // break;
             case "passwdField":
@@ -18,13 +20,13 @@ export default class HTMLeditors {
             case "emailField":
                 return String(`{
                     "emailField" : 
-                        "<label></label><input id='labeling' type='text' value='' placeholder='Edit Label'>"
+                        "<input id='nglabeling' type='text' value='' placeholder='Edit Label'>"
                 }`);
                 // break;
             case "checkboxField":
                 return String(`{
                     "checkboxField" : 
-                        "<label></label><input id='labeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'><hr>"
+                        "<input id='nglabeling' type='text' value='' id='checkboxEdit' placeholder='Edit Label'>"
                 }`);
 
             default:

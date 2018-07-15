@@ -12,23 +12,21 @@
           <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"     (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"     (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="password" (click)="toggleAdd($event, 'password', 'passwdField')">  <span class="left">Password</span>           <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="tel"     (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="file"     (click)="toggleAdd($event,'file', 'fileField')">      <span class="left">File</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">SelectBox</span>      <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio', 'radioField')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Misc.</label>
+          <button class="form-option-btn" id="file"     (click)="toggleAdd($event,'file', 'fileField')">      <span class="left">File</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="password" (click)="toggleAdd($event, 'password', 'passwdField')">  <span class="left">Password</span>           <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="color"    (click)="toggleAdd($event,'color', 'colorField')">     <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="date"     (click)="toggleAdd($event,'date', 'dateField')">      <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number', 'numberField')">    <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range', 'rangeField')">     <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time', 'timeField')">      <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
-          <hr>
-          <label class="list-label">Misc.</label>
-          <button class="form-option-btn" id="select" (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">SelectBox</span>      <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea" (click)="toggleAdd($event,'textarea', 'textareaField')">  <span class="left">Textarea</span>      <span class="plus">&oplus;</span></button>
           
       </div>
@@ -50,18 +48,30 @@
       
   
   </div> <!-- MAIN WINDOW -->
-  <div class="main-app" id="edit-Window">
-      <div id="in-editor">
-        <h2 id="editor-title">Edit Label</h2>
+
+  <div class="option-wrapper">
+    <div id="edit-Window">
+        <h3 id="editor-title">Edit Label</h3>
+        <span id="in-editor">
           
-      </div>
-      <div id="execs">
-          <button type="button" class="bot btn btn-outline-primary">Create HTML</button>
-          
-          <button type="button" class="bot btn btn-outline-danger">Clear</button>
-      </div>
-  </div>
-  <script type="text/javascript">
+        </span>
+        <span class="math-spell-switch">
+            <ul class="list-group">
+                <li class="list-group-item">S.Y.S.</li>
+                <li class="list-group-item">M.U.S.</li>
+              </ul>
+        </span>
+        <span id="execs">
+          <button type="button" class="inline btn btn-outline-danger">Clear</button>
+          <button type="button" class="inline btn btn-outline-dark">Remove</button>
+          <button type="button" class="inline btn btn-outline-primary">Create HTML</button>
+        </span>
+        <hr>
+    </div>
+    
+  </div> <!-- Option Wrapper -->
+
+  <!-- <script type="text/javascript">
 
     function renderCapcha() {
       var captchaContainer = null;
@@ -75,6 +85,6 @@
       };
     }
 
-  </script>
+  </script> -->
   <script src="https://www.google.com/recaptcha/api.js?onload=toCapcha&render=explicit" async defer></script>
   
