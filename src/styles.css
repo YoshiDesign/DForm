@@ -8,36 +8,62 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     color:rgb(13, 132, 201);
 }
 #modal-html-view {
-
     display: none;
     position:absolute;
     top:0;
     bottom:0;
     left:0;
     right:0;
-    background:rgba(0,0,0,0.35);
+    background:rgba(0,0,0,0.5);
+
 }
 
-.exit {
-    position: absolute;
-    top:0;
-    right: 0;
-    padding:28px;
-    outline: none;
-    font-size:3em;
-    color:tomato;
-}
-.exit:hover{
-    color:white;
-}
+#pretty-print-box {
+    border:1px solid white;
+    margin:auto auto;
 
+}
+#pretty-print {
+    width: 80%;
+    color: white;
+    margin:45px auto;
+    word-wrap:break-word;
+    padding:25px;
+    
+}
 #html-container {
     border:1px solid white;
     height:60%;
     width: 60%;
     margin: 45px auto;
-    
+    overflow-y:scroll;
 }
+.content-message {
+    width: 60%;
+    margin: 10px auto;
+}
+.message {
+    color:white;
+    font-variant:small-caps;
+}
+
+
+
+.exit {
+    position: absolute;
+    top:0;
+    right: 0;
+    margin:0px 260px;
+    outline: none;
+    font-size:3em;
+    color:white;
+}
+
+.exit:hover{
+    color:tomato;
+    cursor:default;
+}
+
 .raise-modal {
     overflow:hidden;
 }

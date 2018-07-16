@@ -85,9 +85,20 @@ export default class HTMLeditors {
         'WI':"Wisconsin",
         'WY':"Wyoming"
     }
+    /**
+     *  "title" : Corresponds to html style selection button id's
+     */
+    public MUS = {
 
-    public styles = {
-        "major" : `
+        "title" : "MUS",
+
+        "container" : `
+            background-color:#343e79;
+            max-width:1120px;
+            padding:15px 40px;color:#fff;
+        `,
+        
+        "MUSmajor" : `
             width:90%;
             border-radius: 0;
             border: none;
@@ -99,7 +110,7 @@ export default class HTMLeditors {
             font-size: 25px;`,
 
         "musTextAreaHelp" : `
-            style=
+            width:90%;
             border-radius: 0;
             border: none;
             border-bottom: 1px solid #fff;
@@ -107,6 +118,65 @@ export default class HTMLeditors {
             background-color: rgba(255, 255, 255, .1);
             color: #fff;padding: 0 0 0 5px;
             font-size: 15px;
+        `,
+
+        "ButtonStyleDefinition" : `
+            height:45px;
+            border-radius:0;
+            border:none;
+            font-size:20px;
+            margin-top:15px;
+        `,
+
+        "CheckBoxes" : `
+            margin-right:10px;
+        `,
+        
+    }
+
+    public SYS = {
+
+        "title" : "SYS",
+
+        "container" : `
+            background-color:#343e79;
+            max-width:1120px;
+            padding:15px 40px;color:#fff;
+        `,
+
+        "MajorInput" : `
+            width:90%;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #fff;
+            height: 40px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;
+            font-size: 25px;`,
+
+        "TextAreaHelp" : `
+            width:90%;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #fff;
+            height:100px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;font-size: 15px;
+        `,
+
+        "ButtonStyleDefinition" : `
+            background-color: #F05F40;
+            border-color: #F05F40;
+        `,
+
+        "LabelStyle" : `
+            margin-right:10px;
+        `,
+
+        "CheckBoxes" : `
+            margin-right:10px;
         `,
         
     }

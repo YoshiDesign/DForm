@@ -5,19 +5,19 @@
   <div class="main-window">
       
     <div id="modal-html-view">
-      <div id="html-container">
-
         <span (click)="closeModal()" class="exit">&otimes;</span>
-        <pre id="pretty-print">
+      <div id="html-container">
+          <p id="pretty-print">
 
-        </pre>
+          </p>
       </div>
+      <div class="content-message"><p class="message">This window scrolls</p></div>
     </div>
       
   
       <div class="selection-window" id="sidebar">
           <label class="list-label">General</label>
-                                                            <!-- toggleAdd(E, type, identifiedBy, class) -->
+                                                            <!-- toggleAdd(E, type, identifiedBy, class,[OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"            (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
@@ -67,8 +67,8 @@
         </div>
         <span class="math-spell-switch">
             <ul class="list-group">
-                <li class="list-group-item">S.Y.S.</li>
-                <li class="active list-group-item">M.U.S.</li>
+                <li (click)="stylizer('SYS')" id="SYS" class="list-group-item">S.Y.S.</li>
+                <li (click)="stylizer('MUS')"  id="MUS" class="active list-group-item">M.U.S.</li>
                 <span style="position:relative; top:12px; right:10px; font-weight: 500;">Styles</span>
               </ul>
         </span>

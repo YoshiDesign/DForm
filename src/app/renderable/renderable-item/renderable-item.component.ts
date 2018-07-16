@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Editor from '../../html/htmleditor';
 
+
+
 @Component({
   selector: 'app-renderable-item',
   templateUrl: './renderable-item.component.html',
@@ -8,32 +10,45 @@ import Editor from '../../html/htmleditor';
 })
 export class RenderableItemComponent implements OnInit {
   
-  public form   : Element;
+  public form   : HTMLElement;
   public modal  : HTMLElement;
   public editor : Editor;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
-  public modalActive : Boolean;
-  public finalHTML : String;
+  public modalActive  : Boolean;
+  public finalHTML    : String;
+  public musStyle : Object;
+  public sysStyle : Object;
+  public currentStyle : Object;
+  
   
   constructor() {}
   
   ngOnInit() {
     this.modalActive = false;
     this.editor = new Editor;
-    // Use when allowing HTML
+    this.form = document.getElementById('lead-gen-form-input');
+    // start with MUS style
+    this.musStyle = this.editor.MUS;
+    this.sysStyle = this.editor.SYS;
+    this.currentStyle = this.musStyle;
+    this.stylizer(this.currentStyle["title"]);
+    
+    
+    // If allowing HTML. Will also need diverse event regex's
     // this.illegalInputEvent = /"\bon[A-Z]+"/;
     // this.illegalInputScript = /"\b<script>"/;
-    this.form = document.getElementById('lead-gen-form-input');
   }
-
+  
   toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
     /** 
     *   Adds visible element to middle column.
     *   otherOpt is a universal flag for transitive state.
     *   +localize 'attr' with scope visibility.
     */
+   
     let newInput : Element; // Encapsulated per the page spec.
+
     if (elem == null || undefined) {
       // Do nothing
       return;
@@ -44,9 +59,9 @@ export class RenderableItemComponent implements OnInit {
 
     // Returns a formatted input view
     if (!otherOpt)
-      newInput = this.makeField(identifiedBy, elem);
-    else // otherOpt is a universal flag. 
-      newInput = this.makeField(identifiedBy, elem, 1);
+      newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle);
+    else // otherOpt is a universal flag. See the docstring in makeField()
+      newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle, otherOpt);
 
     // Send new input to the next available field
     this.form.appendChild(newInput);
@@ -62,37 +77,50 @@ export class RenderableItemComponent implements OnInit {
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
-  makeField = (idBy : string, elem : string, otherOpt? : number) : Element => {
+  makeField = (idBy : string, elem : string, currentStyle : Object, otherOpt? : number) : Element => {
+    /** 
+     * Other Options : These values are determined by the function call in renderable-item-component.html
+     * 
+     *    0 == (null)
+     *    1 == make a last name input instead of a first name input
+     */
 
-    // <HTMLElement> factory
+    // <HTMLElement> factory for the form to be generated
 
     let newInput : Element;
     var auxNodes : Object; // i.e. <option> units
-    let encaps   : Element = document.createElement("P");
+    let encaps   : Element = document.createElement("DIV");
     let label    : Element = document.createElement("LABEL");
 
-    label.classList.add("ng-anchor");
-
+    // Determine <input> || <textarea> || <select> to render
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
-    else if (elem == "textarea")
+    else if (elem == "textarea"){
       var input : Element = document.createElement("TEXTAREA");
+      input.setAttribute("rows", "3");
+    }
     else
       var input : Element = document.createElement("INPUT");
 
-    console.log(`MAKEFIELD WITH ELEM = ${elem}`);
-    console.log(`MAKEFIELD WITH idBy = ${idBy}`);
     
+    label.classList.add("ng-anchor");
+
+    // Bootstrap Classes
+    input.classList.add("form-control");
+    label.classList.add("control-label");
+    encaps.classList.add("form-group"); 
+
+    // Construction
     switch (idBy) {
 
       case "nameField":
-        if(otherOpt)
+        if(otherOpt == 1)
           label.textContent = "Last Name";
         else
           label.textContent = "First Name";
-        console.log("ENCAP" + encaps);
+
         input.setAttribute('type', elem);
-        input.setAttribute('style', this.editor.styles["major"]);
+        input.setAttribute('style', currentStyle["MajorInput"]);
         input.setAttribute('class', 'input-xxlarge');
         input.setAttribute('id', 'first-name');
         input.setAttribute('name', 'first_name');
@@ -104,6 +132,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "checkboxField":
         input.setAttribute('type', elem);
+        input.setAttribute('style', currentStyle["checkboxes"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -158,7 +187,7 @@ export class RenderableItemComponent implements OnInit {
         var option = document.createElement("OPTION");
 
         for (let i in auxNodes){
-          // Recycling a clone
+          // Recycling the clone
           let newOption = <HTMLElement> option.cloneNode();
           newOption.setAttribute("value", <string> i);
           newOption.innerText = <string> auxNodes[i];
@@ -178,7 +207,7 @@ export class RenderableItemComponent implements OnInit {
         encaps.appendChild(input);
         return encaps;
 
-        case "radioField":
+      case "radioField":
         input.setAttribute('type', elem);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -196,7 +225,7 @@ export class RenderableItemComponent implements OnInit {
         // fix this please
         container.setAttribute('style', 'width:90%;')
         label.textContent = "How can we help?";
-        input.setAttribute('style', this.editor.styles['musTextAreaHelp']);
+        input.setAttribute('style', currentStyle['TextAreaHelp']);
         input.setAttribute('cols', '45');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'comments');
@@ -205,18 +234,18 @@ export class RenderableItemComponent implements OnInit {
         container.appendChild(encaps);
         return container;
         
-        default:
-        console.log("Improbability Alert : failing quietly");
+      default:
+        console.log("Improbability Alert : silently failing!");
+        console.log(`\n\nError : \n -- ${input} \n -- ${label} \n -- ${encaps} \n\n\n`);
         return null;
       }
     }
 
   openEditor = (idBy : string) : void => {
     
+    // Acquire Editor space and get the corresponding editor from editor.editorNodes
     var editorWindow = document.getElementById("in-editor");
-
     let newEditorEls = this.editor.editorNodes(idBy);
-    console.log("NEW EDITOR ELS" + newEditorEls);
 
     // null == undefined
     if (newEditorEls == null) {
@@ -243,8 +272,6 @@ export class RenderableItemComponent implements OnInit {
       inField.addEventListener('input', (e)=>{this.changeLabel(e, idBy)} );
     } 
     else return;
-
-    console.log(newEditorEls + " : success");
 
   }
 
@@ -309,17 +336,42 @@ export class RenderableItemComponent implements OnInit {
     }
   }
 
-  displayHTML() : void {
+  stylizer(style : string) : void {
+    // Toggles between styles for MUS vs SYS
 
-    this.finalHTML = document.getElementById("view-form").innerHTML;
-    this.modal = document.getElementById("modal-html-view");
-    document.body.classList.add("raise-modal");
-    this.modal.style.display = "block";
+    if (style == "MUS") 
+      this.currentStyle = this.musStyle;
+    else if (style == "SYS")
+      this.currentStyle = this.sysStyle;
 
+    let container = document.getElementById("consult-form-container");
+    let deactivated = document.querySelector(".active");
+    let button = document.getElementById(<string> style); // change color & highlight
+
+    container.setAttribute("style", this.currentStyle['container']);
+    deactivated.classList.remove("active");
+    button.classList.add("active");
+
+
+    
   }
+
+  displayHTML() : void {
+    let theHTML = document.getElementById("pretty-print");
+    this.modalActive = true; 
+    this.finalHTML = <string> document.getElementById("view-form").innerHTML;
+    this.modal = document.getElementById("modal-html-view");
+    this.modal.style.display = "block";
+    document.body.classList.add("raise-modal");
+    theHTML.textContent = <string> this.finalHTML;
+    return;
+  }
+
   closeModal() : void {
+
     document.body.classList.remove("raise-modal");
     this.modal.style.display = "none";
+    this.modalActive = false;
     return;
   }
 
@@ -328,7 +380,7 @@ export class RenderableItemComponent implements OnInit {
        Recaptcha factory function
        Gets called post form completion
     */
-    console.log("click");
+
     let reCapchaElement = document.createElement("DIV");
     
     reCapchaElement.setAttribute('class', 'g-recaptcha');
