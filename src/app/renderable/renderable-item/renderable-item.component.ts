@@ -9,10 +9,12 @@ import Editor from '../../html/htmleditor';
 export class RenderableItemComponent implements OnInit {
   
   public form   : Element;
+  public modal  : HTMLElement;
   public editor : Editor;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
   public modalActive : Boolean;
+  public finalHTML : String;
   
   constructor() {}
   
@@ -62,9 +64,11 @@ export class RenderableItemComponent implements OnInit {
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
   makeField = (idBy : string, elem : string, otherOpt? : number) : Element => {
 
+    // <HTMLElement> factory
+
     let newInput : Element;
-    let auxNodes : Element; // i.e. <option> units
-    let encaps    : Element = document.createElement("P");
+    var auxNodes : Object; // i.e. <option> units
+    let encaps   : Element = document.createElement("P");
     let label    : Element = document.createElement("LABEL");
 
     label.classList.add("ng-anchor");
@@ -150,14 +154,14 @@ export class RenderableItemComponent implements OnInit {
 
       case "selectField":
         // Populate our select box
-        let places = this.editor.selectOptions;
+        auxNodes = this.editor.selectOptions;
         var option = document.createElement("OPTION");
 
-        for (let i in places){
+        for (let i in auxNodes){
           // Recycling a clone
           let newOption = <HTMLElement> option.cloneNode();
           newOption.setAttribute("value", <string> i);
-          newOption.innerText = <string> places[i];
+          newOption.innerText = <string> auxNodes[i];
           input.appendChild(newOption);
         }
 
@@ -210,8 +214,6 @@ export class RenderableItemComponent implements OnInit {
   openEditor = (idBy : string) : void => {
     
     var editorWindow = document.getElementById("in-editor");
-    // We could also build html elements as pure strings (bad practice but an alternative if ever needed)
-    // let newEditorEls = JSON.parse(<string>this.editor.editorNodes(idBy)) || null;
 
     let newEditorEls = this.editor.editorNodes(idBy);
     console.log("NEW EDITOR ELS" + newEditorEls);
@@ -222,7 +224,7 @@ export class RenderableItemComponent implements OnInit {
       return;
     }
 
-    // Apply Template to right
+    // Build current field's associated editor display
     if (editorWindow.innerHTML){
       var oldNode = document.getElementById("nglabeling");
       oldNode.remove();
@@ -235,7 +237,7 @@ export class RenderableItemComponent implements OnInit {
       /**
        * nglabeling is the EDITOR'S CURRENT INPUT FIELD.
        * Change to class list for future extensibility.
-       *           This is a refactor point.
+       *          This is a refactor point.
        */
       let inField = document.getElementById("nglabeling"); 
       inField.addEventListener('input', (e)=>{this.changeLabel(e, idBy)} );
@@ -295,6 +297,7 @@ export class RenderableItemComponent implements OnInit {
         return;
     }
   }
+
   exportWidget(widget : string){
     switch (widget) {
       case "schoolWidget":
@@ -304,6 +307,20 @@ export class RenderableItemComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  displayHTML() : void {
+
+    this.finalHTML = document.getElementById("view-form").innerHTML;
+    this.modal = document.getElementById("modal-html-view");
+    document.body.classList.add("raise-modal");
+    this.modal.style.display = "block";
+
+  }
+  closeModal() : void {
+    document.body.classList.remove("raise-modal");
+    this.modal.style.display = "none";
+    return;
   }
 
   addCaptcha() : void {

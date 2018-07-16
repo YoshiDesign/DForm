@@ -7,7 +7,8 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     border:1px solid rgb(13, 132, 201);
     color:rgb(13, 132, 201);
 }
-.modal-html-view {
+#modal-html-view {
+
     display: none;
     position:absolute;
     top:0;
@@ -16,7 +17,25 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     right:0;
     background:rgba(0,0,0,0.35);
 }
+
 .exit {
+    position: absolute;
+    top:0;
+    right: 0;
+    padding:28px;
+    outline: none;
+    font-size:3em;
+    color:tomato;
+}
+.exit:hover{
+    color:white;
+}
+
+#html-container {
+    border:1px solid white;
+    height:60%;
+    width: 60%;
+    margin: 45px auto;
     
 }
 .raise-modal {
