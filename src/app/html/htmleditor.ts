@@ -97,8 +97,8 @@ export default class HTMLeditors {
             max-width:1120px;
             padding:15px 40px;color:#fff;
         `,
-        
-        "MUSmajor" : `
+
+        "MajorInput" : `
             width:90%;
             border-radius: 0;
             border: none;
@@ -109,7 +109,7 @@ export default class HTMLeditors {
             padding: 0 0 0 5px;
             font-size: 25px;`,
 
-        "musTextAreaHelp" : `
+        "TextAreaHelp" : `
             width:90%;
             border-radius: 0;
             border: none;
@@ -131,6 +131,25 @@ export default class HTMLeditors {
         "CheckBoxes" : `
             margin-right:10px;
         `,
+
+        "SelectBox" : `
+            border-radius: 0;
+            border: none;
+            height: 40px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;font-size: 15px;
+        `,
+
+        "SubmitButtonStyles" : `
+            font-variant: small-caps;
+            height:45px;
+            border-radius:0;
+            border:none;
+            font-size:20px;
+            margin-top:15px;
+
+        `
         
     }
 
@@ -139,18 +158,18 @@ export default class HTMLeditors {
         "title" : "SYS",
 
         "container" : `
-            background-color:#343e79;
+            background-color:#fff;
             max-width:1120px;
-            padding:15px 40px;color:#fff;
+            padding:15px 40px;color:#333;
         `,
 
         "MajorInput" : `
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 2px solid #0054a5;;
             height: 40px;
-            background-color: rgba(255, 255, 255, .1);
+            background-color: #f7f7f7;
             color: #fff;
             padding: 0 0 0 5px;
             font-size: 25px;`,
@@ -161,8 +180,8 @@ export default class HTMLeditors {
             border: none;
             border-bottom: 1px solid #fff;
             height:100px;
-            background-color: rgba(255, 255, 255, .1);
-            color: #fff;
+            background-color: #f7f7f7;
+            color: #333;
             padding: 0 0 0 5px;font-size: 15px;
         `,
 
@@ -176,8 +195,24 @@ export default class HTMLeditors {
         `,
 
         "CheckBoxes" : `
+            display:inline-block;
             margin-right:10px;
+            width: 25px;
+            float:left;
         `,
+
+        "SelectBox" : `
+            border-radius: 0;
+            border: none;
+            height: 40px;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 0 0 0 5px;font-size: 15px;
+        `,
+
+        "SubmitButtonStyles" : `
+            font-variant: small-caps;
+        `
         
     }
 

@@ -14,7 +14,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     bottom:0;
     left:0;
     right:0;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.3);
 
 }
 
@@ -29,6 +29,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     margin:45px auto;
     word-wrap:break-word;
     padding:25px;
+    background:rgba(0,0,0,0.8);
     
 }
 #html-container {

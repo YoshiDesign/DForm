@@ -10,6 +10,9 @@
           <p id="pretty-print">
 
           </p>
+          <div *ngIf="getOutputDepth() > 300">
+            <span id="scrolldown">&#x261F;</span>
+          </div>
       </div>
       <div class="content-message"><p class="message">This window scrolls</p></div>
     </div>
@@ -24,12 +27,15 @@
           <button class="form-option-btn" id="tel"            (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="select"         (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'textarea', 'textareaField')">  <span class="left">Comment Area</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'input', 'subButtonField')">  <span class="left">Submit Button</span>      <span class="plus">&oplus;</span></button>
+
           <hr>
           <label class="list-label" for="">Widgets<br><sup>Expanded until export</sup></label>
           <button class="form-option-btn" id="schools-widget"    (click)="makeWidget('schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
+          
           <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio', 'radioField')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Misc.</label>
@@ -40,6 +46,7 @@
           <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number', 'numberField')">    <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range', 'rangeField')">     <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time', 'timeField')">      <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
+          <div class="g-recaptcha" data-sitekey="6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB" data-callback="enableBtn"></div>
           
       </div>
   
