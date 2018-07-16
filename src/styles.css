@@ -19,7 +19,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 .exit {
     
 }
-.dim-screen {
+.raise-modal {
     overflow:hidden;
 }
 .list-label {

@@ -12,10 +12,12 @@ export class RenderableItemComponent implements OnInit {
   public editor : Editor;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
+  public modalActive : Boolean;
   
   constructor() {}
   
   ngOnInit() {
+    this.modalActive = false;
     this.editor = new Editor;
     // Use when allowing HTML
     // this.illegalInputEvent = /"\bon[A-Z]+"/;
@@ -49,13 +51,20 @@ export class RenderableItemComponent implements OnInit {
 
     event.stopPropagation();
   }
+  removeRecent(){
   
+    let mostRecentField = document.getElementById('lead-gen-form-input')
+    console.log(mostRecentField);
+    let length = mostRecentField.childNodes.length;
+    mostRecentField.removeChild(mostRecentField.childNodes[length - 1]);
+    
+  }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
   makeField = (idBy : string, elem : string, otherOpt? : number) : Element => {
 
     let newInput : Element;
     let auxNodes : Element; // i.e. <option> units
-    let encap    : Element = document.createElement("P");
+    let encaps    : Element = document.createElement("P");
     let label    : Element = document.createElement("LABEL");
 
     label.classList.add("ng-anchor");
@@ -77,61 +86,67 @@ export class RenderableItemComponent implements OnInit {
           label.textContent = "Last Name";
         else
           label.textContent = "First Name";
-        console.log("ENCAP" + encap);
+        console.log("ENCAP" + encaps);
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        input.setAttribute('style', this.editor.styles["major"]);
+        input.setAttribute('class', 'input-xxlarge');
+        input.setAttribute('id', 'first-name');
+        input.setAttribute('name', 'first_name');
+        input.setAttribute('required', 'required');
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+
+        return encaps;
 
       case "checkboxField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "emailField":
         label.textContent = "Email";
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "dateField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "passwdField":
         label.textContent = "Password";
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "fileField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
       
       case "numberField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "colorField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
         
       case "rangeField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
       case "selectField":
         // Populate our select box
@@ -148,35 +163,43 @@ export class RenderableItemComponent implements OnInit {
 
         label.textContent = "State";
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
+        encaps.appendChild(label);
+        encaps.appendChild(input);
         
-        return encap;
+        return encaps;
         
       case "timeField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
 
         case "radioField":
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
    
       case "telField":
         label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
           
       case "textareaField":
+        let container = document.createElement('DIV');
+        // fix this please
+        container.setAttribute('style', 'width:90%;')
+        label.textContent = "How can we help?";
+        input.setAttribute('style', this.editor.styles['musTextAreaHelp']);
+        input.setAttribute('cols', '45');
         input.setAttribute('type', elem);
-        encap.appendChild(label);
-        encap.appendChild(input);
-        return encap;
+        input.setAttribute('name', 'comments');
+        encaps.appendChild(input);
+        container.appendChild(label);
+        container.appendChild(encaps);
+        return container;
         
         default:
         console.log("Improbability Alert : failing quietly");
@@ -245,18 +268,45 @@ export class RenderableItemComponent implements OnInit {
     
     console.log("changeDetected");
   }
+
   makeWidget(event : Event, widget : string) : void {
-    let build;
+    /**
+     *  Define the CONSTRUCTION of widgets here.
+     *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
+     *  Widgets are visible in expanded state until the HTML is exported.
+     *  Define future widgets here.
+     */
+    let encaps;
+    let para;
+    let label;
+    let input;
     switch(widget){
 
-      case "school" :
-        build = document.createElement("DIV");
+      case "school" : 
+        encaps = document.createElement("DIV");
+        label  = document.createElement("LABEL");
+        para   = document.createElement("P");
+        input  = document.createElement("INPUT");
 
+        para.appendChild(label); para.appendChild(input);
+        encaps.appendChild(para); encaps.appendChild(para); encaps.appendChild(para);
+
+      default :
+        return;
     }
-
+  }
+  exportWidget(widget : string){
+    switch (widget) {
+      case "schoolWidget":
+        
+        break;
+    
+      default:
+        break;
+    }
   }
 
-  addCapcha() : void {
+  addCaptcha() : void {
     /*
        Recaptcha factory function
        Gets called post form completion
@@ -267,16 +317,22 @@ export class RenderableItemComponent implements OnInit {
     reCapchaElement.setAttribute('class', 'g-recaptcha');
     reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');
 
-  // append our completed captcha to the form
+    // append our completed captcha to the form
     this.form.appendChild(reCapchaElement);
 
   }
+
   finalize() : Number {
-    this.addCapcha()
+    /** 
+     * TODO
+     *  export widget
+     */
+    // Garbage collection // apply ReCaptcha // apply widget params.
+    let widget = null;
+    delete(this.editor);
+    this.addCaptcha();
+    this.exportWidget(widget);
     return 0;
   }
-
-
-
 
 }

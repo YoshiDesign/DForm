@@ -30,7 +30,7 @@ export default class HTMLeditors {
     }
 
     public selectOptions = {
-        // Locale Select box by state
+        // State Selections
         "None":"Select State",
         'INTL':"International Customer",
         'AL':"Alabama",
@@ -97,6 +97,23 @@ export default class HTMLeditors {
             color: #fff;
             padding: 0 0 0 5px;
             font-size: 25px;`,
+
+        "musTextAreaHelp" : `
+            style=
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #fff;
+            height:100px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;padding: 0 0 0 5px;
+            font-size: 15px;
+        `,
         
     }
+
+    public widgets = {
+
+
+    }
+
 }
