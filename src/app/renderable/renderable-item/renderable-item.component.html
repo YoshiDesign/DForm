@@ -22,14 +22,14 @@
       <div class="selection-window" id="sidebar">
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, type, identifiedBy, class,[OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
-          <button class="form-option-btn" id="recaptcha"     (click)="toggleAdd($event,'recaptcha', 'recaptchaField')">      <span class="left">Recaptcha</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"            (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="tel"            (click)="toggleAdd($event,'tel', 'telField')">               <span class="left">Phone Number</span>       <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="select"         (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'textarea', 'textareaField')">  <span class="left">Comment Area</span>      <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'input', 'subButtonField')">  <span class="left">Submit Button</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="recaptcha"     (click)="toggleAdd($event,'recaptcha', 'recaptchaField')">      <span class="left">Recaptcha</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="submit"         (click)="toggleAdd($event,'submit', 'subButtonField')">  <span class="left">Submit Button</span>      <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label" for="">Widgets<br><sup>Expanded until export</sup></label>
           <button class="form-option-btn" id="schools-widget"    (click)="toggleAdd($event, 'widget', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>

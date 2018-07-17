@@ -113,10 +113,9 @@ export class RenderableItemComponent implements OnInit {
     else if (elem == "textarea"){
       var input : Element = document.createElement("TEXTAREA");
       input.setAttribute("rows", "3");
-    } 
-    else
+    } else
       var input : Element = document.createElement("INPUT");
-
+    
     
     label.classList.add("ng-anchor");
 
@@ -169,8 +168,8 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "subButtonField":
-        // This attributes helps us to explicitly select submit buttons
-        encaps.setAttribute('data-dyna-submit', '');
+        
+        encaps.setAttribute('data-dyna-submit', ''); // For parent tracking
         encaps.appendChild(this.makeSubmitButton());
         return encaps;
 
@@ -444,12 +443,12 @@ export class RenderableItemComponent implements OnInit {
 
   stylizer(style : string, bypass? : boolean) : void {
 
-    // Toggle between styles for MUS vs SYS
+    // For easy toggle between styles for MUS vs SYS
 
     /**
      *  This function has the highest likelihood to grow out of hand
-     *  Therefore specificity should be achieved via tag name or attribute.
-     *  Note that everything is acquired as a <NodeList> even if there is only 1 on screen
+     *  therefore style specificity should be achieved via tag name or attribute.
+     *  Note that every dynamic element is acquired as a <NodeList> even if there is only 1
      */
 
     let container   = document.getElementById('consult-form-container');
@@ -458,30 +457,40 @@ export class RenderableItemComponent implements OnInit {
     let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName("input");
     let allTextbox  = document.getElementsByTagName("textarea");
     let allSelects  = document.getElementsByTagName("select");
-    let allSubmits  = document.querySelectorAll("[data-dyna-submit]");
+    let allSubmits  = document.querySelectorAll("[ng-sub]");
+    let submitClass : string;
     let submitText  : string;
 
     // Style switch
     if (style == "MUS") { 
       this.currentStyle = this.musStyle;
       submitText = "lets go!";
+      submitClass = "btn btn-large btn-success";
     }
     else if (style == "SYS") {
       this.currentStyle = this.sysStyle;
       submitText = "watch the webinar";
+      submitClass = "btn btn-primary form-control";
     }
 
     if (!bypass){ // Will only bypass on initialization because nanoseconds count....
 
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
+        
         allSubmits[i].setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
         allSubmits[i].setAttribute('value', submitText);
+        allSubmits[i].setAttribute('class', submitClass);
       }
-      // <Inputs>
-      for(let i = 0; i < allInputs.length; i++)
-        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
-          allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+      // <Inputs>, skipping any submit types identified by the [ng-sub] attr.
+      for(var i = 0; i < allInputs.length; i++)
+        
+        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel"){
+          if(!(allInputs[i].hasAttribute('ng-sub')))
+            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+          if (i == allInputs.length - 1)
+            allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
+        }
 
       // <Textareas>
       for(let i = 0; i < allTextbox.length; i++)
@@ -489,7 +498,7 @@ export class RenderableItemComponent implements OnInit {
 
       // <Selects>
       for (let i = 0; i < allSelects.length; i++)
-        allTextbox[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
+        allSelects[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
     }
     
     container.setAttribute("style", this.currentStyle['container']);

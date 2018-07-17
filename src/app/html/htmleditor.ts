@@ -153,6 +153,8 @@ export default class HTMLeditors {
             border:none;
             font-size:20px;
             margin-top:15px;
+            width:199px;
+            -webkit-appearance: button;
 
         `,
         
@@ -238,7 +240,20 @@ export default class HTMLeditors {
         `,
 
         "SubmitButtonStyles" : `
+            
             font-variant: small-caps;
+            height:45px;
+            border-radius:0;
+            border:none;
+            font-size:20px;
+            margin-top:15px;
+            width:80%;
+            text-align:center;
+            background-color: #F05F40;
+            border-color: #F05F40;
+            opacity:0.65;
+            transition: all 0.9s;
+            -webkit-appearance: button;
         `,
 
         "widgets" : {
@@ -267,6 +282,17 @@ export default class HTMLeditors {
         `,
         "ColorWheel" : `
             width: 35px;
-        `
+        `,
+        "DefaultFieldStyle" : `
+            -webkit-appearance: textfield;
+            background-color: white;
+            -webkit-rtl-ordering: logical;
+            cursor: text;
+            padding: 1px;
+            border-width: 2px;
+            border-style: inset;
+            border-color: initial;
+            border-image: initial;
+        `,
     }
 }
