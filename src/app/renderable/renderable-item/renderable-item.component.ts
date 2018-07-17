@@ -9,8 +9,7 @@ import Editor from '../../html/htmleditor';
   styleUrls: ['./renderable-item.component.css']
 })
 export class RenderableItemComponent implements OnInit {
-  
-  public form   : HTMLElement;
+
   public modal  : HTMLElement;
   public editor : Editor;
   public illegalInputEvent  : RegExp;
@@ -28,7 +27,7 @@ export class RenderableItemComponent implements OnInit {
   ngOnInit() {
     this.modalActive = false;
     this.editor = new Editor;
-    this.form = document.getElementById('lead-gen-form-input');
+    var form = document.getElementById('lead-gen-form-input');
     // start with MUS style
     this.musStyle = this.editor.MUS;
     this.sysStyle = this.editor.SYS;
@@ -46,7 +45,7 @@ export class RenderableItemComponent implements OnInit {
     *   otherOpt is a universal flag for transitive state.
     *   +localize 'attr' with scope visibility.
     */
-   
+    let form = document.getElementById('lead-gen-form-input');
     let newInput : Element; // Encapsulated per the page spec.
 
     if (elem == null || undefined) {
@@ -62,18 +61,29 @@ export class RenderableItemComponent implements OnInit {
       newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle);
     else // otherOpt is a universal flag. See the docstring in makeField()
       newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle, otherOpt);
-
+    if (elem == "recaptcha")
+      return;
     // Send new input to the next available field
-    this.form.appendChild(newInput);
+    form.appendChild(newInput);
 
     event.stopPropagation();
   }
-  removeRecent(){
-  
-    let mostRecentField = document.getElementById('lead-gen-form-input')
-    console.log(mostRecentField);
-    let length = mostRecentField.childNodes.length;
-    mostRecentField.removeChild(mostRecentField.childNodes[length - 1]);
+  removeRecent(clearAll? : Boolean) : void {
+    let findMostRecentField = document.getElementById('lead-gen-form-input');
+    if(clearAll)
+    {
+      var allNewFields = document.querySelectorAll("div[data-dynaform]");
+      for (let i  in allNewFields){
+        if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
+          break
+        allNewFields[i].parentNode.removeChild(allNewFields[i]);
+      }
+      return;
+    }
+    
+    console.log(findMostRecentField);
+    let length = findMostRecentField.childNodes.length;
+    findMostRecentField.removeChild(findMostRecentField.childNodes[length - 1]);
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
@@ -87,18 +97,17 @@ export class RenderableItemComponent implements OnInit {
 
     // <HTMLElement> factory for the form to be generated
 
-    let newInput : Element;
     var auxNodes : Object; // i.e. <option> units
     let encaps   : Element = document.createElement("DIV");
     let label    : Element = document.createElement("LABEL");
 
-    // Determine <input> || <textarea> || <select> to render
+    // determine inner node
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
     else if (elem == "textarea"){
       var input : Element = document.createElement("TEXTAREA");
       input.setAttribute("rows", "3");
-    }
+    } 
     else
       var input : Element = document.createElement("INPUT");
 
@@ -110,15 +119,21 @@ export class RenderableItemComponent implements OnInit {
       input.classList.add("form-control");
 
     label.classList.add("control-label");
-    encaps.classList.add("form-group"); 
+    encaps.classList.add("form-group");
+    encaps.setAttribute('data-dynaform', ''); // tracking
     
     /**
      *  This switch appends Elements and applies Attributes / Styles.
      *  It is 100% DOM management.
-     *  otherOpt flags are enumerated in the DocString.
+     *  [otherOpt] current flags are enumerated in the DocString at the top of the function.
      */
     switch (idBy) {
-      
+      // safety first.
+      case "recaptchaField":
+        // punt to recap
+        this.addCaptcha();
+        break;
+
       case "nameField":
         if(otherOpt == 1){
           label.textContent = "Last Name";
@@ -129,7 +144,6 @@ export class RenderableItemComponent implements OnInit {
           label.textContent = "First Name";
           input.setAttribute('id', 'first-name');
           input.setAttribute('name', 'first_name');
-
         }
 
         input.setAttribute('class', 'input-xxlarge form-control');
@@ -270,6 +284,7 @@ export class RenderableItemComponent implements OnInit {
           
       case "textareaField":
         let container = document.createElement('DIV');
+        container.setAttribute('data-dynaform', '');
         // fix this please
         container.setAttribute('style', 'width:90%;')
         label.textContent = "How can we help?";
@@ -418,12 +433,10 @@ export class RenderableItemComponent implements OnInit {
 
     // Display Modal and Dim the lights
     this.modal.style.display = "block";
-    // Security ++
-    this.addCaptcha();
 
     document.body.classList.add("raise-modal");
     theHTML.textContent = <string> this.finalHTML;
-
+    
     return;
   }
 
@@ -434,21 +447,25 @@ export class RenderableItemComponent implements OnInit {
     return;
   }
 
-  addCaptcha() : void {
+  addCaptcha() : number {
     /**
      *  Recaptcha is applied when the user
      *  clicks the <HTML> button
      */
 
     let reCapchaElement = document.createElement("DIV");
-    
+    let form = document.getElementById('lead-gen-form-input');
     // Deploy attributes to recaptch DIV
+    reCapchaElement.setAttribute('data-dynaform', '');
     reCapchaElement.setAttribute('class', 'g-recaptcha');
     reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');   // The sitekey goes here
     reCapchaElement.setAttribute('data-callback', 'enableBtn');
+    console.log(reCapchaElement);
 
     // append our completed captcha to the form
-    this.form.appendChild(reCapchaElement);
+    form.appendChild(reCapchaElement);
+    console.log("CAPTCHA APPENDED!!!!!!!!!!!!!!!!");
+    return 1;
 
   }
   getOutputDepth() : number {

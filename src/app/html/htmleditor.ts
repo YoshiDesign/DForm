@@ -86,10 +86,10 @@ export default class HTMLeditors {
         'WY':"Wyoming"
     }
     /**
-     *  "title" : Corresponds to html style selection button id's
+     *  "title" : Also corresponds to html style selection button id's
      */
     public MUS = {
-
+        // Math-U-See styles
         "title" : "MUS",
 
         "container" : `

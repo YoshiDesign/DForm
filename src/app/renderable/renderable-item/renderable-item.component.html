@@ -7,20 +7,20 @@
     <div id="modal-html-view">
         <span (click)="closeModal()" class="exit">&otimes;</span>
       <div id="html-container">
+
           <p id="pretty-print">
 
           </p>
-          <div *ngIf="getOutputDepth() > 300">
-            <span id="scrolldown">&#x261F;</span>
-          </div>
+          
       </div>
-      <div class="content-message"><p class="message">This window scrolls</p></div>
+      <div *ngIf="getOutputDepth() > 345" class="content-message"><p class="message">This window scrolls</p></div>
     </div>
       
   
       <div class="selection-window" id="sidebar">
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, type, identifiedBy, class,[OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
+          <button class="form-option-btn" id="recaptcha"     (click)="toggleAdd($event,'recaptcha', 'recaptchaField')">      <span class="left">Recaptcha</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">        <span class="left">First Name</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>          <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="email"            (click)="toggleAdd($event, 'email', 'emailField')">     <span class="left">Email</span>              <span class="plus">&oplus;</span></button>
@@ -28,7 +28,6 @@
           <button class="form-option-btn" id="select"         (click)="toggleAdd($event,'select', 'selectField')">  <span class="left">Select Locale</span>      <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'textarea', 'textareaField')">  <span class="left">Comment Area</span>      <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'input', 'subButtonField')">  <span class="left">Submit Button</span>      <span class="plus">&oplus;</span></button>
-
           <hr>
           <label class="list-label" for="">Widgets<br><sup>Expanded until export</sup></label>
           <button class="form-option-btn" id="schools-widget"    (click)="makeWidget('schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
@@ -66,23 +65,25 @@
   
   </div> <!-- MAIN WINDOW -->
 
-  <div class="option-wrapper">
+  <div [class.can-show]="!modalActive"
+  [class.can-hide]="modalActive"  class="option-wrapper">
     <div id="edit-Window">
         <h3 id="editor-title">Options</h3>
         <div id="in-editor">
           
         </div>
         <span class="math-spell-switch">
-            <ul class="list-group">
+            <ul [class.can-show]="!modalActive"
+                [class.can-hide]="modalActive" >
                 <li (click)="stylizer('SYS')" id="SYS" class="list-group-item">S.Y.S.</li>
                 <li (click)="stylizer('MUS')"  id="MUS" class="active list-group-item">M.U.S.</li>
                 <span style="position:relative; top:12px; right:10px; font-weight: 500;">Styles</span>
               </ul>
         </span>
         <span id="execs">
-          <button type="button"  class="inline btn btn-outline-danger">Clear</button>
-          <button type="button" (click)="removeRecent()" class="inline btn btn-outline-dark">Remove</button>
-          <button type="button" (click)="displayHTML()" class="inline btn btn-outline-primary">&lsaquo; HTML &rsaquo;</button>
+          <button type="button" [disabled]="modalActive" (click)="removeRecent(true)" class="inline btn btn-outline-danger">Clear</button>
+          <button type="button" [disabled]="modalActive" (click)="removeRecent()" class="inline btn btn-outline-dark">Remove</button>
+          <button type="button" [disabled]="modalActive" (click)="displayHTML()" class="inline btn btn-outline-primary">&lsaquo; HTML &rsaquo;</button>
         </span>
         <hr>
     </div>

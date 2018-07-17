@@ -17,7 +17,73 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     background:rgba(0,0,0,0.3);
 
 }
-
+.can-hide {
+    background-color:white;
+    position:relative;
+    animation-name: h1;
+    -moz-animation-name:h1;
+    -o-animation-name:h1 ;
+    -webkit-animation-name:h1;
+    animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -o-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    
+}
+@keyframes h1           {
+    1% {bottom:0px;}
+    20%{bottom:25px}
+    98% {visibility:hidden; display:none;}
+    100%{bottom:-100px; visibility:hidden; display:none;}
+}
+@-o-keyframes h1        {
+    1% {bottom:0px;}
+    20%{bottom:25px}
+    98% {visibility:hidden; display:none;}
+    100%{bottom:-100px; visibility:hidden; display:none;}
+}
+@-moz-keyframes h1      {
+    1% {bottom:0px;}
+    20%{bottom:25px}
+    98% {visibility:hidden; display:none;}
+    100%{bottom:-100px; visibility:hidden; display:none;}
+}
+@-webkit-keyframes h1   {
+    1% {bottom:0px;}
+    20%{bottom:25px}
+    98% {visibility:hidden; display:none;}
+    100%{bottom:-100px; visibility:hidden; display:none;}
+}
+.can-show {
+    background-color:white;
+    position:relative;
+    display:inline ;
+    bottom:0;
+    
+}
+/* @keyframes s1           {
+    1% {visibility:visible; bottom: -100px; display:inline;}
+    88% {bottom:25px;}
+    100%{bottom:0;}
+}
+@-o-keyframes s1        {
+    1% {visibility:visible; bottom: -100px; display:inline;}
+    88% {bottom:25px;}
+    100%{bottom:0;}
+}
+@-moz-keyframes s1      {
+    1% {visibility:visible; bottom: -100px; display:inline;}
+    88% {bottom:25px;}
+    100%{bottom:0;}
+}
+@-webkit-keyframes s1   {
+    1% {visibility:visible; bottom: -100px; display:inline;}
+    88% {bottom:25px;}
+    100%{bottom:0;}
+} */
 #pretty-print-box {
     border:1px solid white;
     margin:auto auto;
@@ -32,6 +98,17 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     background:rgba(0,0,0,0.8);
     
 }
+.g-recaptcha{
+    height:45px;
+    width:100px;
+    background-color:grey;
+    border-radius:4px;
+    
+}
+.g-recaptcha:after {
+
+    content: '\1F44D';
+}
 #html-container {
     border:1px solid white;
     height:60%;
@@ -42,6 +119,8 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 .content-message {
     width: 60%;
     margin: 10px auto;
+    text-align:center;
+    
 }
 .message {
     color:white;
