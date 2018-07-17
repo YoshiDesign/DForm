@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 input { margin:10px 0; }
-body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
+body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61);}
 
 .active {
     border:1px solid rgb(13, 132, 201);
@@ -64,26 +64,9 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     bottom:0;
     
 }
-/* @keyframes s1           {
-    1% {visibility:visible; bottom: -100px; display:inline;}
-    88% {bottom:25px;}
-    100%{bottom:0;}
+.title-bar {
+    color:white;
 }
-@-o-keyframes s1        {
-    1% {visibility:visible; bottom: -100px; display:inline;}
-    88% {bottom:25px;}
-    100%{bottom:0;}
-}
-@-moz-keyframes s1      {
-    1% {visibility:visible; bottom: -100px; display:inline;}
-    88% {bottom:25px;}
-    100%{bottom:0;}
-}
-@-webkit-keyframes s1   {
-    1% {visibility:visible; bottom: -100px; display:inline;}
-    88% {bottom:25px;}
-    100%{bottom:0;}
-} */
 #pretty-print-box {
     border:1px solid white;
     margin:auto auto;
@@ -107,7 +90,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 }
 .g-recaptcha:after {
 
-    content: '\1F44D';
+    content: '\1F44D Secured';
 }
 #html-container {
     border:1px solid white;
@@ -117,7 +100,9 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     overflow-y:scroll;
 }
 .content-message {
-    width: 60%;
+    display:block;
+    height:25px;
+    width: 100%;
     margin: 10px auto;
     text-align:center;
     
@@ -126,7 +111,6 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     color:white;
     font-variant:small-caps;
 }
-
 
 
 .exit {
@@ -159,20 +143,20 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
     display:inline-block;
 }
 .main-window{
-    height:585px;
+    height:785px;
     z-index:1000;
     display: flex;
-    background: lemonchiffon;
+    background: rgb(255, 255, 255);
     margin:auto 175px;
-}
-.selection-window button:hover {
-    background:rgb(0, 0, 0);
-    color:rgb(0,255,55);
 }
 .main-window > div{
 
     border:1px solid  rgba(255, 136, 0, 0.3);
 
+}
+.selection-window button:hover {
+    background:rgb(0, 0, 0);
+    color:rgb(0,255,55);
 }
 
 .disable-main{
@@ -226,14 +210,14 @@ body  { margin:0 0 0 0; padding:0; background:rgb(206, 255, 206);}
 /* Selection Buttons */
 #sidebar {
     flex: 0.5;
-    height:585px;
+    height:785px;
     overflow-y:scroll;
 }
 /* The middle renderer view */
 #view-form {
     flex:1.5;
     padding:15px;
-    height:585px;
+    height:785px;
     overflow-y:scroll;
 }
 /* bottom bar */

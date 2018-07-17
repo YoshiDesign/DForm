@@ -136,6 +136,7 @@ export default class HTMLeditors {
             border-radius: 0;
             border: none;
             height: 40px;
+            width:199px;
             background-color: rgba(255, 255, 255, .1);
             color: #fff;
             padding: 0 0 0 5px;font-size: 15px;
@@ -149,7 +150,27 @@ export default class HTMLeditors {
             font-size:20px;
             margin-top:15px;
 
-        `
+        `,
+        
+
+        "widgets" : {
+
+            "WidgetMajor" : `
+                width:90%;
+                border-radius: 0;
+                border: none;
+                border-bottom: 1px solid #fff;
+                height: 40px;
+                background-color: rgba(255, 255, 255, .1);
+                color: #fff;
+                padding: 0 0 0 5px;
+                font-size: 25px;`,
+
+                "WidgetMajorMid" : `
+                    width: 83%;
+                
+            `,
+        }
         
     }
 
@@ -170,7 +191,7 @@ export default class HTMLeditors {
             border-bottom: 2px solid #0054a5;;
             height: 40px;
             background-color: #f7f7f7;
-            color: #fff;
+            color: #333;
             padding: 0 0 0 5px;
             font-size: 25px;`,
 
@@ -178,7 +199,7 @@ export default class HTMLeditors {
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid #0054a5
             height:100px;
             background-color: #f7f7f7;
             color: #333;
@@ -205,20 +226,43 @@ export default class HTMLeditors {
             border-radius: 0;
             border: none;
             height: 40px;
+            width:199px;
             background-color: #f7f7f7;
             color: #333;
-            padding: 0 0 0 5px;font-size: 15px;
+            padding: 0 0 0 5px;
+            font-size: 15px;
         `,
 
         "SubmitButtonStyles" : `
             font-variant: small-caps;
+        `,
+
+        "widgets" : {
+            
+            "WidgetMajor" : `
+                width:90%;
+                border-radius: 0;
+                border: none;
+                border-bottom: 1px solid #0054a5;
+                height: 40px;
+                background-color: #f7f7f7;
+                color: #fff;
+                padding: 0 0 0 5px;
+                font-size: 25px;`,
+
+            "WidgetMajorMid" : `
+                width: 83%;
+            `,
+        }
+
+    }
+
+    public General = {
+        "LabelMargin" : `
+            margin-right:8px;
+        `,
+        "ColorWheel" : `
+            width: 35px;
         `
-        
     }
-
-    public widgets = {
-
-
-    }
-
 }

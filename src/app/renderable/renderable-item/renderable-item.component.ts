@@ -20,8 +20,6 @@ export class RenderableItemComponent implements OnInit {
   public sysStyle : Object;
   public currentStyle : Object;
   
-  
-  
   constructor() {}
   
   ngOnInit() {
@@ -34,7 +32,7 @@ export class RenderableItemComponent implements OnInit {
     this.currentStyle = this.musStyle;
     this.stylizer(this.currentStyle["title"]);
     
-    // If allowing HTML. Will also need diverse event regex's
+    // currently all dynamic HTML is disabled by default so these are useless.
     // this.illegalInputEvent = /"\bon[A-Z]+"/;
     // this.illegalInputScript = /"\b<script>"/;
   }
@@ -56,18 +54,27 @@ export class RenderableItemComponent implements OnInit {
     // Create Editor View
     this.openEditor(identifiedBy);
 
-    // Returns a formatted input view
+    // Standard enter here
     if (!otherOpt)
-      newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle);
+      newInput = this.makeField(<string> elem,
+                                <string> identifiedBy,
+                                <string> this.currentStyle);
     else // otherOpt is a universal flag. See the docstring in makeField()
-      newInput = this.makeField(identifiedBy, elem, <string> this.currentStyle, otherOpt);
+      newInput = this.makeField(<string> elem,
+                                <string> identifiedBy,
+                                <string> this.currentStyle, 
+                                <number> otherOpt);
+
+    // Recaptcha is appended throught the addCaptcha() function
     if (elem == "recaptcha")
       return;
+
     // Send new input to the next available field
     form.appendChild(newInput);
 
     event.stopPropagation();
   }
+
   removeRecent(clearAll? : Boolean) : void {
     let findMostRecentField = document.getElementById('lead-gen-form-input');
     if(clearAll)
@@ -87,7 +94,7 @@ export class RenderableItemComponent implements OnInit {
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
-  makeField = (idBy : string, elem : string, currentStyle : Object, otherOpt? : number) : Element => {
+  makeField = (elem : string, idBy : string, currentStyle : Object, otherOpt? : number) : Element => {
     /** 
      * Other Option Values : These values are determined by the function call in renderable-item-component.html
      * 
@@ -127,12 +134,17 @@ export class RenderableItemComponent implements OnInit {
      *  It is 100% DOM management.
      *  [otherOpt] current flags are enumerated in the DocString at the top of the function.
      */
+
+    // If we need a widget, get the widget and exit.
+    if (elem == "widget")
+        return this.makeWidget(idBy);
+    
     switch (idBy) {
       // safety first.
       case "recaptchaField":
         // punt to recap
         this.addCaptcha();
-        break;
+        return null;
 
       case "nameField":
         if(otherOpt == 1){
@@ -239,6 +251,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('type', elem);
         encaps.appendChild(label);
         encaps.appendChild(input);
+        encaps.setAttribute('style',this.editor.General.ColorWheel);
         return encaps;
         
       case "rangeField":
@@ -264,6 +277,7 @@ export class RenderableItemComponent implements OnInit {
         label.textContent = "State";
         input.setAttribute('style', currentStyle['SelectBox']);
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'state');
         encaps.appendChild(label);
         encaps.appendChild(input);
         
@@ -364,41 +378,81 @@ export class RenderableItemComponent implements OnInit {
     console.log("changeDetected");
   }
 
-  makeWidget(event : Event, widget : string) : void {
+  makeWidget(widget : string) : HTMLElement {
     /**
      *  Define the CONSTRUCTION of widgets here.
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      *  Define future widgets here.
      */
-    let encaps;
-    let para;
-    let label;
-    let input;
+    let bootstrapEncaps = document.createElement("DIV");
+    let label  = document.createElement("LABEL");
+    let input  = document.createElement("INPUT");
+
+    bootstrapEncaps.setAttribute('class', 'form-group');
+    label.setAttribute('style', this.editor.General['LabelMargin']);
+
     switch(widget){
 
-      case "school" : 
-        encaps = document.createElement("DIV");
-        label  = document.createElement("LABEL");
-        para   = document.createElement("P");
-        input  = document.createElement("INPUT");
+      case "schoolWidget" :
+        
+        var positionFieldContainer  = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var schoolDistrictContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var schoolNameContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var outerContainer      = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var positionField       = <HTMLElement> input.cloneNode(false);
+        var schoolNameField     = <HTMLElement> input.cloneNode(false);
+        var schoolDistField = <HTMLElement> input.cloneNode(false);
+        var positionLabel   = <HTMLElement> label.cloneNode(false);
+        var schoolNameLabel = <HTMLElement> label.cloneNode(false);
+        var schoolDistLabel = <HTMLElement> label.cloneNode(false);
 
-        para.appendChild(label); para.appendChild(input);
-        encaps.appendChild(para); encaps.appendChild(para); encaps.appendChild(para);
+        // Setup inputs for each widget element
+        positionField.setAttribute('class', 'input-xxlarge');
+        positionField.setAttribute('id', 'position');
+        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]['WidgetMajorMid']);
+        positionField.setAttribute('name', 'position');
+        positionField.setAttribute('type', 'text');
 
+        schoolNameField.setAttribute('class', 'input-xxlarge');
+        schoolNameField.setAttribute('id', 'school_name');
+        schoolNameField.setAttribute('style', this.currentStyle["widgets"]['WidgetMajor']);
+        schoolNameField.setAttribute('name', 'school_name');
+        schoolNameField.setAttribute('type', 'text');
+        
+        schoolDistField.setAttribute('class', 'input-xxlarge');
+        schoolDistField.setAttribute('id', 'school_district');
+        schoolDistField.setAttribute('style', this.currentStyle["widgets"]['WidgetMajor']);
+        schoolDistField.setAttribute('name', 'school_district');
+        schoolDistField.setAttribute('type', 'text');
+
+        // Setup widget labels
+        positionLabel.innerText   = "Position";
+        schoolNameLabel.innerText = "School Name";
+        schoolDistLabel.innerText = "School District";
+
+        // Setup Structure
+        positionFieldContainer.appendChild(positionLabel);
+        positionFieldContainer.appendChild(positionField);
+
+        schoolNameContainer.appendChild(schoolNameLabel);
+        schoolNameContainer.appendChild(schoolNameField);
+
+        schoolDistrictContainer.appendChild(schoolDistLabel);
+        schoolDistrictContainer.appendChild(schoolDistField);
+
+        // Final form
+        outerContainer.appendChild(positionFieldContainer)
+        outerContainer.appendChild(schoolDistrictContainer)
+        outerContainer.appendChild(schoolNameContainer)
+ 
+        outerContainer.setAttribute("data-dynaform", '');
+
+        return outerContainer;
+
+      // There is only one widget here.
       default :
         return;
-    }
-  }
-
-  exportWidget(widget : string){
-    switch (widget) {
-      case "schoolWidget":
-        
-        break;
-    
-      default:
-        break;
     }
   }
 
@@ -406,8 +460,8 @@ export class RenderableItemComponent implements OnInit {
 
     // Toggles between styles for MUS vs SYS
 
-    let container   = document.getElementById("consult-form-container");
-    let deactivated = document.querySelector(".active");
+    let container   = document.getElementById('consult-form-container');
+    let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
 
     if (style == "MUS")         // If clicked MUS
@@ -419,6 +473,7 @@ export class RenderableItemComponent implements OnInit {
     container.setAttribute("style", this.currentStyle['container']);
     deactivated.classList.remove("active");
     button.classList.add("active");
+    return;
 
   }
 
@@ -427,21 +482,21 @@ export class RenderableItemComponent implements OnInit {
      * Modal
      */
     this.modalActive  = true; 
-    let theHTML       = document.getElementById("pretty-print");
-    this.finalHTML    = <string> document.getElementById("view-form").innerHTML;
-    this.modal        = document.getElementById("modal-html-view");
+    let theHTML       = document.getElementById('pretty-print');
+    this.finalHTML    = <string> document.getElementById('view-form').innerHTML;
+    this.modal        = document.getElementById('modal-html-view');
 
     // Display Modal and Dim the lights
     this.modal.style.display = "block";
 
-    document.body.classList.add("raise-modal");
+    document.body.classList.add('raise-modal');
     theHTML.textContent = <string> this.finalHTML;
     
     return;
   }
 
   closeModal() : void {
-    document.body.classList.remove("raise-modal");
+    document.body.classList.remove('raise-modal');
     this.modal.style.display = "none";
     this.modalActive = false;
     return;
@@ -453,7 +508,7 @@ export class RenderableItemComponent implements OnInit {
      *  clicks the <HTML> button
      */
 
-    let reCapchaElement = document.createElement("DIV");
+    let reCapchaElement = document.createElement('DIV');
     let form = document.getElementById('lead-gen-form-input');
     // Deploy attributes to recaptch DIV
     reCapchaElement.setAttribute('data-dynaform', '');
@@ -464,14 +519,16 @@ export class RenderableItemComponent implements OnInit {
 
     // append our completed captcha to the form
     form.appendChild(reCapchaElement);
-    console.log("CAPTCHA APPENDED!!!!!!!!!!!!!!!!");
+
     return 1;
 
   }
+
   getOutputDepth() : number {
     let outWindow = document.getElementById('pretty-print');
     let height    = outWindow.clientHeight;
     console.log(`CLIENT HEIGHT ${height}`);
     return height;
   }
+
 }
