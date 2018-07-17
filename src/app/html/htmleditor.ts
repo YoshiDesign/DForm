@@ -109,7 +109,7 @@ export default class HTMLeditors {
             padding: 0 0 0 5px;
             font-size: 25px;`,
 
-        "TextAreaHelp" : `
+        "TextAreaStyle" : `
             width:90%;
             border-radius: 0;
             border: none;
@@ -119,9 +119,11 @@ export default class HTMLeditors {
             color: #fff;padding: 0 0 0 5px;
             font-size: 15px;
         `,
+
         "Opposite" : `
             border-bottom: 1px solid #0054a5;
         `,
+
         "ButtonStyleDefinition" : `
             height:45px;
             border-radius:0;
@@ -134,7 +136,7 @@ export default class HTMLeditors {
             margin-right:10px;
         `,
 
-        "SelectBox" : `
+        "SelectBoxStyle" : `
             border-radius: 0;
             border: none;
             height: 40px;
@@ -154,7 +156,6 @@ export default class HTMLeditors {
 
         `,
         
-
         "widgets" : {
 
             "WidgetMajor" : `
@@ -197,7 +198,7 @@ export default class HTMLeditors {
             padding: 0 0 0 5px;
             font-size: 25px;`,
 
-        "TextAreaHelp" : `
+        "TextAreaStyle" : `
             width:90%;
             border-radius: 0;
             border: none;
@@ -225,7 +226,7 @@ export default class HTMLeditors {
 
         `,
 
-        "SelectBox" : `
+        "SelectBoxStyle" : `
             border-radius: 0;
             border: none;
             height: 40px;

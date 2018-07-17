@@ -169,6 +169,8 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "subButtonField":
+        // This attributes helps us to explicitly select submit buttons
+        encaps.setAttribute('data-dyna-submit', '');
         encaps.appendChild(this.makeSubmitButton());
         return encaps;
 
@@ -259,7 +261,7 @@ export class RenderableItemComponent implements OnInit {
         }
 
         label.textContent = "State";
-        input.setAttribute('style', this.currentStyle['SelectBox']);
+        input.setAttribute('style', this.currentStyle['SelectBoxStyle']);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'state');
         encaps.appendChild(label);
@@ -286,7 +288,7 @@ export class RenderableItemComponent implements OnInit {
         // fix this please
         container.setAttribute('style', 'width:90%;')
         label.textContent = "How can we help?";
-        input.setAttribute('style', this.currentStyle['TextAreaHelp']);
+        input.setAttribute('style', this.currentStyle['TextAreaStyle']);
         input.setAttribute('cols', '45');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'comments');
@@ -446,7 +448,8 @@ export class RenderableItemComponent implements OnInit {
 
     /**
      *  This function has the highest likelihood to grow out of hand
-     *  Specificity should be allocated accordingly
+     *  Therefore specificity should be achieved via tag name or attribute.
+     *  Note that everything is acquired as a <NodeList> even if there is only 1 on screen
      */
 
     let container   = document.getElementById('consult-form-container');
@@ -454,51 +457,41 @@ export class RenderableItemComponent implements OnInit {
     let button      = document.getElementById(<string> style); // change color & highlight
     let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName("input");
     let allTextbox  = document.getElementsByTagName("textarea");
-    let newSubmitBtns  = document.querySelectorAll("input[type=submit]");
-    let subButtonParent : NodeList;
+    let allSelects  = document.getElementsByTagName("select");
+    let allSubmits  = document.querySelectorAll("[data-dyna-submit]");
+    let submitText  : string;
 
-    if (style == "MUS")  {  
-
+    // Style switch
+    if (style == "MUS") { 
       this.currentStyle = this.musStyle;
-
-      if (!bypass){
-
-        subButtonParent = document.querySelectorAll(".form-group");
-        /**
-         * 
-         *  You are here
-         * 
-         * 
-         * 
-         *  Target current on-screen btn
-         * 
-         * 
-         */
-
-        for(let i = 0; i < allInputs.length; i++)
-        {
-          if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
-            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
-
-        }
-        
-        for (let i = 0; i < allTextbox.length; i++)
-          allTextbox[i].setAttribute('style', this.currentStyle["MajorInput"]);
-      }
+      submitText = "lets go!";
     }
-    else if (style == "SYS") {   
+    else if (style == "SYS") {
       this.currentStyle = this.sysStyle;
-      if (!bypass){
-        for(let i = 0; i < allInputs.length; i++)
-        {
-          if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
-            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
-        }
-        for (let i = 0; i < allTextbox.length; i++)
-          allTextbox[i].setAttribute('style', this.currentStyle["MajorInput"]);
-      }
+      submitText = "watch the webinar";
     }
 
+    if (!bypass){ // Will only bypass on initialization because nanoseconds count....
+
+      // <Submit Buttons>
+      for (let i = 0; i < allSubmits.length; i++){
+        allSubmits[i].setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
+        allSubmits[i].setAttribute('value', submitText);
+      }
+      // <Inputs>
+      for(let i = 0; i < allInputs.length; i++)
+        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
+          allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+
+      // <Textareas>
+      for(let i = 0; i < allTextbox.length; i++)
+        allTextbox[i].setAttribute('style', this.currentStyle["TextAreaStyle"]);
+
+      // <Selects>
+      for (let i = 0; i < allSelects.length; i++)
+        allTextbox[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
+    }
+    
     container.setAttribute("style", this.currentStyle['container']);
     deactivated.classList.remove("active");
     button.classList.add("active");
