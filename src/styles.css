@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 input { margin:10px 0; }
-body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61);}
+body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
 
 .active {
     border:1px solid rgb(13, 132, 201);
@@ -66,6 +66,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61);}
 }
 .title-bar {
     color:white;
+    padding:35px;
 }
 #pretty-print-box {
     border:1px solid white;
@@ -82,15 +83,17 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61);}
     
 }
 .g-recaptcha{
-    height:45px;
-    width:100px;
+    padding-top:15px;
+    text-align:center;
+    height:85px;
+    width:300px;
     background-color:grey;
     border-radius:4px;
     
 }
 .g-recaptcha:after {
 
-    content: '\1F44D Secured';
+    content: 'This placeholder will be replaced automatically \1F44D ';
 }
 #html-container {
     border:1px solid white;
@@ -101,13 +104,14 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61);}
 }
 .content-message {
     display:block;
-    height:25px;
+    background:rgba(0,0,0,0.9);
     width: 100%;
-    margin: 10px auto;
+    margin: 10px auto 0px auto;
     text-align:center;
     
 }
 .message {
+    margin-bottom: 0px;
     color:white;
     font-variant:small-caps;
 }

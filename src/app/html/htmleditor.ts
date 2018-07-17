@@ -15,7 +15,7 @@ export default class HTMLeditors {
                 x.setAttribute("id", "nglabeling");
                 x.setAttribute("type", "text");
                 x.setAttribute("placeholder", "Edit Label");
-                console.log("XXXXX" + x.id);
+
                 return x;
 
             default:
@@ -23,7 +23,7 @@ export default class HTMLeditors {
                 x.setAttribute("id", "nglabeling");
                 x.setAttribute("type", "text");
                 x.setAttribute("placeholder", "Edit Label");
-                console.log("XXXXX" + x.id + " " + idBy);
+
                 return x;
         }
 
@@ -119,7 +119,9 @@ export default class HTMLeditors {
             color: #fff;padding: 0 0 0 5px;
             font-size: 15px;
         `,
-
+        "Opposite" : `
+            border-bottom: 1px solid #0054a5;
+        `,
         "ButtonStyleDefinition" : `
             height:45px;
             border-radius:0;
@@ -188,7 +190,7 @@ export default class HTMLeditors {
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 2px solid #0054a5;;
+            border-bottom: 2px solid #0054a5;
             height: 40px;
             background-color: #f7f7f7;
             color: #333;
@@ -205,7 +207,9 @@ export default class HTMLeditors {
             color: #333;
             padding: 0 0 0 5px;font-size: 15px;
         `,
-
+        "Opposite" : `
+            border-bottom: 2px solid #fff;
+        `,
         "ButtonStyleDefinition" : `
             background-color: #F05F40;
             border-color: #F05F40;
@@ -216,10 +220,9 @@ export default class HTMLeditors {
         `,
 
         "CheckBoxes" : `
-            display:inline-block;
+
             margin-right:10px;
-            width: 25px;
-            float:left;
+
         `,
 
         "SelectBox" : `

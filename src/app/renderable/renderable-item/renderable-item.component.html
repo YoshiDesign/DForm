@@ -5,9 +5,10 @@
   <div class="main-window">
       
     <div id="modal-html-view">
-        <div *ngIf="getOutputDepth() > 345" class="content-message"><p class="message">This window scrolls</p></div>
+        
         <span (click)="closeModal()" class="exit">&otimes;</span>
       <div id="html-container">
+        <div *ngIf="getOutputDepth() > 345" class="content-message"><p class="message">This window scrolls</p></div>
 
           <p id="pretty-print">
 
@@ -46,7 +47,7 @@
           <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number', 'numberField')">    <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range', 'rangeField')">     <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time', 'timeField')">      <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
-          <div class="g-recaptcha" data-sitekey="6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB" data-callback="enableBtn"></div>
+          <div class="g-recaptcha" ngdynaform="" data-sitekey="6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB" data-callback="enableBtn"></div>
           
       </div>
   

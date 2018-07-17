@@ -23,6 +23,7 @@ export class RenderableItemComponent implements OnInit {
   constructor() {}
   
   ngOnInit() {
+    console.log("up");
     this.modalActive = false;
     this.editor = new Editor;
     var form = document.getElementById('lead-gen-form-input');
@@ -30,7 +31,7 @@ export class RenderableItemComponent implements OnInit {
     this.musStyle = this.editor.MUS;
     this.sysStyle = this.editor.SYS;
     this.currentStyle = this.musStyle;
-    this.stylizer(this.currentStyle["title"]);
+    this.stylizer(this.currentStyle["title"], true);
     
     // currently all dynamic HTML is disabled by default so these are useless.
     // this.illegalInputEvent = /"\bon[A-Z]+"/;
@@ -57,12 +58,10 @@ export class RenderableItemComponent implements OnInit {
     // Standard enter here
     if (!otherOpt)
       newInput = this.makeField(<string> elem,
-                                <string> identifiedBy,
-                                <string> this.currentStyle);
+                                <string> identifiedBy);
     else // otherOpt is a universal flag. See the docstring in makeField()
       newInput = this.makeField(<string> elem,
                                 <string> identifiedBy,
-                                <string> this.currentStyle, 
                                 <number> otherOpt);
 
     // Recaptcha is appended throught the addCaptcha() function
@@ -88,13 +87,13 @@ export class RenderableItemComponent implements OnInit {
       return;
     }
     
-    console.log(findMostRecentField);
+    
     let length = findMostRecentField.childNodes.length;
     findMostRecentField.removeChild(findMostRecentField.childNodes[length - 1]);
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
-  makeField = (elem : string, idBy : string, currentStyle : Object, otherOpt? : number) : Element => {
+  makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
     /** 
      * Other Option Values : These values are determined by the function call in renderable-item-component.html
      * 
@@ -159,7 +158,7 @@ export class RenderableItemComponent implements OnInit {
         }
 
         input.setAttribute('class', 'input-xxlarge form-control');
-        input.setAttribute('style', currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('required', 'required');
         input.setAttribute('id', 'first-name');
         input.setAttribute('type', elem);
@@ -170,22 +169,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "subButtonField":
-        input.setAttribute('id', 'leadGen');
-        input.setAttribute('type', 'submit');
-        input.setAttribute('disabled', '');
-        input.setAttribute('style', currentStyle['SubmitButtonStyles']);
-
-        if (this.currentStyle["title"] == "MUS"){
-          input.setAttribute('value', 'lets go!');
-          input.setAttribute('class', 'btn btn-large btn-success');
-        }
-        else if (this.currentStyle['title'] == "SYS"){
-          input.setAttribute('value', 'watch the webinar!');
-          input.setAttribute('class', 'btn btn-primary form-control');
-        }
-
-        encaps.appendChild(input);
-
+        encaps.appendChild(this.makeSubmitButton());
         return encaps;
 
       case "checkboxField":
@@ -196,7 +180,7 @@ export class RenderableItemComponent implements OnInit {
 
         input.setAttribute('type', elem);
         input.setAttribute('name', 'assign_to')
-        input.setAttribute('style', currentStyle["CheckBoxes"]);
+        input.setAttribute('style', this.currentStyle["CheckBoxes"]);
         
         encaps.appendChild(input);
         encaps.appendChild(label);
@@ -205,7 +189,7 @@ export class RenderableItemComponent implements OnInit {
       case "emailField":
         label.textContent = "Email";
         input.setAttribute('type', elem);
-        input.setAttribute('style', currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -213,20 +197,20 @@ export class RenderableItemComponent implements OnInit {
       case "telField":
         label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
         input.setAttribute('type', elem);
-        input.setAttribute('style', currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
         
       case "dateField":
-        input.setAttribute('style', currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('type', elem);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
 
       case "passwdField":
-        input.setAttribute('style', currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
         label.textContent = "Password";
         input.setAttribute('type', elem);
         encaps.appendChild(label);
@@ -275,7 +259,7 @@ export class RenderableItemComponent implements OnInit {
         }
 
         label.textContent = "State";
-        input.setAttribute('style', currentStyle['SelectBox']);
+        input.setAttribute('style', this.currentStyle['SelectBox']);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'state');
         encaps.appendChild(label);
@@ -302,7 +286,7 @@ export class RenderableItemComponent implements OnInit {
         // fix this please
         container.setAttribute('style', 'width:90%;')
         label.textContent = "How can we help?";
-        input.setAttribute('style', currentStyle['TextAreaHelp']);
+        input.setAttribute('style', this.currentStyle['TextAreaHelp']);
         input.setAttribute('cols', '45');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'comments');
@@ -366,7 +350,7 @@ export class RenderableItemComponent implements OnInit {
 
     // ng-anchor(s) exist on each of the rendering form's labels
     FormLabels = document.querySelectorAll(".ng-anchor");
-    console.log(`FormLabels length : ${FormLabels.length}`);
+    
     lastFormLabel = FormLabels[FormLabels.length - 1];
 
     // Exit when we try to acquire a field without a label (i.e. submit)
@@ -375,7 +359,7 @@ export class RenderableItemComponent implements OnInit {
 
     lastFormLabel.textContent = e.target.value;
     
-    console.log("changeDetected");
+    
   }
 
   makeWidget(widget : string) : HTMLElement {
@@ -456,19 +440,64 @@ export class RenderableItemComponent implements OnInit {
     }
   }
 
-  stylizer(style : string) : void {
+  stylizer(style : string, bypass? : boolean) : void {
 
-    // Toggles between styles for MUS vs SYS
+    // Toggle between styles for MUS vs SYS
+
+    /**
+     *  This function has the highest likelihood to grow out of hand
+     *  Specificity should be allocated accordingly
+     */
 
     let container   = document.getElementById('consult-form-container');
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
+    let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName("input");
+    let allTextbox  = document.getElementsByTagName("textarea");
+    let newSubmitBtns  = document.querySelectorAll("input[type=submit]");
+    let subButtonParent : NodeList;
 
-    if (style == "MUS")         // If clicked MUS
+    if (style == "MUS")  {  
+
       this.currentStyle = this.musStyle;
-    
-    else if (style == "SYS")    // If clicked SYS
+
+      if (!bypass){
+
+        subButtonParent = document.querySelectorAll(".form-group");
+        /**
+         * 
+         *  You are here
+         * 
+         * 
+         * 
+         *  Target current on-screen btn
+         * 
+         * 
+         */
+
+        for(let i = 0; i < allInputs.length; i++)
+        {
+          if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
+            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+
+        }
+        
+        for (let i = 0; i < allTextbox.length; i++)
+          allTextbox[i].setAttribute('style', this.currentStyle["MajorInput"]);
+      }
+    }
+    else if (style == "SYS") {   
       this.currentStyle = this.sysStyle;
+      if (!bypass){
+        for(let i = 0; i < allInputs.length; i++)
+        {
+          if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel")
+            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+        }
+        for (let i = 0; i < allTextbox.length; i++)
+          allTextbox[i].setAttribute('style', this.currentStyle["MajorInput"]);
+      }
+    }
 
     container.setAttribute("style", this.currentStyle['container']);
     deactivated.classList.remove("active");
@@ -502,12 +531,29 @@ export class RenderableItemComponent implements OnInit {
     return;
   }
 
+  makeSubmitButton() : HTMLElement {
+    let button = document.createElement("INPUT");
+    button.setAttribute('id', 'leadGen');
+    button.setAttribute('type', 'submit');
+    button.setAttribute('disabled', '');
+    button.setAttribute('ng-sub', '');
+    button.setAttribute('style', this.currentStyle['SubmitButtonStyles']);
+
+    if (this.currentStyle["title"] == "MUS"){ // MUS Submit button flavor
+      button.setAttribute('value', 'lets go!');
+      button.setAttribute('class', 'btn btn-large btn-success');
+    }
+    else if (this.currentStyle['title'] == "SYS"){ // SYS Submit button flavor
+      button.setAttribute('value', 'watch the webinar!');
+      button.setAttribute('class', 'btn btn-primary form-control');
+    }
+    return button;
+  }
+
   addCaptcha() : number {
     /**
-     *  Recaptcha is applied when the user
-     *  clicks the <HTML> button
+     * Generate Recaptcha
      */
-
     let reCapchaElement = document.createElement('DIV');
     let form = document.getElementById('lead-gen-form-input');
     // Deploy attributes to recaptch DIV
@@ -515,7 +561,7 @@ export class RenderableItemComponent implements OnInit {
     reCapchaElement.setAttribute('class', 'g-recaptcha');
     reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');   // The sitekey goes here
     reCapchaElement.setAttribute('data-callback', 'enableBtn');
-    console.log(reCapchaElement);
+    
 
     // append our completed captcha to the form
     form.appendChild(reCapchaElement);
@@ -527,8 +573,10 @@ export class RenderableItemComponent implements OnInit {
   getOutputDepth() : number {
     let outWindow = document.getElementById('pretty-print');
     let height    = outWindow.clientHeight;
-    console.log(`CLIENT HEIGHT ${height}`);
+    
     return height;
   }
 
+
 }
+
