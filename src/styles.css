@@ -64,6 +64,18 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     bottom:0;
     
 }
+#anylabel {
+    display:inline;
+    margin: auto 5px;
+    position:relative;
+    bottom: 13px;
+}
+#ngrequirement {
+    position:relative;
+    bottom: 15px;
+    margin: auto 4px auto 15px;
+}
+
 .title-bar {
     color:white;
     padding:35px;

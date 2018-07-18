@@ -83,8 +83,8 @@
               </ul>
         </span>
         <span id="execs">
-          <button type="button" [disabled]="modalActive" (click)="removeRecent(true)" class="inline btn btn-outline-danger">Clear</button>
-          <button type="button" [disabled]="modalActive" (click)="removeRecent()" class="inline btn btn-outline-dark">Remove</button>
+          <button type="button" [disabled]="modalActive" (click)="toggleRemove(true)" class="inline btn btn-outline-danger">Clear</button>
+          <button type="button" [disabled]="modalActive" (click)="toggleRemove()" class="inline btn btn-outline-dark">Remove</button>
           <button type="button" [disabled]="modalActive" (click)="displayHTML()" class="inline btn btn-outline-primary">&lsaquo; HTML &rsaquo;</button>
         </span>
         <hr>

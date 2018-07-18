@@ -2,29 +2,55 @@ export default class HTMLeditors {
     /**
     *   Relationships between our selected form and its available options / subsets
     */
-    constructor(){}
+    public container  : HTMLElement;
+    public labelInput : HTMLElement;
+    public isRequired : HTMLElement;
+    public anyLabel   : HTMLElement;
+
+    constructor(){
+       this.resetEditor();
+    }
 
     public editorNodes = (idBy) => {
-
-        let x = document.createElement("INPUT");
-
+        /**
+         * Constructs a separate editor for each type of form field
+         * Each editor's input's ID attribute should correspond to what it is effectively doing
+         */
+        
         switch (idBy) {
-            // These ID's should become classes upon extension
-            case "toBeDecided":
-                
-                x.setAttribute("id", "nglabeling");
-                x.setAttribute("type", "text");
-                x.setAttribute("placeholder", "Edit Label");
+            
+            case "subButtonField":
+                this.resetEditor();
+                // Currently, submit buttons have the only unique editor panel    
+                this.container.setAttribute("id", "ngsubmit-button-editor");
+                this.labelInput.setAttribute("id", "nglabeling");
+                this.labelInput.setAttribute("type", "text");
+                this.labelInput.setAttribute("placeholder", "Edit Label");
 
-                return x;
+                this.container.appendChild(this.labelInput);
+
+                return this.container;
+            case "noField" || null:
+                return null;
+            case "recaptchaField":
+                return null;
 
             default:
-                x = document.createElement("INPUT");
-                x.setAttribute("id", "nglabeling");
-                x.setAttribute("type", "text");
-                x.setAttribute("placeholder", "Edit Label");
+                this.resetEditor();
+                this.container.setAttribute("id", "ngsubmit-els-editor");
 
-                return x;
+                this.labelInput.setAttribute("id", "nglabeling");
+                this.labelInput.setAttribute("type", "text");
+                this.labelInput.setAttribute("placeholder", "Edit Label");
+
+                this.anyLabel.setAttribute("id", "anylabel");
+                this.anyLabel.textContent = "Required";
+
+                this.container.appendChild(this.labelInput);
+                this.container.appendChild(this.isRequired);
+                this.container.appendChild(this.anyLabel);
+
+                return this.container;
         }
 
     }
@@ -134,6 +160,13 @@ export default class HTMLeditors {
 
         "CheckBoxes" : `
             margin-right:10px;
+            color: #fff;
+        `,
+
+        "Radio" : `
+            margin-right:10px;
+            color: black;
+
         `,
 
         "SelectBoxStyle" : `
@@ -225,6 +258,14 @@ export default class HTMLeditors {
         "CheckBoxes" : `
 
             margin-right:10px;
+            color: black;
+
+        `,
+
+        "Radio" : `
+
+            margin-right:10px;
+            color: black;
 
         `,
 
@@ -296,4 +337,17 @@ export default class HTMLeditors {
             border-image: initial;
         `,
     }
+
+    resetEditor () {
+         // Toolbox
+         this.container  = document.createElement('DIV');
+         this.labelInput = document.createElement('INPUT');
+         this.anyLabel   = document.createElement('LABEL');
+ 
+         // Checkbox for assigning requirement status
+         this.isRequired = document.createElement('INPUT');
+         this.isRequired.setAttribute('type', 'checkbox');
+         this.isRequired.setAttribute("id", "ngrequirement");
+    }
+
 }

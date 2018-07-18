@@ -10,27 +10,31 @@ import Editor from '../../html/htmleditor';
 })
 export class RenderableItemComponent implements OnInit {
 
+  public editor : Editor;          // Custom class. Defines our styles, Option editor inputs and other static items.
   public modal  : HTMLElement;
-  public editor : Editor;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
   public modalActive  : Boolean;
   public finalHTML    : String;
   public musStyle : Object;
   public sysStyle : Object;
-  public currentStyle : Object;
+  public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
+  public history : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
   
-  constructor() {}
+  constructor() {
+    this.history = [];
+  }
   
   ngOnInit() {
-    console.log("up");
+
     this.modalActive = false;
     this.editor = new Editor;
-    var form = document.getElementById('lead-gen-form-input');
+    this.openEditor("noField");
     // start with MUS style
-    this.musStyle = this.editor.MUS;
-    this.sysStyle = this.editor.SYS;
+    this.musStyle     = this.editor.MUS;
+    this.sysStyle     = this.editor.SYS;
     this.currentStyle = this.musStyle;
+
     this.stylizer(this.currentStyle["title"], true);
     
     // currently all dynamic HTML is disabled by default so these are useless.
@@ -41,8 +45,7 @@ export class RenderableItemComponent implements OnInit {
   toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
     /** 
     *   Adds visible element to middle column.
-    *   otherOpt is a universal flag for transitive state.
-    *   +localize 'attr' with scope visibility.
+    *   otherOpt is a universal flag for optional behavior. See makeField() docstring
     */
     let form = document.getElementById('lead-gen-form-input');
     let newInput : Element; // Encapsulated per the page spec.
@@ -52,19 +55,22 @@ export class RenderableItemComponent implements OnInit {
       return;
     }
 
-    // Create Editor View
+    // Sync the order of elements being inserted
+    this.history.push(<string> identifiedBy);
+
+    // Update Option Editor view
     this.openEditor(identifiedBy);
 
     // Standard enter here
     if (!otherOpt)
       newInput = this.makeField(<string> elem,
                                 <string> identifiedBy);
-    else // otherOpt is a universal flag. See the docstring in makeField()
+    else // otherOpt is a universal flag. See makeField() docstr
       newInput = this.makeField(<string> elem,
                                 <string> identifiedBy,
                                 <number> otherOpt);
 
-    // Recaptcha is appended throught the addCaptcha() function
+    // we addCaptcha() explicitly
     if (elem == "recaptcha")
       return;
 
@@ -74,11 +80,14 @@ export class RenderableItemComponent implements OnInit {
     event.stopPropagation();
   }
 
-  removeRecent(clearAll? : Boolean) : void {
+  toggleRemove(clearAll? : Boolean) : void {
     let findMostRecentField = document.getElementById('lead-gen-form-input');
     if(clearAll)
     {
-      var allNewFields = document.querySelectorAll("div[data-dynaform]");
+      this.history = [];
+      this.openEditor("noField");
+      console.log("HISTORY IS EMPTY? " + this.history);
+      var allNewFields = document.querySelectorAll('div[data-dynaform]');
       for (let i  in allNewFields){
         if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
           break
@@ -86,10 +95,17 @@ export class RenderableItemComponent implements OnInit {
       }
       return;
     }
-    
-    
+
+    this.history.pop();
+    this.openEditor(this.history[this.history.length - 1]);
+    console.log("UPDATING HISTORY " + this.history);
     let length = findMostRecentField.childNodes.length;
-    findMostRecentField.removeChild(findMostRecentField.childNodes[length - 1]);
+    let dontRemove = <HTMLElement>findMostRecentField.childNodes[length-1];
+
+    if (!(dontRemove.hasAttribute('data-dynaform')))
+      return;
+    else  
+      findMostRecentField.removeChild(findMostRecentField.childNodes[length - 1]);
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
@@ -103,29 +119,31 @@ export class RenderableItemComponent implements OnInit {
 
     // <HTMLElement> factory for the form to be generated
 
-    var auxNodes : Object; // i.e. <option> units
+    var auxNodes : Object; // i.e. <option> units for select boxes
     let encaps   : Element = document.createElement("DIV");
     let label    : Element = document.createElement("LABEL");
 
-    // determine inner node
+    // determine most significant inner node
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
-    else if (elem == "textarea"){
+    else if (elem == "textarea") {
       var input : Element = document.createElement("TEXTAREA");
       input.setAttribute("rows", "3");
     } else
       var input : Element = document.createElement("INPUT");
     
-    label.classList.add("ng-anchor");
+    // Tracking & class
+    label.classList.add("ng-anchor-label");
+    label.classList.add("control-label");
 
-    // Bootstrap Classes
-    if (idBy != "checkboxField") // Becuse checkboxes require bootstrap override
+    // Tracking & class
+    encaps.setAttribute('data-dynaform', '');
+    encaps.classList.add("form-group");
+
+    // Apply Bootstrap Classes to proper nodes. Selectables require override
+    if (idBy != "checkboxField" && idBy != "radioField")
       input.classList.add("form-control");
 
-    label.classList.add("control-label");
-    encaps.classList.add("form-group");
-    encaps.setAttribute('data-dynaform', ''); // tracking
-    
     /**
      *  This switch appends Elements and applies Attributes / Styles.
      *  It is 100% DOM management.
@@ -168,7 +186,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "subButtonField":
         
-        encaps.setAttribute('data-dyna-submit', ''); // For parent tracking
+        encaps.setAttribute('data-dyna-submit', ''); // For PARENT tracking. See makeSubmitButton for sub button tracking
         encaps.appendChild(this.makeSubmitButton());
         return encaps;
 
@@ -188,6 +206,7 @@ export class RenderableItemComponent implements OnInit {
       
       case "emailField":
         label.textContent = "Email";
+        input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         encaps.appendChild(label);
@@ -260,7 +279,7 @@ export class RenderableItemComponent implements OnInit {
         }
 
         label.textContent = "State";
-        input.setAttribute('style', this.currentStyle['SelectBoxStyle']);
+        input.setAttribute('style', this.currentStyle["SelectBoxStyle"]);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'state');
         encaps.appendChild(label);
@@ -297,7 +316,7 @@ export class RenderableItemComponent implements OnInit {
         
       default:
         console.log("Improbability Alert : silently failing!");
-        console.log(`\n\nError : \n -- ${input} \n -- ${label} \n -- ${encaps} \n\n\n`);
+        console.log(`\n\nError : \n -- ${input} \n -- ${label} \n -- ${encaps} \n\n`);
         return null;
       }
     }
@@ -305,18 +324,25 @@ export class RenderableItemComponent implements OnInit {
   openEditor = (idBy : string) : void => {
     
     // Acquire Editor space and get the corresponding editor from editor.editorNodes
-    var editorWindow = document.getElementById("in-editor");
-    let newEditorEls = this.editor.editorNodes(idBy);
+    var editorWindow = document.getElementById('in-editor');
+    var newEditorEls : HTMLElement;
+    var oldNode : HTMLElement;
+    
+    // Populate Editor window accordingly
+    if (history[0])
+      newEditorEls = <HTMLElement> this.editor.editorNodes(this.history[this.history.length - 1]);
+    else
+      newEditorEls = <HTMLElement> null;
 
-    // null == undefined
     if (newEditorEls == null) {
-      editorWindow.innerHTML = "<span>No editing options</span>";
+      editorWindow.innerHTML = "<span id='ngsubmit-els-editor'>No editing options</span>";
       return;
     }
 
-    // Build current field's associated editor display
+    // Remove old editor, append new one
     if (editorWindow.innerHTML){
-      var oldNode = document.getElementById("nglabeling");
+      oldNode = document.getElementById('ngsubmit-els-editor') || 
+                    document.getElementById('ngsubmit-button-editor');
       oldNode.remove();
     }
 
@@ -326,17 +352,26 @@ export class RenderableItemComponent implements OnInit {
     {
       /**
        * nglabeling is the EDITOR'S CURRENT INPUT FIELD.
-       * Change to class list for future extensibility.
+  
        *          This is a refactor point.
        */
-      let inField = document.getElementById("nglabeling"); 
-      inField.addEventListener('input', (e)=>{this.changeLabel(e, idBy)} );
+      let inField  = document.getElementById('nglabeling');
+      let reqField = document.getElementById('ngrequirement') || null;
+      
+      // Things our Editor can do
+      inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
+      reqField.addEventListener('input', (e)=>{this.changeRequirement(e)} );
     } 
+
     else return;
 
   }
 
-  changeLabel(e , idBy : string) : void {
+  /** 
+  *   NOTE : Casting an Event object is ALWAYS a bad idea. They are NOT polymorphic across events
+  */
+
+  changeLabel(e,  idBy : string) : void {
 
     /**
      *  Part of the Editor's functionality and (currently) allows us 
@@ -344,21 +379,48 @@ export class RenderableItemComponent implements OnInit {
      *  The event variable is of the next lower ordered functions stack frame
      */
 
-    let FormLabels : NodeList;
     // Most recently added elem's <label>
     let lastFormLabel : Node;
+    let formLabels : NodeList;
 
-    // ng-anchor(s) exist on each of the rendering form's labels
-    FormLabels = document.querySelectorAll(".ng-anchor");
-    
-    lastFormLabel = FormLabels[FormLabels.length - 1];
+    // Most recently added submitButton's [value]
+    let lastSubValue  : HTMLElement;
+    let submitLabel   : NodeList;
 
-    // Exit when we try to acquire a field without a label (i.e. submit)
-    if(!lastFormLabel)
-      return;
+    if (idBy == "subButtonField"){
 
-    lastFormLabel.textContent = e.target.value;
-    
+      submitLabel = document.querySelectorAll('input[ng-sub]');
+      lastSubValue = <HTMLElement> submitLabel[submitLabel.length - 1];
+      lastSubValue.setAttribute('value',e.target.value);
+
+    }
+    else {
+
+      // ng-anchor-label(s) exist on each of the rendering form's labels
+      formLabels = document.querySelectorAll('.ng-anchor-label');
+      
+      lastFormLabel = formLabels[formLabels.length - 1]; // The last label that was added
+
+      // Exit when we try to acquire a field without a label (i.e. submit)
+      if(!lastFormLabel)
+        return;
+
+        lastFormLabel.textContent = e.target.value;
+
+    }
+
+  }
+
+  changeRequirement (event) {
+      /**
+       * 
+       * 
+       * 
+       *  You are here
+       * 
+       * 
+       * 
+       */
   }
 
   makeWidget(widget : string) : HTMLElement {
@@ -369,9 +431,9 @@ export class RenderableItemComponent implements OnInit {
      *  Widgets are visible in expanded state until the HTML is exported.
      *  Define future widgets here.
      */
-    let bootstrapEncaps = document.createElement("DIV");
-    let label  = document.createElement("LABEL");
-    let input  = document.createElement("INPUT");
+    let bootstrapEncaps = document.createElement('DIV');
+    let label  = document.createElement('LABEL');
+    let input  = document.createElement('INPUT');
 
     bootstrapEncaps.setAttribute('class', 'form-group');
     label.setAttribute('style', this.editor.General['LabelMargin']);
@@ -394,20 +456,20 @@ export class RenderableItemComponent implements OnInit {
         // Setup inputs for each widget element
         positionField.setAttribute('class', 'input-xxlarge');
         positionField.setAttribute('id', 'position');
-        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]['WidgetMajorMid']);
+        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]["WidgetMajorMid"]);
         positionField.setAttribute('name', 'position');
         positionField.setAttribute('type', 'text');
         positionField.setAttribute('position-from-widget', '');
 
         schoolNameField.setAttribute('class', 'input-xxlarge');
         schoolNameField.setAttribute('id', 'school_name');
-        schoolNameField.setAttribute('style', this.currentStyle["widgets"]['WidgetMajor']);
+        schoolNameField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         schoolNameField.setAttribute('name', 'school_name');
         schoolNameField.setAttribute('type', 'text');
         
         schoolDistField.setAttribute('class', 'input-xxlarge');
         schoolDistField.setAttribute('id', 'school_district');
-        schoolDistField.setAttribute('style', this.currentStyle["widgets"]['WidgetMajor']);
+        schoolDistField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         schoolDistField.setAttribute('name', 'school_district');
         schoolDistField.setAttribute('type', 'text');
 
@@ -431,8 +493,8 @@ export class RenderableItemComponent implements OnInit {
         outerContainer.appendChild(schoolDistrictContainer)
         outerContainer.appendChild(schoolNameContainer)
  
-        outerContainer.setAttribute("data-dynaform", '');
-        outerContainer.setAttribute('widget-target', '');
+        outerContainer.setAttribute('data-dynaform', '');
+        outerContainer.setAttribute('data-widget-target', '');
 
         return outerContainer;
 
@@ -444,7 +506,7 @@ export class RenderableItemComponent implements OnInit {
 
   stylizer(style : string, bypass? : boolean) : void {
 
-    // For easy toggle between styles for MUS && SYS
+    // Fires when toggling between MUS / SYS
 
     /**
      *  This function has the highest likelihood to grow out of hand
@@ -455,10 +517,12 @@ export class RenderableItemComponent implements OnInit {
     let container   = document.getElementById('consult-form-container');
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
-    let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName("input");
-    let allTextbox  = document.getElementsByTagName("textarea");
-    let allSelects  = document.getElementsByTagName("select");
-    let allSubmits  = document.querySelectorAll("[ng-sub]");
+    let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName('input');
+    let allTextbox  = document.getElementsByTagName('textarea');
+    let allSelects  = document.getElementsByTagName('select');
+    let allSubmits  = document.querySelectorAll('[ng-sub]');
+    let allCheckbox = document.querySelectorAll('input[type=checkbox]');
+    let allRadio    = document.querySelectorAll('input[type=radio]');
     let submitClass : string;
     let submitText  : string;
 
@@ -482,12 +546,13 @@ export class RenderableItemComponent implements OnInit {
         allSubmits[i].setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
         allSubmits[i].setAttribute('value', submitText);
         allSubmits[i].setAttribute('class', submitClass);
+
       }
       // <Inputs>, skipping any submit types identified by the [ng-sub] attr.
       for(var i = 0; i < allInputs.length; i++)
         
-        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") {
-
+        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") 
+        {
           // Applies the style for the selected style
           if(!(allInputs[i].hasAttribute('ng-sub')))
             allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
@@ -496,10 +561,11 @@ export class RenderableItemComponent implements OnInit {
           if (i == allInputs.length - 1)
             allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
 
-          if (allInputs[i].parentElement.hasAttribute('widget-target'))
+          // WIDGETS : POTENTIAL (easily mitigated) CONFLICT - Widgets are only effected when they contain an input of the above if(types)
+          if (allInputs[i].parentElement.hasAttribute('data-widget-target'))
             allInputs[i].setAttribute('style', this.currentStyle["WidgetMajor"]);
             if (allInputs[i].hasAttribute('position-from-widget'))
-              allInputs[i].setAttribute('style', this.currentStyle["widgets"]['WidgetMajor'] + this.currentStyle['widgets']['WidgetMajorMid']);
+              allInputs[i].setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]["WidgetMajorMid"]);
         }
 
       // <Textareas>
@@ -509,9 +575,24 @@ export class RenderableItemComponent implements OnInit {
       // <Selects>
       for (let i = 0; i < allSelects.length; i++)
         allSelects[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
+
+      // <input[CHECKBOX]>
+      for (let i = 0; i < allCheckbox.length; i++)
+      {
+        // if (i == allCheckbox.length - 1)
+        //  continue;
+        allCheckbox[i].setAttribute('style', this.currentStyle["Radio"]);
+      }
+      // <input[RADIO]>
+      for (let i = 0; i < allRadio.length; i++)
+      {
+        // if (i == allCheckbox.length - 1)
+        //  continue;
+        allRadio[i].setAttribute('style', this.currentStyle["Radio"]);
+      }
     }
 
-    container.setAttribute("style", this.currentStyle['container']);
+    container.setAttribute("style", this.currentStyle["container"]);
     deactivated.classList.remove("active");
     button.classList.add("active");
     return;
@@ -544,12 +625,12 @@ export class RenderableItemComponent implements OnInit {
   }
 
   makeSubmitButton() : HTMLElement {
-    let button = document.createElement("INPUT");
+    let button = document.createElement('INPUT');
     button.setAttribute('id', 'leadGen');
     button.setAttribute('type', 'submit');
     button.setAttribute('disabled', '');
     button.setAttribute('ng-sub', '');
-    button.setAttribute('style', this.currentStyle['SubmitButtonStyles']);
+    button.setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
 
     if (this.currentStyle["title"] == "MUS"){ // MUS Submit button flavor
       button.setAttribute('value', 'lets go!');
