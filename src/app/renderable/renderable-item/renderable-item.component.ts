@@ -15,6 +15,7 @@ export class RenderableItemComponent implements OnInit {
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
   public modalActive  : Boolean;
+  public whichStyle   : Boolean;
   public finalHTML    : String;
   public musStyle : Object;
   public sysStyle : Object;
@@ -33,7 +34,7 @@ export class RenderableItemComponent implements OnInit {
     // start with MUS style
     this.musStyle     = this.editor.MUS;
     this.sysStyle     = this.editor.SYS;
-    this.currentStyle = this.musStyle;
+    this.currentStyle = this.musStyle;  
 
     this.stylizer(this.currentStyle["title"], true);
     
@@ -551,6 +552,11 @@ export class RenderableItemComponent implements OnInit {
     let allRange    = document.querySelectorAll('input[type=range]');
     let submitClass : string;
     let submitText  : string;
+
+    if(style == "MUS")
+      this.whichStyle = true;
+    else
+      this.whichStyle = false;
 
     // Style switch
     if (style == "MUS") { 

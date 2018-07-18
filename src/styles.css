@@ -17,6 +17,12 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     background:rgba(0,0,0,0.3);
 
 }
+.mus-color {
+    background:#4e5a9c;
+}
+.sys-color {
+    background:rgb(255, 245, 226);
+}
 .can-hide {
     background-color:white;
     position:relative;

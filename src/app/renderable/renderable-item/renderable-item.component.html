@@ -47,11 +47,11 @@
           <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number', 'numberField')">    <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range', 'rangeField')">     <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time', 'timeField')">      <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
-          <div class="g-recaptcha" ngdynaform="" data-sitekey="6Lfc8Q0UAAAAAOg8v3w8RKgSi2Fy03sllae2HT7r" data-callback="enableBtn"></div>
+          
           
       </div>
   
-      <div class="main-app" id="view-form">
+      <div class="main-app" id="view-form" [class]="whichStyle ? 'mus-color' : 'sys-color'">
   
         <div id="consult-form-container" style="background-color:#343e79;max-width:1120px;padding:15px 40px;color:#fff;">
           <!-- FORM START -->
