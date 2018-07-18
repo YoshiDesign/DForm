@@ -116,7 +116,6 @@ export class RenderableItemComponent implements OnInit {
     } else
       var input : Element = document.createElement("INPUT");
     
-    
     label.classList.add("ng-anchor");
 
     // Bootstrap Classes
@@ -199,6 +198,7 @@ export class RenderableItemComponent implements OnInit {
         label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('required', 'required');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -280,7 +280,6 @@ export class RenderableItemComponent implements OnInit {
         encaps.appendChild(input);
         return encaps;
    
-          
       case "textareaField":
         let container = document.createElement('DIV');
         container.setAttribute('data-dynaform', '');
@@ -360,12 +359,12 @@ export class RenderableItemComponent implements OnInit {
 
     lastFormLabel.textContent = e.target.value;
     
-    
   }
 
   makeWidget(widget : string) : HTMLElement {
     /**
-     *  Define the CONSTRUCTION of widgets here.
+     *  TODO : MOVE THIS TO A SEPARATE CLASS
+     *  Define the CONSTRUCTION of widgets here. 
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      *  Define future widgets here.
@@ -398,6 +397,7 @@ export class RenderableItemComponent implements OnInit {
         positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]['WidgetMajorMid']);
         positionField.setAttribute('name', 'position');
         positionField.setAttribute('type', 'text');
+        positionField.setAttribute('position-from-widget', '');
 
         schoolNameField.setAttribute('class', 'input-xxlarge');
         schoolNameField.setAttribute('id', 'school_name');
@@ -432,6 +432,7 @@ export class RenderableItemComponent implements OnInit {
         outerContainer.appendChild(schoolNameContainer)
  
         outerContainer.setAttribute("data-dynaform", '');
+        outerContainer.setAttribute('widget-target', '');
 
         return outerContainer;
 
@@ -443,7 +444,7 @@ export class RenderableItemComponent implements OnInit {
 
   stylizer(style : string, bypass? : boolean) : void {
 
-    // For easy toggle between styles for MUS vs SYS
+    // For easy toggle between styles for MUS && SYS
 
     /**
      *  This function has the highest likelihood to grow out of hand
@@ -485,11 +486,20 @@ export class RenderableItemComponent implements OnInit {
       // <Inputs>, skipping any submit types identified by the [ng-sub] attr.
       for(var i = 0; i < allInputs.length; i++)
         
-        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel"){
+        if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") {
+
+          // Applies the style for the selected style
           if(!(allInputs[i].hasAttribute('ng-sub')))
             allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
+
+          // Always set the last input in the index to default, it's our option editor field.
           if (i == allInputs.length - 1)
             allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
+
+          if (allInputs[i].parentElement.hasAttribute('widget-target'))
+            allInputs[i].setAttribute('style', this.currentStyle["WidgetMajor"]);
+            if (allInputs[i].hasAttribute('position-from-widget'))
+              allInputs[i].setAttribute('style', this.currentStyle["widgets"]['WidgetMajor'] + this.currentStyle['widgets']['WidgetMajorMid']);
         }
 
       // <Textareas>
@@ -500,7 +510,7 @@ export class RenderableItemComponent implements OnInit {
       for (let i = 0; i < allSelects.length; i++)
         allSelects[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
     }
-    
+
     container.setAttribute("style", this.currentStyle['container']);
     deactivated.classList.remove("active");
     button.classList.add("active");
@@ -564,7 +574,6 @@ export class RenderableItemComponent implements OnInit {
     reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');   // The sitekey goes here
     reCapchaElement.setAttribute('data-callback', 'enableBtn');
     
-
     // append our completed captcha to the form
     form.appendChild(reCapchaElement);
 
@@ -578,7 +587,6 @@ export class RenderableItemComponent implements OnInit {
     
     return height;
   }
-
 
 }
 

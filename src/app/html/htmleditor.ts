@@ -254,6 +254,7 @@ export default class HTMLeditors {
             opacity:0.65;
             transition: all 0.9s;
             -webkit-appearance: button;
+            border-radius:300px;
         `,
 
         "widgets" : {
