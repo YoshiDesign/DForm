@@ -57,6 +57,7 @@ export class RenderableItemComponent implements OnInit {
 
     // Sync the order of elements being inserted
     this.history.push(<string> identifiedBy);
+    console.log(this.history);
 
     // Update Option Editor view
     this.openEditor(identifiedBy);
@@ -162,12 +163,14 @@ export class RenderableItemComponent implements OnInit {
         return null;
 
       case "nameField":
-        if(otherOpt == 1){
+
+        if(otherOpt == 1) {
+          console.log("other opt")
           label.textContent = "Last Name";
           input.setAttribute('id', 'last-name')
           input.setAttribute('name', 'last_name');
         }
-        else if (otherOpt == null){
+        else if (otherOpt == null) {
           label.textContent = "First Name";
           input.setAttribute('id', 'first-name');
           input.setAttribute('name', 'first_name');
@@ -176,7 +179,6 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('class', 'input-xxlarge form-control');
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('required', 'required');
-        input.setAttribute('id', 'first-name');
         input.setAttribute('type', elem);
 
         encaps.appendChild(label);
@@ -329,10 +331,13 @@ export class RenderableItemComponent implements OnInit {
     var oldNode : HTMLElement;
     
     // Populate Editor window accordingly
-    if (history[0])
-      newEditorEls = <HTMLElement> this.editor.editorNodes(this.history[this.history.length - 1]);
+    if (this.history[0] == undefined)
+      newEditorEls = null;
     else
-      newEditorEls = <HTMLElement> null;
+      newEditorEls = <HTMLElement> this.editor.editorNodes(<string>this.history[this.history.length - 1]);
+
+
+    //   newEditorEls = <HTMLElement> null;
 
     if (newEditorEls == null) {
       editorWindow.innerHTML = "<span id='ngsubmit-els-editor'>No editing options</span>";
@@ -342,7 +347,7 @@ export class RenderableItemComponent implements OnInit {
     // Remove old editor, append new one
     if (editorWindow.innerHTML){
       oldNode = document.getElementById('ngsubmit-els-editor') || 
-                    document.getElementById('ngsubmit-button-editor');
+                document.getElementById('ngsubmit-button-editor');
       oldNode.remove();
     }
 
@@ -360,7 +365,9 @@ export class RenderableItemComponent implements OnInit {
       
       // Things our Editor can do
       inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
-      reqField.addEventListener('input', (e)=>{this.changeRequirement(e)} );
+
+      if (reqField != null)
+        reqField.addEventListener('input', (e)=>{this.changeRequirement(e)} );
     } 
 
     else return;

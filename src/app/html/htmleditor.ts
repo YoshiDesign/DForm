@@ -128,7 +128,7 @@ export default class HTMLeditors {
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 2px solid #fff;
             height: 40px;
             background-color: rgba(255, 255, 255, .1);
             color: #fff;
@@ -139,7 +139,7 @@ export default class HTMLeditors {
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 2px solid #fff;
             height:100px;
             background-color: rgba(255, 255, 255, .1);
             color: #fff;padding: 0 0 0 5px;
@@ -197,7 +197,7 @@ export default class HTMLeditors {
                 width:90%;
                 border-radius: 0;
                 border: none;
-                border-bottom: 1px solid #fff;
+                border-bottom: 2px solid #fff;
                 height: 40px;
                 background-color: rgba(255, 255, 255, .1);
                 color: #fff;
@@ -237,7 +237,7 @@ export default class HTMLeditors {
             width:90%;
             border-radius: 0;
             border: none;
-            border-bottom: 1px solid #0054a5
+            border-bottom: 2px solid #0054a5
             height:100px;
             background-color: #f7f7f7;
             color: #333;
@@ -304,7 +304,7 @@ export default class HTMLeditors {
                 width:90%;
                 border-radius: 0;
                 border: none;
-                border-bottom: 1px solid #0054a5;
+                border-bottom: 2px solid #0054a5;
                 height: 40px;
                 background-color: #f7f7f7;
                 color: #fff;

@@ -105,7 +105,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
 }
 .g-recaptcha:after {
 
-    content: 'This placeholder will be replaced automatically \1F44D ';
+    content: 'Recaptcha - Ready to go \1F44D ';
 }
 #html-container {
     border:1px solid white;
