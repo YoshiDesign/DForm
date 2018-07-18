@@ -133,6 +133,9 @@ export class RenderableItemComponent implements OnInit {
     } else
       var input : Element = document.createElement("INPUT");
     
+    // Tracking Attribute for any input that is not a submit or in a widget
+    input.setAttribute('data-ng-el', 'true');
+
     // Tracking & class
     label.classList.add("ng-anchor-label");
     label.classList.add("control-label");
@@ -262,6 +265,7 @@ export class RenderableItemComponent implements OnInit {
         
       case "rangeField":
         input.setAttribute('type', elem);
+        input.setAttribute('style', this.currentStyle["RangeStyle"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -297,8 +301,9 @@ export class RenderableItemComponent implements OnInit {
 
       case "radioField":
         input.setAttribute('type', elem);
-        encaps.appendChild(label);
+        input.setAttribute('style', this.currentStyle["CheckBoxes"]);
         encaps.appendChild(input);
+        encaps.appendChild(label);
         return encaps;
    
       case "textareaField":
@@ -332,6 +337,9 @@ export class RenderableItemComponent implements OnInit {
     
     // Populate Editor window accordingly
     if (this.history[0] == undefined)
+      newEditorEls = null;
+    // No editor for widgets : UPDATE when there are more widgets : if (idBy in [current widgets] )
+    else if (idBy == "schoolWidget")
       newEditorEls = null;
     else
       newEditorEls = <HTMLElement> this.editor.editorNodes(<string>this.history[this.history.length - 1]);
@@ -367,7 +375,7 @@ export class RenderableItemComponent implements OnInit {
       inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
 
       if (reqField != null)
-        reqField.addEventListener('input', (e)=>{this.changeRequirement(e)} );
+        reqField.addEventListener('input', (e)=>{this.changeRequirement(e, reqField)} );
     } 
 
     else return;
@@ -418,16 +426,26 @@ export class RenderableItemComponent implements OnInit {
 
   }
 
-  changeRequirement (event) {
-      /**
-       * 
-       * 
-       * 
-       *  You are here
-       * 
-       * 
-       * 
-       */
+  changeRequirement (e, reqField : HTMLElement) {
+
+    let enabledItems = document.querySelectorAll('[data-ng-el]');
+    let currentItem = enabledItems[enabledItems.length - 1];
+
+    console.log(currentItem);
+    console.log(e.target);
+    if (currentItem.hasAttribute("required"))
+      e.target.setAttribute("checked",'');
+
+    // Secondary check for required attribute
+
+    if (e.target.checked) {
+      currentItem.setAttribute("required", "required");
+    } else if (!e.target.checked) {
+      currentItem.removeAttribute("required");
+    }
+    
+
+
   }
 
   makeWidget(widget : string) : HTMLElement {
@@ -444,9 +462,9 @@ export class RenderableItemComponent implements OnInit {
 
     bootstrapEncaps.setAttribute('class', 'form-group');
     label.setAttribute('style', this.editor.General['LabelMargin']);
-
+    
     switch(widget){
-
+      
       case "schoolWidget" :
         
         var positionFieldContainer  = <HTMLElement> bootstrapEncaps.cloneNode(false);
@@ -530,6 +548,7 @@ export class RenderableItemComponent implements OnInit {
     let allSubmits  = document.querySelectorAll('[ng-sub]');
     let allCheckbox = document.querySelectorAll('input[type=checkbox]');
     let allRadio    = document.querySelectorAll('input[type=radio]');
+    let allRange    = document.querySelectorAll('input[type=range]');
     let submitClass : string;
     let submitText  : string;
 
@@ -597,6 +616,10 @@ export class RenderableItemComponent implements OnInit {
         //  continue;
         allRadio[i].setAttribute('style', this.currentStyle["Radio"]);
       }
+      // Range
+      for (let i = 0; i < allRange.length; i++)
+        allRange[i].setAttribute("style", this.currentStyle["RangeStyle"]);
+
     }
 
     container.setAttribute("style", this.currentStyle["container"]);

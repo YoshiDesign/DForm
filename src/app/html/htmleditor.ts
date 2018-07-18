@@ -37,6 +37,14 @@ export default class HTMLeditors {
 
             default:
                 this.resetEditor();
+                if (idBy == "nameField" 
+                || "telField" 
+                || "checkboxField" 
+                || "emailField" 
+                || "dateField" 
+                || "selectField")
+                    this.isRequired.setAttribute("checked", "");
+
                 this.container.setAttribute("id", "ngsubmit-els-editor");
 
                 this.labelInput.setAttribute("id", "nglabeling");
@@ -49,7 +57,7 @@ export default class HTMLeditors {
                 this.container.appendChild(this.labelInput);
                 this.container.appendChild(this.isRequired);
                 this.container.appendChild(this.anyLabel);
-
+                
                 return this.container;
         }
 
@@ -190,6 +198,10 @@ export default class HTMLeditors {
             -webkit-appearance: button;
 
         `,
+        "RangeStyle" : `
+            width: 200px;
+            margin: 8px;
+        `,
         
         "widgets" : {
 
@@ -296,6 +308,11 @@ export default class HTMLeditors {
             transition: all 0.9s;
             -webkit-appearance: button;
             border-radius:300px;
+        `,
+
+        "RangeStyle" : `
+            width: 200px;
+            margin: 8px;
         `,
 
         "widgets" : {
