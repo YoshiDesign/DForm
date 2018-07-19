@@ -84,6 +84,7 @@ export class RenderableItemComponent implements OnInit {
 
   toggleRemove(clearAll? : Boolean) : void {
     let findMostRecentField = document.getElementById('lead-gen-form-input');
+
     if(clearAll)
     {
       this.history = [];
@@ -158,6 +159,8 @@ export class RenderableItemComponent implements OnInit {
     // If we need a widget, get the widget and exit.
     if (elem == "widget")
         return this.makeWidget(idBy);
+    else if (idBy == "heading")
+        return this.makeHeading(elem);
     
     switch (idBy) {
       // safety first.
@@ -197,13 +200,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "checkboxField":
-        if(this.currentStyle['title'] == "MUS")
-          input.setAttribute('value', 'Homeschool');
-        else if (this.currentStyle['title'] == "SYS")
-          input.setAttribute('value', 'Homeschool');
-
         input.setAttribute('type', elem);
-        input.setAttribute('name', 'assign_to')
         input.setAttribute('style', this.currentStyle["CheckBoxes"]);
         
         encaps.appendChild(input);
@@ -231,6 +228,7 @@ export class RenderableItemComponent implements OnInit {
       case "dateField":
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'date');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -239,12 +237,14 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         label.textContent = "Password";
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'pword');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
 
       case "fileField":
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'file-field');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -345,9 +345,6 @@ export class RenderableItemComponent implements OnInit {
     else
       newEditorEls = <HTMLElement> this.editor.editorNodes(<string>this.history[this.history.length - 1]);
 
-
-    //   newEditorEls = <HTMLElement> null;
-
     if (newEditorEls == null) {
       editorWindow.innerHTML = "<span id='ngsubmit-els-editor'>No editing options</span>";
       return;
@@ -369,7 +366,9 @@ export class RenderableItemComponent implements OnInit {
   
        *          This is a refactor point.
        */
+
       let inField  = document.getElementById('nglabeling');
+      inField.setAttribute('data-default', '');
       let reqField = document.getElementById('ngrequirement') || null;
       
       // Things our Editor can do
@@ -390,12 +389,12 @@ export class RenderableItemComponent implements OnInit {
   changeLabel(e,  idBy : string) : void {
 
     /**
-     *  Part of the Editor's functionality and (currently) allows us 
-     *  to edit the label of the most recently added element.
+    *   This is a keystroke listener for the editor
      *  The event variable is of the next lower ordered functions stack frame
      */
 
     // Most recently added elem's <label>
+    console.log("still finding H2");
     let lastFormLabel : Node;
     let formLabels : NodeList;
 
@@ -410,6 +409,14 @@ export class RenderableItemComponent implements OnInit {
       lastSubValue.setAttribute('value',e.target.value);
 
     }
+    else if (idBy == "heading")
+    {
+      var headingLabel = <NodeList> document.querySelectorAll("[data-heading-anchor]");
+      console.log(headingLabel);
+      var lastHeading  = <HTMLElement> headingLabel[headingLabel.length - 1];
+      console.log(lastHeading);
+      lastHeading.textContent = e.target.value;
+    }
     else {
 
       // ng-anchor-label(s) exist on each of the rendering form's labels
@@ -421,7 +428,7 @@ export class RenderableItemComponent implements OnInit {
       if(!lastFormLabel)
         return;
 
-        lastFormLabel.textContent = e.target.value;
+      lastFormLabel.textContent = e.target.value;
 
     }
 
@@ -445,7 +452,29 @@ export class RenderableItemComponent implements OnInit {
       currentItem.removeAttribute("required");
     }
     
+  }
 
+  makeHeading(elem : string) : HTMLElement
+  {
+    /**
+     * Create customizeable headings
+     */
+    let headingContainer = document.createElement("DIV");
+    let heading : HTMLElement;
+
+    switch (elem){
+
+      case "headingTwo":
+        let headingTwo = document.createElement("H2");
+        
+        headingContainer.appendChild(headingTwo);
+
+    }
+
+    headingContainer.setAttribute("data-dynaform", "");
+    heading = <HTMLElement> headingContainer.firstChild;
+    heading.setAttribute('data-heading-anchor', '');
+    return headingContainer;
 
   }
 
@@ -472,14 +501,23 @@ export class RenderableItemComponent implements OnInit {
         var schoolDistrictContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var schoolNameContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var outerContainer      = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var checkboxContainer   = <HTMLElement> bootstrapEncaps.cloneNode(false);
+        var checkboxExpand      = <HTMLElement> input.cloneNode(false);
         var positionField       = <HTMLElement> input.cloneNode(false);
         var schoolNameField     = <HTMLElement> input.cloneNode(false);
-        var schoolDistField = <HTMLElement> input.cloneNode(false);
+        var schoolDistField     = <HTMLElement> input.cloneNode(false);
+        var checkboxLabel   = <HTMLElement> label.cloneNode(false);
         var positionLabel   = <HTMLElement> label.cloneNode(false);
         var schoolNameLabel = <HTMLElement> label.cloneNode(false);
         var schoolDistLabel = <HTMLElement> label.cloneNode(false);
 
         // Setup inputs for each widget element
+        checkboxExpand.setAttribute('value', 'Homeschool');
+        checkboxExpand.setAttribute('name', 'assign_to');
+        checkboxExpand.setAttribute('id', 'assign_to');
+        checkboxExpand.setAttribute('style', this.currentStyle["CheckBoxes"]);
+        checkboxExpand.setAttribute('type', 'checkbox');
+
         positionField.setAttribute('class', 'input-xxlarge');
         positionField.setAttribute('id', 'position');
         positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]["WidgetMajorMid"]);
@@ -503,8 +541,12 @@ export class RenderableItemComponent implements OnInit {
         positionLabel.innerText   = "Position";
         schoolNameLabel.innerText = "School Name";
         schoolDistLabel.innerText = "School District";
+        checkboxLabel.innerText   = "I’m interested in Math-U-See for schools.";
 
         // Setup Structure
+        checkboxContainer.appendChild(checkboxExpand);
+        checkboxContainer.appendChild(checkboxLabel);
+
         positionFieldContainer.appendChild(positionLabel);
         positionFieldContainer.appendChild(positionField);
 
@@ -515,6 +557,7 @@ export class RenderableItemComponent implements OnInit {
         schoolDistrictContainer.appendChild(schoolDistField);
 
         // Final form
+        outerContainer.appendChild(checkboxContainer);
         outerContainer.appendChild(positionFieldContainer)
         outerContainer.appendChild(schoolDistrictContainer)
         outerContainer.appendChild(schoolNameContainer)
@@ -541,6 +584,7 @@ export class RenderableItemComponent implements OnInit {
      */
 
     let container   = document.getElementById('consult-form-container');
+
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
     let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName('input');
@@ -553,25 +597,22 @@ export class RenderableItemComponent implements OnInit {
     let submitClass : string;
     let submitText  : string;
 
-    if(style == "MUS")
-      this.whichStyle = true;
-    else
-      this.whichStyle = false;
-
     // Style switch
     if (style == "MUS") { 
+      this.whichStyle = true;
       this.currentStyle = this.musStyle;
       submitText = "lets go!";
       submitClass = "btn btn-large btn-success";
     }
     else if (style == "SYS") {
+      this.whichStyle = false;
       this.currentStyle = this.sysStyle;
       submitText = "watch the webinar";
       submitClass = "btn btn-primary form-control";
     }
 
     if (!bypass){ // Will only bypass on initialization because nanoseconds count....
-
+      console.log("BYPASSING");
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
         
@@ -582,7 +623,7 @@ export class RenderableItemComponent implements OnInit {
       }
       // <Inputs>, skipping any submit types identified by the [ng-sub] attr.
       for(var i = 0; i < allInputs.length; i++)
-        
+
         if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") 
         {
           // Applies the style for the selected style
@@ -590,7 +631,7 @@ export class RenderableItemComponent implements OnInit {
             allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
 
           // Always set the last input in the index to default, it's our option editor field.
-          if (i == allInputs.length - 1)
+          if (allInputs[i].hasAttribute('data-default'))
             allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
 
           // WIDGETS : POTENTIAL (easily mitigated) CONFLICT - Widgets are only effected when they contain an input of the above if(types)

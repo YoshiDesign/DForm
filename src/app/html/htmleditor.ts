@@ -21,7 +21,7 @@ export default class HTMLeditors {
             
             case "subButtonField":
                 this.resetEditor();
-                // Currently, submit buttons have the only unique editor panel    
+    
                 this.container.setAttribute("id", "ngsubmit-button-editor");
                 this.labelInput.setAttribute("id", "nglabeling");
                 this.labelInput.setAttribute("type", "text");
@@ -30,10 +30,24 @@ export default class HTMLeditors {
                 this.container.appendChild(this.labelInput);
 
                 return this.container;
+
             case "noField" || null:
                 return null;
+
             case "recaptchaField":
                 return null;
+
+            case "heading":
+                this.resetEditor();
+    
+                this.container.setAttribute("id", "ngsubmit-els-editor");
+                this.labelInput.setAttribute("id", "nglabeling");
+                this.labelInput.setAttribute("type", "text");
+                this.labelInput.setAttribute("placeholder", "Edit Label");
+
+                this.container.appendChild(this.labelInput);
+
+                return this.container;
 
             default:
                 this.resetEditor();
