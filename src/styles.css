@@ -76,6 +76,9 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     position:relative;
     bottom: 13px;
 }
+#ngsubmit-els-editor {
+    width: 300px;
+}
 #ngrequirement {
     position:relative;
     bottom: 15px;

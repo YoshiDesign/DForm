@@ -168,6 +168,11 @@ export default class HTMLeditors {
             font-size: 15px;
         `,
 
+        "HeadgingCentered" : `
+            text-align:center;
+            
+        `,
+
         "Opposite" : `
             border-bottom: 1px solid #0054a5;
         `,
@@ -208,7 +213,8 @@ export default class HTMLeditors {
             border:none;
             font-size:20px;
             margin-top:15px;
-            width:199px;
+            min-width:199px;
+            width: auto;
             -webkit-appearance: button;
 
         `,
@@ -257,7 +263,8 @@ export default class HTMLeditors {
             background-color: #f7f7f7;
             color: #333;
             padding: 0 0 0 5px;
-            font-size: 25px;`,
+            font-size: 25px;
+        `,
 
         "TextAreaStyle" : `
             width:90%;
@@ -269,9 +276,15 @@ export default class HTMLeditors {
             color: #333;
             padding: 0 0 0 5px;font-size: 15px;
         `,
+
+        "HeadgingCentered" : `
+            text-align:center;
+        `,
+
         "Opposite" : `
             border-bottom: 2px solid #fff;
         `,
+         
         "ButtonStyleDefinition" : `
             background-color: #F05F40;
             border-color: #F05F40;
@@ -287,7 +300,7 @@ export default class HTMLeditors {
             color: black;
 
         `,
-
+        
         "Radio" : `
 
             margin-right:10px;
@@ -314,7 +327,8 @@ export default class HTMLeditors {
             border:none;
             font-size:20px;
             margin-top:15px;
-            width:80%;
+            min-width:80%;
+            width: auto;
             text-align:center;
             background-color: #F05F40;
             border-color: #F05F40;

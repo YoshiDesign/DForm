@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Editor from '../../html/htmleditor';
+import { Input } from '../../../../node_modules/@angular/compiler/src/core';
 
 
 
@@ -487,6 +488,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "headingTwo":
         let headingTwo = document.createElement("H2");
+        // headingTwo.setAttribute('style', this.currentStyle['HeadingStyle']);
         headingTwo.innerText = "Edit Your Title!";
         headingContainer.appendChild(headingTwo);
 
@@ -612,6 +614,10 @@ export class RenderableItemComponent implements OnInit {
      */
 
     let container   = document.getElementById('consult-form-container');
+
+    let editorfield = <HTMLInputElement> document.getElementById('nglabeling');
+    if (editorfield)
+      editorfield.value = "";
 
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
