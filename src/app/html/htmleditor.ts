@@ -356,6 +356,9 @@ export default class HTMLeditors {
         "ColorWheel" : `
             width: 35px;
         `,
+        "FullWidth" : `
+            width:100%;
+        `,
         "DefaultFieldStyle" : `
             -webkit-appearance: textfield;
             background-color: white;

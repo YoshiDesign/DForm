@@ -250,7 +250,8 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
       
       case "numberField":
-        label.textContent = "Qty."
+        label.textContent = "Qty.";
+        input.setAttribute('name', 'quantity');
         input.setAttribute('type', elem);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -259,6 +260,7 @@ export class RenderableItemComponent implements OnInit {
       case "colorField":
         label.textContent = "Pick Color";
         input.setAttribute('type', elem);
+        input.setAttribute('name','color');
         encaps.appendChild(label);
         encaps.appendChild(input);
         encaps.setAttribute('style',this.editor.General.ColorWheel);
@@ -266,6 +268,7 @@ export class RenderableItemComponent implements OnInit {
         
       case "rangeField":
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'in-range');
         input.setAttribute('style', this.currentStyle["RangeStyle"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -520,7 +523,7 @@ export class RenderableItemComponent implements OnInit {
 
         positionField.setAttribute('class', 'input-xxlarge');
         positionField.setAttribute('id', 'position');
-        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]["WidgetMajorMid"]);
+        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         positionField.setAttribute('name', 'position');
         positionField.setAttribute('type', 'text');
         positionField.setAttribute('position-from-widget', '');
@@ -539,6 +542,7 @@ export class RenderableItemComponent implements OnInit {
 
         // Setup widget labels
         positionLabel.innerText   = "Position";
+        positionLabel.setAttribute("style", this.editor.General['FullWidth']);
         schoolNameLabel.innerText = "School Name";
         schoolDistLabel.innerText = "School District";
         checkboxLabel.innerText   = "I’m interested in Math-U-See for schools.";
@@ -638,7 +642,7 @@ export class RenderableItemComponent implements OnInit {
           if (allInputs[i].parentElement.hasAttribute('data-widget-target'))
             allInputs[i].setAttribute('style', this.currentStyle["WidgetMajor"]);
             if (allInputs[i].hasAttribute('position-from-widget'))
-              allInputs[i].setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"] + this.currentStyle["widgets"]["WidgetMajorMid"]);
+              allInputs[i].setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         }
 
       // <Textareas>
