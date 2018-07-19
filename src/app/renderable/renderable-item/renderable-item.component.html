@@ -10,10 +10,10 @@
       <div id="html-container">
         <div *ngIf="getOutputDepth() > 345" class="content-message"><p class="message">This window scrolls</p></div>
 
-          <p id="pretty-print">
+          <textarea id="pretty-print"></textarea>
 
-          </p>
-          
+       
+          <button (click)="copy2Clip()" class="btn btn-success" id="copy-btn">COPY</button>
       </div>
       
     </div>

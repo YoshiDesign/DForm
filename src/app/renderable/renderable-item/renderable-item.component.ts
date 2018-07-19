@@ -603,6 +603,18 @@ export class RenderableItemComponent implements OnInit {
     }
   }
 
+  copy2Clip () {
+
+    let copyText = <HTMLTextAreaElement> document.getElementById("pretty-print");
+    let copied = document.getElementById('copy-btn');
+
+    copyText.select();
+    document.execCommand("copy");
+
+    copied.innerHTML = "COPIED &#x1f44d;";
+
+  }
+
   stylizer(style : string, bypass? : boolean) : void {
 
     // Fires when toggling between MUS / SYS
@@ -741,6 +753,7 @@ export class RenderableItemComponent implements OnInit {
     this.modalActive  = true; 
     let theHTML       = document.getElementById('pretty-print');
     this.modal        = document.getElementById('modal-html-view');
+    let isThereAwidget = document.querySelectorAll('[data-widget-target]') || null;
 
     /** 
      *  Widgets need 1 general identifier and 1 unique identifier
@@ -748,7 +761,6 @@ export class RenderableItemComponent implements OnInit {
      *  General Identifier = attr[data-widget-target]
      */
 
-    let isThereAwidget = document.querySelectorAll('[data-widget-target]') || null;
     if (isThereAwidget)
       for (let i = 0; i < isThereAwidget.length; i++)
         this.configureWidgets(<HTMLElement>isThereAwidget[i]);
@@ -764,6 +776,9 @@ export class RenderableItemComponent implements OnInit {
   }
 
   closeModal() : void {
+    let copied = document.getElementById("copy-btn");
+    copied.innerHTML = "copy";
+
     document.body.classList.remove('raise-modal');
     this.modal.style.display = "none";
     this.modalActive = false;
