@@ -47,8 +47,7 @@ export class RenderableItemComponent implements OnInit {
   
   toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
     /** 
-    *   Adds visible element to middle column.
-    *   otherOpt is a universal flag for optional behavior. See makeField() docstring
+    *   otherOpt is a universal flag for optional behavior. See makeField()s docstring
     */
     let form = document.getElementById('lead-gen-form-input');
     let newInput : Element; // Encapsulated per the page spec.
@@ -60,7 +59,6 @@ export class RenderableItemComponent implements OnInit {
 
     // Sync the order of elements being inserted
     this.history.push(<string> identifiedBy);
-    console.log(this.history);
 
     // Update Option Editor view
     this.openEditor(identifiedBy);
@@ -688,9 +686,12 @@ export class RenderableItemComponent implements OnInit {
         }
 
       // <Textareas>
-      for(let i = 0; i < allTextbox.length; i++)
+      for(let i = 0; i < allTextbox.length; i++){
+        if (allTextbox[i].id == "pretty-print")
+          continue;
         allTextbox[i].setAttribute('style', this.currentStyle["TextAreaStyle"]);
 
+      }
       // <Selects>
       for (let i = 0; i < allSelects.length; i++)
         allSelects[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
