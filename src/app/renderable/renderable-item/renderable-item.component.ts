@@ -16,6 +16,7 @@ export class RenderableItemComponent implements OnInit {
   public illegalInputScript : RegExp;
   public modalActive  : Boolean;
   public whichStyle   : Boolean;
+  public activeSchoolWidget : Boolean;
   public finalHTML    : String;
   public musStyle : Object;
   public sysStyle : Object;
@@ -84,6 +85,9 @@ export class RenderableItemComponent implements OnInit {
 
   toggleRemove(clearAll? : Boolean) : void {
     let findMostRecentField = document.getElementById('lead-gen-form-input');
+    let isItaWidget = document.querySelectorAll('[data-widget-target]') || null;
+    let widgetsLength = isItaWidget.length;
+    let allLength = findMostRecentField.children.length;
 
     if(clearAll)
     {
@@ -96,19 +100,32 @@ export class RenderableItemComponent implements OnInit {
           break
         allNewFields[i].parentNode.removeChild(allNewFields[i]);
       }
+
+      // Handle widgets here
+      this.activeSchoolWidget = false;
+
       return;
+    }
+
+    // Handle widgets here
+    if (isItaWidget && 
+      findMostRecentField.children[allLength - 1]
+      .hasAttribute("data-widget-target"))
+    {
+      if (isItaWidget[widgetsLength - 1].id == "school-widget")
+        this.activeSchoolWidget = false;
     }
 
     this.history.pop();
     this.openEditor(this.history[this.history.length - 1]);
     console.log("UPDATING HISTORY " + this.history);
-    let length = findMostRecentField.childNodes.length;
-    let dontRemove = <HTMLElement>findMostRecentField.childNodes[length-1];
+    
+    let dontRemove = <HTMLElement>findMostRecentField.childNodes[allLength-1];
 
     if (!(dontRemove.hasAttribute('data-dynaform')))
       return;
     else  
-      findMostRecentField.removeChild(findMostRecentField.childNodes[length - 1]);
+      findMostRecentField.removeChild(findMostRecentField.childNodes[allLength - 1]);
     
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
@@ -470,7 +487,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "headingTwo":
         let headingTwo = document.createElement("H2");
-        
+        headingTwo.innerText = "Edit Your Title!";
         headingContainer.appendChild(headingTwo);
 
     }
@@ -478,6 +495,7 @@ export class RenderableItemComponent implements OnInit {
     headingContainer.setAttribute("data-dynaform", "");
     heading = <HTMLElement> headingContainer.firstChild;
     heading.setAttribute('data-heading-anchor', '');
+    
     return headingContainer;
 
   }
@@ -500,7 +518,7 @@ export class RenderableItemComponent implements OnInit {
     switch(widget){
       
       case "schoolWidget" :
-        
+        this.activeSchoolWidget = true;
         var dynamicContainer        = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var positionFieldContainer  = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var schoolDistrictContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);

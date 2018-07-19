@@ -18,7 +18,6 @@
       
     </div>
       
-  
       <div class="selection-window" id="sidebar">
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, elem, identifiedBy, class,[OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
@@ -35,7 +34,7 @@
           <button class="form-option-btn" id="h2-heading"    (click)="toggleAdd($event, 'headingTwo', 'heading')">     <span class="left">Section Title</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label" for="">Widgets<br><sup>Expanded until export</sup></label>
-          <button class="form-option-btn" id="schools-widget"    (click)="toggleAdd($event, 'widget', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn"  [disabled]="activeSchoolWidget" id="schools-widget"    (click)="toggleAdd($event, 'widget', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label">Selection</label>
           <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
