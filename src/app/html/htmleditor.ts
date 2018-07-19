@@ -370,6 +370,9 @@ export default class HTMLeditors {
             border-color: initial;
             border-image: initial;
         `,
+        "noDisplay" : `
+            display: none;
+        `,
     }
 
     resetEditor () {

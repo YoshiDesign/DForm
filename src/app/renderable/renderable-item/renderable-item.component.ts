@@ -425,9 +425,10 @@ export class RenderableItemComponent implements OnInit {
       // ng-anchor-label(s) exist on each of the rendering form's labels
       formLabels = document.querySelectorAll('.ng-anchor-label');
       
-      lastFormLabel = formLabels[formLabels.length - 1]; // The last label that was added
+      // The last label that was added
+      lastFormLabel = formLabels[formLabels.length - 1]; 
 
-      // Exit when we try to acquire a field without a label (i.e. submit)
+      // Exit when we try to acquire a field without a label
       if(!lastFormLabel)
         return;
 
@@ -500,6 +501,7 @@ export class RenderableItemComponent implements OnInit {
       
       case "schoolWidget" :
         
+        var dynamicContainer        = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var positionFieldContainer  = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var schoolDistrictContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
         var schoolNameContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
@@ -513,6 +515,8 @@ export class RenderableItemComponent implements OnInit {
         var positionLabel   = <HTMLElement> label.cloneNode(false);
         var schoolNameLabel = <HTMLElement> label.cloneNode(false);
         var schoolDistLabel = <HTMLElement> label.cloneNode(false);
+
+        dynamicContainer.setAttribute('id', 'schools');
 
         // Setup inputs for each widget element
         checkboxExpand.setAttribute('value', 'Homeschool');
@@ -562,12 +566,14 @@ export class RenderableItemComponent implements OnInit {
 
         // Final form
         outerContainer.appendChild(checkboxContainer);
-        outerContainer.appendChild(positionFieldContainer)
-        outerContainer.appendChild(schoolDistrictContainer)
-        outerContainer.appendChild(schoolNameContainer)
+        outerContainer.appendChild(dynamicContainer);
+        dynamicContainer.appendChild(positionFieldContainer);
+        dynamicContainer.appendChild(schoolDistrictContainer);
+        dynamicContainer.appendChild(schoolNameContainer);
  
         outerContainer.setAttribute('data-dynaform', '');
         outerContainer.setAttribute('data-widget-target', '');
+        outerContainer.setAttribute('id', 'school-widget');
 
         return outerContainer;
 
@@ -679,6 +685,30 @@ export class RenderableItemComponent implements OnInit {
     return;
 
   }
+  configureWidgets (widget : HTMLElement, reset = false) : void {
+
+    /**
+     *  Type of widget is the ID value of the outer-most div of the widget
+     * 
+     *  Export or retract widget final state
+     */
+
+    let typeOfWidget = widget.id;
+
+    // Being very explicit with if-statements here...
+    if (typeOfWidget == "school-widget" && !reset) {
+      // School Widget : set inner container display to none
+      let changeVis = document.getElementById('schools');
+      changeVis.setAttribute('style', this.editor.General['noDisplay']);
+    }
+    else if (typeOfWidget == "school-widget" && reset)
+    {
+      let changeVis = document.getElementById('schools');
+      changeVis.removeAttribute('style');
+    }
+
+    return;
+  }
 
   displayHTML() : void {
     /**
@@ -686,9 +716,20 @@ export class RenderableItemComponent implements OnInit {
      */
     this.modalActive  = true; 
     let theHTML       = document.getElementById('pretty-print');
-    this.finalHTML    = <string> document.getElementById('view-form').innerHTML;
     this.modal        = document.getElementById('modal-html-view');
 
+    /** 
+     *  Widgets need 1 general identifier and 1 unique identifier
+     *  Respectively answering : Is there a widget? Which widget is it? <-- fun to say
+     *  General Identifier = attr[data-widget-target]
+     */
+
+    let isThereAwidget = document.querySelectorAll('[data-widget-target]') || null;
+    if (isThereAwidget)
+      for (let i = 0; i < isThereAwidget.length; i++)
+        this.configureWidgets(<HTMLElement>isThereAwidget[i]);
+
+    this.finalHTML    = <string> document.getElementById('view-form').innerHTML;
     // Display Modal and Dim the lights
     this.modal.style.display = "block";
 
@@ -702,6 +743,14 @@ export class RenderableItemComponent implements OnInit {
     document.body.classList.remove('raise-modal');
     this.modal.style.display = "none";
     this.modalActive = false;
+
+    // Undo widget finalized state
+    let findWidgets = <NodeList> document.querySelectorAll('[data-widget-target]') || null;
+    if (findWidgets)
+      for (let i = 0; i < findWidgets.length; i++) {
+        console.log(<HTMLElement>findWidgets[i]);
+        this.configureWidgets(<HTMLElement>findWidgets[i], true);
+      }
     return;
   }
 
