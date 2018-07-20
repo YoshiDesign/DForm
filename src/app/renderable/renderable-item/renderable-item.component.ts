@@ -243,7 +243,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
         
       case "dateField":
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["DateStyle"]);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'date');
         encaps.appendChild(label);
@@ -260,6 +260,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "fileField":
+        input.setAttribute('style', this.currentStyle['FileStyle']);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'file-field');
         encaps.appendChild(label);
@@ -268,6 +269,7 @@ export class RenderableItemComponent implements OnInit {
       
       case "numberField":
         label.textContent = "Qty.";
+        input.setAttribute('style', this.currentStyle['QtyStyle']);
         input.setAttribute('name', 'quantity');
         input.setAttribute('type', elem);
         encaps.appendChild(label);
@@ -280,7 +282,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('name','color');
         encaps.appendChild(label);
         encaps.appendChild(input);
-        encaps.setAttribute('style',this.editor.General.ColorWheel);
+        input.setAttribute('style',this.editor.General["ColorWheel"]);
         return encaps;
         
       case "rangeField":
@@ -315,6 +317,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
         
       case "timeField":
+        input.setAttribute('style', this.currentStyle["TimeStyle"]);
         input.setAttribute('type', elem);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -363,7 +366,8 @@ export class RenderableItemComponent implements OnInit {
     else if (idBy == "schoolWidget")
       newEditorEls = null;
     else
-      newEditorEls = <HTMLElement> this.editor.editorNodes(<string>this.history[this.history.length - 1]);
+      newEditorEls = <HTMLElement> this.editor
+      .editorNodes(<string>this.history[this.history.length - 1]);
 
     if (newEditorEls == null) {
       editorWindow.innerHTML = "<span id='ngsubmit-els-editor'>No editing options</span>";
@@ -383,8 +387,7 @@ export class RenderableItemComponent implements OnInit {
     {
       /**
        * nglabeling is the EDITOR'S CURRENT INPUT FIELD.
-  
-       *          This is a refactor point.
+       *
        */
 
       let inField  = document.getElementById('nglabeling');
@@ -437,6 +440,7 @@ export class RenderableItemComponent implements OnInit {
       console.log(lastHeading);
       lastHeading.textContent = e.target.value;
     }
+
     else {
 
       // ng-anchor-label(s) exist on each of the rendering form's labels
@@ -457,16 +461,19 @@ export class RenderableItemComponent implements OnInit {
 
   changeRequirement (e, reqField : HTMLElement) {
 
+    /**
+     * Control the checkedness of the editors requirement checkbox
+     */
+
+    // Every generated element on the screen. Sans submit btns
     let enabledItems = document.querySelectorAll('[data-ng-el]');
+    // the most recent addition
     let currentItem = enabledItems[enabledItems.length - 1];
 
-    console.log(currentItem);
-    console.log(e.target);
     if (currentItem.hasAttribute("required"))
       e.target.setAttribute("checked",'');
 
-    // Secondary check for required attribute
-
+    // Respond to editor's 'required' checkbox
     if (e.target.checked) {
       currentItem.setAttribute("required", "required");
     } else if (!e.target.checked) {
@@ -483,11 +490,11 @@ export class RenderableItemComponent implements OnInit {
     let headingContainer = document.createElement("DIV");
     let heading : HTMLElement;
 
+    // Using a switch in case we add more heading types
     switch (elem){
 
       case "headingTwo":
-        let headingTwo = document.createElement("H2");
-        // headingTwo.setAttribute('style', this.currentStyle['HeadingStyle']);
+        let headingTwo = document.createElement("H3");
         headingTwo.innerText = "Edit Your Title!";
         headingContainer.appendChild(headingTwo);
 
@@ -507,7 +514,6 @@ export class RenderableItemComponent implements OnInit {
      *  Define the CONSTRUCTION of widgets here. 
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
-     *  Define future widgets here.
      */
     let bootstrapEncaps = document.createElement('DIV');
     let label  = document.createElement('LABEL');

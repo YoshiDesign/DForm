@@ -155,7 +155,8 @@ export default class HTMLeditors {
             background-color: rgba(255, 255, 255, .1);
             color: #fff;
             padding: 0 0 0 5px;
-            font-size: 25px;`,
+            font-size: 25px;
+            `,
 
         "TextAreaStyle" : `
             width:90%;
@@ -218,6 +219,37 @@ export default class HTMLeditors {
             -webkit-appearance: button;
 
         `,
+
+        "QtyStyle" : `
+            width : 250px;
+        `,
+
+        "DateStyle" : `
+            width :250px;
+            border-radius: 0;
+            border: none;
+            border-bottom: 2px solid #fff;
+            height: 40px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;
+            font-size: 25px;
+        `,
+        "FileStyle" : `
+            width : 199px;
+            border-radius: 0;
+            border: none;
+            border-bottom: 2px solid #fff;
+            height: 40px;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
+            padding: 0 0 0 5px;
+            font-size: 25px;
+        `,
+        "TimeStyle" : `
+            width : 250px;
+        `,
+
         "RangeStyle" : `
             width: 200px;
             margin: 8px;
@@ -342,7 +374,19 @@ export default class HTMLeditors {
             width: 200px;
             margin: 8px;
         `,
+        "QtyStyle" : `
+            width : 250px;
+        `,
 
+        "DateStyle" : `
+            width :250px;
+        `,
+        "FileStyle" : `
+            width : 199px;
+        `,
+        "TimeStyle" : `
+            width : 250px;
+        `,
         "widgets" : {
             
             "WidgetMajor" : `
@@ -368,7 +412,8 @@ export default class HTMLeditors {
             margin-right:8px;
         `,
         "ColorWheel" : `
-            width: 35px;
+            width: 85px;
+            height: 35px;
         `,
         "FullWidth" : `
             width:100%;
