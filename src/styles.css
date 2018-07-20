@@ -177,18 +177,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     height:25px;
     display:inline-block;
 }
-.main-window{
-    height:785px;
-    z-index:1000;
-    display: flex;
-    background: rgb(255, 255, 255);
-    margin:auto 175px;
-}
-.main-window > div{
 
-    border:1px solid  rgba(255, 136, 0, 0.3);
-
-}
 .selection-window button:hover {
     background:rgb(0, 0, 0);
     color:rgb(0,255,55);
@@ -245,16 +234,21 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
 /* Selection Buttons */
 #sidebar {
     flex: 0.5;
-    height:785px;
     overflow-y:scroll;
 }
 /* The middle renderer view */
 #view-form {
     flex:1.5;
     padding:15px;
-    height:785px;
     overflow-y:scroll;
 }
+
+.main-window > div{
+
+    border:1px solid  rgba(255, 136, 0, 0.3);
+
+}
+
 /* bottom bar */
 .option-wrapper {
     background:lavenderblush;

@@ -33,6 +33,7 @@ export class RenderableItemComponent implements OnInit {
     this.modalActive = false;
     this.editor = new Editor;
     this.openEditor("noField");
+    this.setWindowHeight();
     // start with MUS style
     this.musStyle     = this.editor.MUS;
     this.sysStyle     = this.editor.SYS;
@@ -835,9 +836,24 @@ export class RenderableItemComponent implements OnInit {
   getOutputDepth() : number {
     let outWindow = document.getElementById('pretty-print');
     let height    = outWindow.clientHeight;
-    
     return height;
   }
 
+  setWindowHeight() : void {
+    let mainWindow = document.getElementsByClassName('main-window')[0];
+    let pageBody = document.getElementsByTagName('body')[0];
+    let height = pageBody.clientHeight;
+    let adjustHeight = height - (height * 0.75);
+    
+    mainWindow.setAttribute('style', `
+      z-index:1000;
+      display: flex;
+      background: rgb(255, 255, 255);
+      margin:auto 175px;
+      overflow-y:scroll;
+      height :
+      ${String(height - adjustHeight)}px`);
+
+  }
 }
 
