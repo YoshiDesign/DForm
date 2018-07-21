@@ -93,7 +93,7 @@ export class RenderableItemComponent implements OnInit {
     {
       this.history = [];
       this.openEditor("noField");
-      console.log("HISTORY IS EMPTY? " + this.history);
+
       var allNewFields = document.querySelectorAll('div[data-dynaform]');
       for (let i  in allNewFields){
         if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
@@ -118,7 +118,6 @@ export class RenderableItemComponent implements OnInit {
 
     this.history.pop();
     this.openEditor(this.history[this.history.length - 1]);
-    console.log("UPDATING HISTORY " + this.history);
     
     let dontRemove = <HTMLElement>findMostRecentField.childNodes[allLength-1];
 
@@ -130,6 +129,7 @@ export class RenderableItemComponent implements OnInit {
   }
 ///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
+
     /** 
      * Other Option Values : These values are determined by the function call in renderable-item-component.html
      * 
@@ -189,7 +189,7 @@ export class RenderableItemComponent implements OnInit {
       case "nameField":
 
         if(otherOpt == 1) {
-          console.log("other opt")
+
           label.textContent = "Last Name";
           input.setAttribute('id', 'last-name')
           input.setAttribute('name', 'last_name');
@@ -244,6 +244,7 @@ export class RenderableItemComponent implements OnInit {
         
       case "dateField":
         input.setAttribute('style', this.currentStyle["DateStyle"]);
+        input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'date');
         encaps.appendChild(label);
@@ -252,6 +253,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "passwdField":
         input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('required', 'required');
         label.textContent = "Password";
         input.setAttribute('type', elem);
         input.setAttribute('name', 'pword');
@@ -263,6 +265,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('style', this.currentStyle['FileStyle']);
         input.setAttribute('type', elem);
         input.setAttribute('name', 'file-field');
+        input.setAttribute('required', 'required');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -306,10 +309,10 @@ export class RenderableItemComponent implements OnInit {
           newOption.innerText = <string> auxNodes[i];
           input.appendChild(newOption);
         }
-
         label.textContent = "State";
         input.setAttribute('style', this.currentStyle["SelectBoxStyle"]);
         input.setAttribute('type', elem);
+        input.setAttribute('required', 'required');
         input.setAttribute('name', 'state');
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -390,15 +393,16 @@ export class RenderableItemComponent implements OnInit {
        *
        */
 
+
       let inField  = document.getElementById('nglabeling');
       inField.setAttribute('data-default', '');
       let reqField = document.getElementById('ngrequirement') || null;
-      
+
       // Things our Editor can do
       inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
 
       if (reqField != null)
-        reqField.addEventListener('input', (e)=>{this.changeRequirement(e, reqField)} );
+        reqField.addEventListener('input', (e)=>{this.changeRequirement(e, idBy)} );
     } 
 
     else return;
@@ -406,7 +410,7 @@ export class RenderableItemComponent implements OnInit {
   }
 
   /** 
-  *   NOTE : Casting an Event object is ALWAYS a bad idea. They are NOT polymorphic across events
+  *   NOTE : Casting to an Event object is usually a bad idea. They are NOT polymorphic across events
   */
 
   changeLabel(e,  idBy : string) : void {
@@ -417,7 +421,7 @@ export class RenderableItemComponent implements OnInit {
      */
 
     // Most recently added elem's <label>
-    console.log("still finding H2");
+
     let lastFormLabel : Node;
     let formLabels : NodeList;
 
@@ -435,9 +439,9 @@ export class RenderableItemComponent implements OnInit {
     else if (idBy == "heading")
     {
       var headingLabel = <NodeList> document.querySelectorAll("[data-heading-anchor]");
-      console.log(headingLabel);
+
       var lastHeading  = <HTMLElement> headingLabel[headingLabel.length - 1];
-      console.log(lastHeading);
+
       lastHeading.textContent = e.target.value;
     }
 
@@ -459,11 +463,12 @@ export class RenderableItemComponent implements OnInit {
 
   }
 
-  changeRequirement (e, reqField : HTMLElement) {
+  changeRequirement (e, idBy : string) {
 
     /**
      * Control the checkedness of the editors requirement checkbox
      */
+
 
     // Every generated element on the screen. Sans submit btns
     let enabledItems = document.querySelectorAll('[data-ng-el]');
@@ -479,7 +484,7 @@ export class RenderableItemComponent implements OnInit {
     } else if (!e.target.checked) {
       currentItem.removeAttribute("required");
     }
-    
+
   }
 
   makeHeading(elem : string) : HTMLElement
@@ -550,6 +555,7 @@ export class RenderableItemComponent implements OnInit {
         checkboxExpand.setAttribute('style', this.currentStyle["CheckBoxes"]);
         checkboxExpand.setAttribute('type', 'checkbox');
 
+        positionField.setAttribute('required', 'required');
         positionField.setAttribute('class', 'input-xxlarge');
         positionField.setAttribute('id', 'position');
         positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
@@ -557,12 +563,14 @@ export class RenderableItemComponent implements OnInit {
         positionField.setAttribute('type', 'text');
         positionField.setAttribute('position-from-widget', '');
 
+        schoolNameField.setAttribute('required', 'required');
         schoolNameField.setAttribute('class', 'input-xxlarge');
         schoolNameField.setAttribute('id', 'school_name');
         schoolNameField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         schoolNameField.setAttribute('name', 'school_name');
         schoolNameField.setAttribute('type', 'text');
         
+        schoolDistField.setAttribute('required', 'required');
         schoolDistField.setAttribute('class', 'input-xxlarge');
         schoolDistField.setAttribute('id', 'school_district');
         schoolDistField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
@@ -663,7 +671,7 @@ export class RenderableItemComponent implements OnInit {
     }
 
     if (!bypass){ // Will only bypass on initialization because nanoseconds count....
-      console.log("BYPASSING");
+
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
         
@@ -795,7 +803,6 @@ export class RenderableItemComponent implements OnInit {
     let findWidgets = <NodeList> document.querySelectorAll('[data-widget-target]') || null;
     if (findWidgets)
       for (let i = 0; i < findWidgets.length; i++) {
-        console.log(<HTMLElement>findWidgets[i]);
         this.configureWidgets(<HTMLElement>findWidgets[i], true);
       }
     return;
@@ -849,7 +856,7 @@ export class RenderableItemComponent implements OnInit {
     let mainWindow = document.getElementsByClassName('main-window')[0];
     let pageBody = document.getElementsByTagName('body')[0];
     let height = pageBody.clientHeight;
-    let adjustHeight = height - (height * 0.75);
+    let adjustHeight = height - (height * 0.5);
     
     mainWindow.setAttribute('style', `
       z-index:1000;

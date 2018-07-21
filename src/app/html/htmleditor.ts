@@ -52,12 +52,21 @@ export default class HTMLeditors {
             default:
                 this.resetEditor();
                 if (idBy == "nameField" 
-                || "telField" 
-                || "checkboxField" 
-                || "emailField" 
-                || "dateField" 
-                || "selectField")
+                || idBy == "telField" 
+                || idBy == "checkboxField" 
+                || idBy == "emailField" 
+                || idBy == "dateField" 
+                || idBy == "selectField"
+                || idBy == "fileField"
+                || idBy == "passwdField")
                     this.isRequired.setAttribute("checked", "");
+                if (idBy == "textareaField" 
+                || idBy == "radioField" 
+                || idBy == "numberField" 
+                || idBy == "colorField" 
+                || idBy == "timeField" 
+                || idBy == "rangeField")
+                    this.isRequired.removeAttribute("checked");
 
                 this.container.setAttribute("id", "ngsubmit-els-editor");
 
@@ -236,15 +245,13 @@ export default class HTMLeditors {
             font-size: 25px;
         `,
         "FileStyle" : `
-            width : 199px;
+            width : 299px;
             border-radius: 0;
             border: none;
-            border-bottom: 2px solid #fff;
-            height: 40px;
-            background-color: rgba(255, 255, 255, .1);
-            color: #fff;
-            padding: 0 0 0 5px;
-            font-size: 25px;
+            background: #343E75;
+            color : white;
+            
+           
         `,
         "TimeStyle" : `
             width : 250px;
@@ -382,7 +389,10 @@ export default class HTMLeditors {
             width :250px;
         `,
         "FileStyle" : `
-            width : 199px;
+            width : 299px;
+            border : none;
+            background : white;
+            color : black;
         `,
         "TimeStyle" : `
             width : 250px;
