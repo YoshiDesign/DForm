@@ -231,6 +231,7 @@ export default class HTMLeditors {
 
         "QtyStyle" : `
             width : 250px;
+            color: white;
         `,
 
         "DateStyle" : `
@@ -383,6 +384,7 @@ export default class HTMLeditors {
         `,
         "QtyStyle" : `
             width : 250px;
+            color: black;
         `,
 
         "DateStyle" : `

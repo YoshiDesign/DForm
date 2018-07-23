@@ -241,6 +241,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     flex:1.5;
     padding:15px;
     overflow-y:scroll;
+    
 }
 
 .main-window > div{
