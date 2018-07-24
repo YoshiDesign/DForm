@@ -630,7 +630,7 @@ export class RenderableItemComponent implements OnInit {
 
   stylizer(style : string, bypass? : boolean) : void {
 
-    // Fires when toggling between MUS / SYS
+    // Fires when toggling between MUS / SYS : Not from initialization
 
     /**
      *  This function has the highest likelihood to grow out of hand
@@ -647,18 +647,21 @@ export class RenderableItemComponent implements OnInit {
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
     let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName('input');
-    let allFileField = document.querySelectorAll("input[type=file]");
-    let allQtyFields = document.querySelectorAll("input[type=number]");
     let allTextbox  = document.getElementsByTagName('textarea');
     let allSelects  = document.getElementsByTagName('select');
     let allSubmits  = document.querySelectorAll('[ng-sub]');
+    let allFileField = document.querySelectorAll('input[type=file]');
+    let allQtyFields = document.querySelectorAll('input[type=number]');
     let allCheckbox = document.querySelectorAll('input[type=checkbox]');
     let allRadio    = document.querySelectorAll('input[type=radio]');
     let allRange    = document.querySelectorAll('input[type=range]');
+    let allDates    = document.querySelectorAll('input[type=date]');
+    let allTimes    = document.querySelectorAll('input[type=time]');
+    let allColor    = document.querySelectorAll('input[type=color]');
     let submitClass : string;
     let submitText  : string;
 
-    // Style switch
+    // Differentiate submit button text
     if (style == "MUS") { 
       this.whichStyle = true;
       this.currentStyle = this.musStyle;
@@ -672,7 +675,7 @@ export class RenderableItemComponent implements OnInit {
       submitClass = "btn btn-primary form-control";
     }
 
-    if (!bypass){ // Will only bypass on initialization because nanoseconds count....
+    if (!bypass){ // Will only bypass on initialization because nanoseconds are seconds too
 
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
@@ -683,25 +686,26 @@ export class RenderableItemComponent implements OnInit {
 
       }
       // <Inputs>, skipping any submit types identified by the [ng-sub] attr.
-      for(var i = 0; i < allInputs.length; i++)
-
+      for(var i = 0; i < allInputs.length; i++) {
+        if (allInputs[i].getAttribute('type') == "hidden")
+          continue;
         if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") 
         {
           // Applies the style for the selected style
           if(!(allInputs[i].hasAttribute('ng-sub')))
             allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
 
-          // Always set the last input in the index to default, it's our option editor field.
+          // Our option editor's input field.
           if (allInputs[i].hasAttribute('data-default'))
             allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
 
-          // WIDGETS : POTENTIAL (easily mitigated) CONFLICT - Widgets are only effected when they contain an input of the above if(types)
+          // WIDGETS : POTENTIAL (easily mitigated) CONFLICT - Widgets are only effected when they contain an input of the above if(types) i.e. text || email...etc
           if (allInputs[i].parentElement.hasAttribute('data-widget-target'))
             allInputs[i].setAttribute('style', this.currentStyle["WidgetMajor"]);
             if (allInputs[i].hasAttribute('position-from-widget'))
               allInputs[i].setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         }
-
+      }
       // <Textareas>
       for(let i = 0; i < allTextbox.length; i++){
         if (allTextbox[i].id == "pretty-print")
@@ -727,20 +731,36 @@ export class RenderableItemComponent implements OnInit {
         //  continue;
         allRadio[i].setAttribute('style', this.currentStyle["Radio"]);
       }
-      // Range
+      // input[Range]
       for (let i = 0; i < allRange.length; i++)
         allRange[i].setAttribute("style", this.currentStyle["RangeStyle"]);
 
+      // input[file]
       for (let i = 0; i < allFileField.length; i++)
         allFileField[i].setAttribute("style", this.currentStyle["FileStyle"]);
 
+      // input[number]
       for (let i = 0; i < allQtyFields.length; i++)
         allQtyFields[i].setAttribute("style", this.currentStyle["QtyStyle"]);
 
+      for (let i = 0; i < allDates.length; i++)
+        allDates[i].setAttribute("style", this.currentStyle['DateStyle']);
+
+      for (let i = 0; i < allTimes.length; i++)
+        allTimes[i].setAttribute("style", this.currentStyle['TimeStyle']);
+
+      for (let i = 0; i < allColor.length; i++)
+        allColor[i].setAttribute("style", this.currentStyle['ColorStyle']);
+
     }
 
+    // Apply outer-most style
     container.setAttribute("style", this.currentStyle["container"]);
+
+    // target the previously active .active and remove the class
     deactivated.classList.remove("active");
+
+    // activate our selected button
     button.classList.add("active");
     return;
 

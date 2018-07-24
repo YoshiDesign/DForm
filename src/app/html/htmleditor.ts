@@ -231,20 +231,23 @@ export default class HTMLeditors {
 
         "QtyStyle" : `
             width : 250px;
-            color: white;
+            
         `,
 
+        "ColorStyle" : `
+        width : 85px;
+        height : 35px;
+        
+    `,
         "DateStyle" : `
-            width :250px;
-            border-radius: 0;
-            border: none;
-            border-bottom: 2px solid #fff;
-            height: 40px;
-            background-color: rgba(255, 255, 255, .1);
-            color: #fff;
-            padding: 0 0 0 5px;
-            font-size: 25px;
+            width : 250px;
+            
         `,
+        "TimeStyle" : `
+            width : 250px;
+            
+        `,
+
         "FileStyle" : `
             width : 299px;
             border-radius: 0;
@@ -253,9 +256,6 @@ export default class HTMLeditors {
             color : white;
             
            
-        `,
-        "TimeStyle" : `
-            width : 250px;
         `,
 
         "RangeStyle" : `
@@ -386,18 +386,25 @@ export default class HTMLeditors {
             width : 250px;
             color: black;
         `,
-
-        "DateStyle" : `
-            width :250px;
+        "ColorStyle" : `
+            width : 85px;
+            height : 35px;
+            color: black;
         `,
+        "DateStyle" : `
+            width : 250px;
+            color: black;
+        `,
+        "TimeStyle" : `
+            width : 250px;
+            color: black;
+        `,
+
         "FileStyle" : `
             width : 299px;
             border : none;
             background : white;
             color : black;
-        `,
-        "TimeStyle" : `
-            width : 250px;
         `,
         "widgets" : {
             
