@@ -872,7 +872,7 @@ export class RenderableItemComponent implements OnInit {
       background: rgb(255, 255, 255);
       margin:auto 175px;
       height :
-      ${String(height - adjustHeight)}px`);
+      ${String(height - adjustHeight + 70)}px`);
 
   }
 }
