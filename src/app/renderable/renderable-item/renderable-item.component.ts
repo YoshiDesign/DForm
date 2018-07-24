@@ -624,7 +624,7 @@ export class RenderableItemComponent implements OnInit {
     copyText.select();
     document.execCommand("copy");
 
-    copied.innerHTML = "COPIED &#x1f44d;";
+    copied.innerHTML = "Copied &#x1f44d;";
 
   }
 
@@ -647,6 +647,8 @@ export class RenderableItemComponent implements OnInit {
     let deactivated = document.querySelector('.active');
     let button      = document.getElementById(<string> style); // change color & highlight
     let allInputs   = <NodeListOf<HTMLElement>> document.getElementsByTagName('input');
+    let allFileField = document.querySelectorAll("input[type=file]");
+    let allQtyFields = document.querySelectorAll("input[type=number]");
     let allTextbox  = document.getElementsByTagName('textarea');
     let allSelects  = document.getElementsByTagName('select');
     let allSubmits  = document.querySelectorAll('[ng-sub]');
@@ -728,6 +730,12 @@ export class RenderableItemComponent implements OnInit {
       // Range
       for (let i = 0; i < allRange.length; i++)
         allRange[i].setAttribute("style", this.currentStyle["RangeStyle"]);
+
+      for (let i = 0; i < allFileField.length; i++)
+        allFileField[i].setAttribute("style", this.currentStyle["FileStyle"]);
+
+      for (let i = 0; i < allQtyFields.length; i++)
+        allQtyFields[i].setAttribute("style", this.currentStyle["QtyStyle"]);
 
     }
 
@@ -863,7 +871,6 @@ export class RenderableItemComponent implements OnInit {
       display: flex;
       background: rgb(255, 255, 255);
       margin:auto 175px;
-      overflow-y:scroll;
       height :
       ${String(height - adjustHeight)}px`);
 

@@ -124,7 +124,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     content: 'Recaptcha - Ready to go \1F44D ';
 }
 
-#html-container {
+div>#html-container {
     border:1px solid white;
     padding:0px;
     height:60%;
@@ -238,13 +238,13 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
 }
 /* The middle renderer view */
 #view-form {
-    flex:1.5;
+    flex:1;
     padding:15px;
-    
+    overflow-y:scroll;
 }
 
-.main-window > div{
-
+.main-window{
+    display:flex;
     border:1px solid  rgba(255, 136, 0, 0.3);
 
 }
