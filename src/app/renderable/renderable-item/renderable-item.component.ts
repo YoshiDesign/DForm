@@ -856,7 +856,7 @@ export class RenderableItemComponent implements OnInit {
     let mainWindow = document.getElementsByClassName('main-window')[0];
     let pageBody = document.getElementsByTagName('body')[0];
     let height = pageBody.clientHeight;
-    let adjustHeight = height - (height * 0.5);
+    let adjustHeight = height - (height * 0.4);
     
     mainWindow.setAttribute('style', `
       z-index:1000;
