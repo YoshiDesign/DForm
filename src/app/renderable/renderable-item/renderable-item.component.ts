@@ -398,9 +398,14 @@ export class RenderableItemComponent implements OnInit {
       inField.setAttribute('data-default', '');
       let reqField = document.getElementById('ngrequirement') || null;
 
-      // Things our Editor can do
+      /**
+       * Things our editor can do
+       */
+
+      // Live label editor
       inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
 
+      // Live requirement attribute checkbox
       if (reqField != null)
         reqField.addEventListener('input', (e)=>{this.changeRequirement(e, idBy)} );
     } 
@@ -706,31 +711,25 @@ export class RenderableItemComponent implements OnInit {
               allInputs[i].setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
         }
       }
-      // <Textareas>
+      // <Textarea>
       for(let i = 0; i < allTextbox.length; i++){
         if (allTextbox[i].id == "pretty-print")
           continue;
         allTextbox[i].setAttribute('style', this.currentStyle["TextAreaStyle"]);
-
       }
-      // <Selects>
+
+      // <Select>
       for (let i = 0; i < allSelects.length; i++)
         allSelects[i].setAttribute('style', this.currentStyle["SelectBoxStyle"]);
 
-      // <input[CHECKBOX]>
+      // input[CHECKBOX]
       for (let i = 0; i < allCheckbox.length; i++)
-      {
-        // if (i == allCheckbox.length - 1)
-        //  continue;
         allCheckbox[i].setAttribute('style', this.currentStyle["Radio"]);
-      }
-      // <input[RADIO]>
+      
+      // input[RADIO]
       for (let i = 0; i < allRadio.length; i++)
-      {
-        // if (i == allCheckbox.length - 1)
-        //  continue;
         allRadio[i].setAttribute('style', this.currentStyle["Radio"]);
-      }
+
       // input[Range]
       for (let i = 0; i < allRange.length; i++)
         allRange[i].setAttribute("style", this.currentStyle["RangeStyle"]);
@@ -743,12 +742,15 @@ export class RenderableItemComponent implements OnInit {
       for (let i = 0; i < allQtyFields.length; i++)
         allQtyFields[i].setAttribute("style", this.currentStyle["QtyStyle"]);
 
+      // input[date]
       for (let i = 0; i < allDates.length; i++)
         allDates[i].setAttribute("style", this.currentStyle['DateStyle']);
 
+      // input[time]
       for (let i = 0; i < allTimes.length; i++)
         allTimes[i].setAttribute("style", this.currentStyle['TimeStyle']);
 
+      // input[color]
       for (let i = 0; i < allColor.length; i++)
         allColor[i].setAttribute("style", this.currentStyle['ColorStyle']);
 
