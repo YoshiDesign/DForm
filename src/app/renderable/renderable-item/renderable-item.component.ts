@@ -138,6 +138,7 @@ export class RenderableItemComponent implements OnInit {
      * 
      *    0 == (null)
      *    1 == make a last name input instead of a first name input
+     *    2 == make an address_2 field
      */
 
     // <HTMLElement> factory for the form to be generated
@@ -193,7 +194,6 @@ export class RenderableItemComponent implements OnInit {
       case "nameField":
 
         if(otherOpt == 1) {
-
           label.textContent = "Last Name";
           input.setAttribute('id', 'last-name')
           input.setAttribute('name', 'last_name');
@@ -214,8 +214,23 @@ export class RenderableItemComponent implements OnInit {
         
         return encaps;
 
+      case "AddressField":
+
+        if (otherOpt == 2) {
+          label.textContent = "Address 2";
+          input.setAttribute('name', 'address_2');
+        } else {
+          input.setAttribute('name', 'address_1');
+          label.textContent = "Address 1";
+        }
+        input.setAttribute('required', 'required');
+        input.setAttribute('type', elem);
+        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
+
       case "subButtonField":
-        
         encaps.setAttribute('data-dyna-submit', ''); // For PARENT tracking. See makeSubmitButton for sub button tracking
         encaps.appendChild(this.makeSubmitButton());
         return encaps;
@@ -223,7 +238,6 @@ export class RenderableItemComponent implements OnInit {
       case "checkboxField":
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["CheckBoxes"]);
-        
         encaps.appendChild(input);
         encaps.appendChild(label);
         return encaps;
@@ -312,7 +326,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "selectField":
-        // An object containing States & Abbreviatiosns.
+        // An object containing States & Abbreviatiosns as k:v respectively.
         auxNodes = this.editor.selectOptions;
 
         var option = document.createElement("OPTION");
@@ -615,7 +629,7 @@ export class RenderableItemComponent implements OnInit {
 
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
-        
+        // <moot> The loop implies that there could be more than one submit button to stylize </moot>
         allSubmits[i].setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
         allSubmits[i].setAttribute('value', submitText);
         allSubmits[i].setAttribute('class', submitClass);
