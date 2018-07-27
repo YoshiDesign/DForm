@@ -252,7 +252,7 @@ div>#html-container {
 /* bottom bar */
 .option-wrapper {
     background:lavenderblush;
-    position:absolute;
+    position:fixed;
     padding:2px;
     bottom:0;
     width:100%;

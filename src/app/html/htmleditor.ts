@@ -50,7 +50,11 @@ export default class HTMLeditors {
                 return this.container;
 
             default:
+
+                // Destroy current field
                 this.resetEditor();
+
+                // If making these, start with enabled required field
                 if (idBy == "nameField" 
                 || idBy == "telField" 
                 || idBy == "checkboxField" 
@@ -60,6 +64,8 @@ export default class HTMLeditors {
                 || idBy == "fileField"
                 || idBy == "passwdField")
                     this.isRequired.setAttribute("checked", "");
+
+                // If making these, start with disabled required field
                 if (idBy == "textareaField" 
                 || idBy == "radioField" 
                 || idBy == "numberField" 
@@ -68,6 +74,7 @@ export default class HTMLeditors {
                 || idBy == "rangeField")
                     this.isRequired.removeAttribute("checked");
 
+                
                 this.container.setAttribute("id", "ngsubmit-els-editor");
 
                 this.labelInput.setAttribute("id", "nglabeling");
@@ -166,6 +173,18 @@ export default class HTMLeditors {
             padding: 0 0 0 5px;
             font-size: 25px;
             `,
+
+        "MinorInput" : `
+            width: 150px;
+            border-radius: 0;
+            border: none;
+            border-bottom: 2px solid #0054a5;
+            height: 40px;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 0 0 0 5px;
+            font-size: 25px;
+        `,
 
         "TextAreaStyle" : `
             width:90%;
@@ -304,6 +323,22 @@ export default class HTMLeditors {
             color: #333;
             padding: 0 0 0 5px;
             font-size: 25px;
+        `,
+
+        "MinorInput" : `
+            width: 300px;
+            border-radius: 0;
+            border: none;
+            border-bottom: 2px solid #0054a5;
+            height: 40px;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 0 0 0 5px;
+            font-size: 25px;
+        `,
+
+        "MinorInputResp" : `
+
         `,
 
         "TextAreaStyle" : `
@@ -450,6 +485,9 @@ export default class HTMLeditors {
         `,
         "noDisplay" : `
             display: none;
+        `,
+        "rightAlign" : `
+            text-align: right;
         `,
     }
 

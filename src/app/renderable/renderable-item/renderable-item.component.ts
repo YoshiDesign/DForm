@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Editor from '../../html/htmleditor';
-import { Input } from '../../../../node_modules/@angular/compiler/src/core';
+import Widgeteer from '../../widgeteer/widgeteer';
+import { Input } from '@angular/compiler/src/core';
 
 
 
@@ -12,6 +13,7 @@ import { Input } from '../../../../node_modules/@angular/compiler/src/core';
 export class RenderableItemComponent implements OnInit {
 
   public editor : Editor;          // Custom class. Defines our styles, Option editor inputs and other static items.
+  public widgeteer : Widgeteer;
   public modal  : HTMLElement;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
@@ -32,6 +34,7 @@ export class RenderableItemComponent implements OnInit {
 
     this.modalActive = false;
     this.editor = new Editor;
+    this.widgeteer = new Widgeteer;
     this.openEditor("noField");
     this.setWindowHeight();
     // start with MUS style
@@ -101,7 +104,7 @@ export class RenderableItemComponent implements OnInit {
         allNewFields[i].parentNode.removeChild(allNewFields[i]);
       }
 
-      // Handle widgets here
+      // So we can enable the ability to add a school widget again
       this.activeSchoolWidget = false;
 
       return;
@@ -127,7 +130,7 @@ export class RenderableItemComponent implements OnInit {
       findMostRecentField.removeChild(findMostRecentField.childNodes[allLength - 1]);
     
   }
-///////////////////////Remember to Delete Editor upon completion///////////////////////////////////
+
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
 
     /** 
@@ -143,7 +146,7 @@ export class RenderableItemComponent implements OnInit {
     let encaps   : Element = document.createElement("DIV");
     let label    : Element = document.createElement("LABEL");
 
-    // determine most significant inner node
+    // determine node
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
     else if (elem == "textarea") {
@@ -168,7 +171,7 @@ export class RenderableItemComponent implements OnInit {
       input.classList.add("form-control");
 
     /**
-     *  This switch appends Elements and applies Attributes / Styles.
+     *  This switch appends Elements and applies Attributes / Styles and allocates form units
      *  It is 100% DOM management.
      *  [otherOpt] current flags are enumerated in the DocString at the top of the function.
      */
@@ -179,6 +182,7 @@ export class RenderableItemComponent implements OnInit {
     else if (idBy == "heading")
         return this.makeHeading(elem);
     
+    // Factory
     switch (idBy) {
       // safety first.
       case "recaptchaField":
@@ -228,7 +232,18 @@ export class RenderableItemComponent implements OnInit {
         label.textContent = "Email";
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'email');
         input.setAttribute('style', this.currentStyle["MajorInput"]);
+        encaps.appendChild(label);
+        encaps.appendChild(input);
+        return encaps;
+      
+      case "zipField" :
+        label.textContent = "Zip Code";
+        input.setAttribute('required', 'required');
+        input.setAttribute('type', elem);
+        input.setAttribute('name', 'zip_code');
+        input.setAttribute('style', this.currentStyle['MinorInput'] + this.editor.General["rightAlign"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -256,7 +271,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('required', 'required');
         label.textContent = "Password";
         input.setAttribute('type', elem);
-        input.setAttribute('name', 'pword');
+        input.setAttribute('name', 'password');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -525,97 +540,13 @@ export class RenderableItemComponent implements OnInit {
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      */
-    let bootstrapEncaps = document.createElement('DIV');
-    let label  = document.createElement('LABEL');
-    let input  = document.createElement('INPUT');
-
-    bootstrapEncaps.setAttribute('class', 'form-group');
-    label.setAttribute('style', this.editor.General['LabelMargin']);
     
-    switch(widget){
-      
+    switch(widget) {
+    
       case "schoolWidget" :
         this.activeSchoolWidget = true;
-        var dynamicContainer        = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var positionFieldContainer  = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var schoolDistrictContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var schoolNameContainer = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var outerContainer      = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var checkboxContainer   = <HTMLElement> bootstrapEncaps.cloneNode(false);
-        var checkboxExpand      = <HTMLElement> input.cloneNode(false);
-        var positionField       = <HTMLElement> input.cloneNode(false);
-        var schoolNameField     = <HTMLElement> input.cloneNode(false);
-        var schoolDistField     = <HTMLElement> input.cloneNode(false);
-        var checkboxLabel   = <HTMLElement> label.cloneNode(false);
-        var positionLabel   = <HTMLElement> label.cloneNode(false);
-        var schoolNameLabel = <HTMLElement> label.cloneNode(false);
-        var schoolDistLabel = <HTMLElement> label.cloneNode(false);
-
-        dynamicContainer.setAttribute('id', 'schools');
-
-        // Setup inputs for each widget element
-        checkboxExpand.setAttribute('value', 'Homeschool');
-        checkboxExpand.setAttribute('name', 'assign_to');
-        checkboxExpand.setAttribute('id', 'assign_to');
-        checkboxExpand.setAttribute('style', this.currentStyle["CheckBoxes"]);
-        checkboxExpand.setAttribute('type', 'checkbox');
-
-        positionField.setAttribute('required', 'required');
-        positionField.setAttribute('class', 'input-xxlarge');
-        positionField.setAttribute('id', 'position');
-        positionField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
-        positionField.setAttribute('name', 'position');
-        positionField.setAttribute('type', 'text');
-        positionField.setAttribute('position-from-widget', '');
-
-        schoolNameField.setAttribute('required', 'required');
-        schoolNameField.setAttribute('class', 'input-xxlarge');
-        schoolNameField.setAttribute('id', 'school_name');
-        schoolNameField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
-        schoolNameField.setAttribute('name', 'school_name');
-        schoolNameField.setAttribute('type', 'text');
+        return this.widgeteer.makeWidget(widget, this.currentStyle, this.editor.General);
         
-        schoolDistField.setAttribute('required', 'required');
-        schoolDistField.setAttribute('class', 'input-xxlarge');
-        schoolDistField.setAttribute('id', 'school_district');
-        schoolDistField.setAttribute('style', this.currentStyle["widgets"]["WidgetMajor"]);
-        schoolDistField.setAttribute('name', 'school_district');
-        schoolDistField.setAttribute('type', 'text');
-
-        // Setup widget labels
-        positionLabel.innerText   = "Position";
-        positionLabel.setAttribute("style", this.editor.General['FullWidth']);
-        schoolNameLabel.innerText = "School Name";
-        schoolDistLabel.innerText = "School District";
-        checkboxLabel.innerText   = "I’m interested in Math-U-See for schools.";
-
-        // Setup Structure
-        checkboxContainer.appendChild(checkboxExpand);
-        checkboxContainer.appendChild(checkboxLabel);
-
-        positionFieldContainer.appendChild(positionLabel);
-        positionFieldContainer.appendChild(positionField);
-
-        schoolNameContainer.appendChild(schoolNameLabel);
-        schoolNameContainer.appendChild(schoolNameField);
-
-        schoolDistrictContainer.appendChild(schoolDistLabel);
-        schoolDistrictContainer.appendChild(schoolDistField);
-
-        // Final form
-        outerContainer.appendChild(checkboxContainer);
-        outerContainer.appendChild(dynamicContainer);
-        dynamicContainer.appendChild(positionFieldContainer);
-        dynamicContainer.appendChild(schoolDistrictContainer);
-        dynamicContainer.appendChild(schoolNameContainer);
- 
-        outerContainer.setAttribute('data-dynaform', '');
-        outerContainer.setAttribute('data-widget-target', '');
-        outerContainer.setAttribute('id', 'school-widget');
-
-        return outerContainer;
-
-      // There is only one widget here.
       default :
         return;
     }
@@ -892,7 +823,7 @@ export class RenderableItemComponent implements OnInit {
       z-index:1000;
       display: flex;
       background: rgb(255, 255, 255);
-      margin:auto 175px;
+      margin:25px 175px 175px 175px;
       height :
       ${String(height - adjustHeight + 70)}px`);
 
