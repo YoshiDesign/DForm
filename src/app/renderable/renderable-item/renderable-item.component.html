@@ -13,7 +13,7 @@
           <textarea id="pretty-print"></textarea>
 
        
-          <button (click)="copy2clip()" class="btn btn-success" id="copy-btn">COPY</button>
+          <button (click)="copy2clip()" class="btn btn-success" class="new-btn" id="copy-btn">COPY</button>
       </div>
       
     </div>
@@ -21,15 +21,14 @@
       <div class="selection-window" id="sidebar">
 
         <div class="initial-layer">
-            <label class="list-label"></label>
-            <button class="form-option-btn" id="resourceListrak"             (click)="toggleAdd($event, 'widget', 'ListrakResource')">      <span class="left">Apply Listrak Resource</span>          <span class="plus">&oplus;</span></button>
-            <button class="form-option-btn" id="resourceCRM"             (click)="toggleAdd($event, 'widget', 'CRMResource')">               <span class="left">Apply CRM Resource</span>          <span class="plus">&oplus;</span></button>
-            <button class="form-option-btn" id="resourceBOTH"             (click)="toggleAdd($event, 'widget', 'BothResource')">            <span class="left">Apply Both</span>          <span class="plus">&oplus;</span></button>
+                      
 
         </div>
 
 
         <div class="initial-bypass">
+
+          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMonitorOpen"       (click)="openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Resource Monitor</span> <span class="plus">&#8628;</span></button>
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
@@ -75,20 +74,56 @@
 
           
       </div>
-  
+      <!-- Hidden Element Editor -->
       <div class="main-app" id="view-form" [class]="whichStyle ? 'mus-color' : 'sys-color'">
-  
-        <div id="consult-form-container" style="background-color:#343e79;max-width:1120px;padding:15px 40px;color:#fff;">
-          <!-- FORM START -->
-          <form id="lead-gen-form-input" method="POST" action="/lead-gen-handler.php">
-            <input type="hidden" name="listrak_source" value="2403731" />
-            <input type="hidden" name="listrak_external_id" value="13064" />
-            <input type="hidden" name="description" value="Back to Homeschool" />
-            <input type="hidden" name="lead_source" value="Demme Learning Blog" />
-            <input type="hidden" id="referral_url" name="referral_url" value="">
-          </form>
+
+        <div id="res-form" [class.resource-options]="resourceMonitorOpen" [class.hideme]="!resourceMonitorOpen">
+          <h3>Hidden Resource Meta Values</h3><hr>
+
+          <label class="resource-labels" for="">Description</label>
+          <select class="resource-editor-field" name="" id="both-resource-description">
+            <option value="Back to Homeschool">Back to Homeschool</option>
+            <option value="Addition Facts Lead Gen Form">Addition Facts Lead Gen Form</option>
+            <option value="Homeschool Sample Lead Gen Form">Homeschool Sample Lead Gen Form</option>
+            <option value="Placement Consultation for Alpha">Placement Consultation for Alpha</option>
+            <option value="SYS Homepage Lead Gen Form">SYS Homepage Lead Gen Form</option>
+            <option value="MUS Slider Lead Gen Form">MUS Slider Lead Gen Form</option>
+            <option value="MUS Main Contact Form">MUS Main Contact Form</option>
+          </select>
+
+          <label class="resource-labels" for="">Lead Source</label>
+          <select class="resource-editor-field" name="" id="both-resource-lead-source">
+            <option value="Demme Learning Blog">Demme Learning Blog</option>
+            <option value="Math-U-See Website">Math-U-See Website</option>
+            <option value="Placement Tool">Placement Tool</option>
+            <option value="Spelling You-See Website">Spelling You-See Website</option>
+          </select>
+
+          <input type="checkbox" id="append-listrak">
+          <label class="resource-labels" for="">Enable Listrak Resource</label>
+
+          <br>
+          <label class="resource-labels" for="">Listrak Source</label>
+          <input type="text" id="listrak-source-resource" placeholder="Edit" disabled>
+          <label class="resource-labels" for="">Listrak External Id.</label>
+          <input type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
+          <hr>
+          <button (click)="resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
         </div>
-  
+
+        <div id="sub-view">
+          <div id="consult-form-container" style="background-color:#343e79;max-width:1120px;padding:15px 40px;color:#fff;">
+            <!-- FORM START -->
+            <form id="lead-gen-form-input" method="POST" action="/lead-gen-handler.php">
+              <input type="hidden" name="listrak_source" value="2403731" />
+              <input type="hidden" name="listrak_external_id" value="13064" />
+              <input type="hidden" name="description" value="Back to Homeschool" />
+              <input type="hidden" name="lead_source" value="Demme Learning Blog" />
+              <input type="hidden" id="referral_url" name="referral_url" value="">
+            </form>
+          </div>
+        </div>
+
       </div>
   
   </div> <!-- MAIN WINDOW -->
@@ -117,21 +152,9 @@
     </div>
     
   </div> <!-- Option Wrapper -->
+  <div class="bottom-feed">
+    <p class="bottom-text">Current Resource: </p>
 
-  <!-- <script type="text/javascript">
-
-    function renderCapcha() {
-      var captchaContainer = null;
-      var loadCaptcha = function() {
-        captchaContainer = grecaptcha.render('captcha_container', {
-          'sitekey' : 'Your sitekey',
-          'callback' : function(response) {
-            console.log(response);
-          }
-        });
-      };
-    }
-
-  </script> -->
+  </div>
   <script src="https://www.google.com/recaptcha/api.js?onload=toCapcha&render=explicit" async defer></script>
   

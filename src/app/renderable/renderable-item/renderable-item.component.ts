@@ -21,27 +21,31 @@ export class RenderableItemComponent implements OnInit {
   public whichStyle   : Boolean;
   public activeSchoolWidget : Boolean;
   public finalHTML    : String;
-  public musStyle : Object;
-  public sysStyle : Object;
+  public musStyle     : Object;
+  public sysStyle     : Object;
   public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
   public history : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
   public optLabel : HTMLElement;
+  public resourceMonitorOpen : Boolean;
+  public resourceListrakCheck : Boolean;
   
   constructor() {
     this.history = [];
   }
   
   ngOnInit() {
-
-    this.modalActive = false;
-    this.editor = new Editor;
-    this.widgeteer = new Widgeteer;
+    this.modalActive          = false;
+    this.resourceListrakCheck = false;
+    this.resourceMonitorOpen  = false;
+    this.editor     = new Editor;
+    this.widgeteer  = new Widgeteer;
     this.openEditor("noField");
     this.setWindowHeight();
     // start with MUS style
     this.musStyle     = this.editor.MUS;
     this.sysStyle     = this.editor.SYS;
     this.currentStyle = this.musStyle;  
+    this.optLabel = document.getElementById('editor-title');
 
     this.stylizer(this.currentStyle["title"], true);
     
@@ -162,6 +166,8 @@ export class RenderableItemComponent implements OnInit {
         return this.makeWidget(idBy);
     else if (idBy == "heading")
         return this.makeHeading(elem);
+    else if (idBy == "resourceMonitor")
+        return
 
     var auxNodes : Object; // i.e. <option> units for select boxes
     let encaps   : Element = document.createElement("DIV");
@@ -440,15 +446,15 @@ export class RenderableItemComponent implements OnInit {
       
       let inField  = document.getElementById('nglabeling');
       let reqField = document.getElementById('ngrequirement') || null;
-      let optLabel = document.getElementById('editor-title');
+
 
       inField.setAttribute('data-default', '');
 
       if(idBy == "schoolWidget") {
-        optLabel.innerText = "Assign To ";
+        this.optLabel.innerText = "Assign To ";
       }
       else
-        optLabel.innerText = "Options";
+        this.optLabel.innerText = "Options";
 
       if (reqField != null)
         reqField.setAttribute('data-default', '');
@@ -573,7 +579,11 @@ export class RenderableItemComponent implements OnInit {
     return headingContainer;
 
   }
+  openResource(e : Event, type : string, IdBy : string) : void {
 
+    this.resourceMonitorOpen = true;
+
+  }
   makeWidget(widget : string) : HTMLElement {
     /**
      *  TODO : MOVE THIS TO A SEPARATE CLASS
@@ -581,22 +591,21 @@ export class RenderableItemComponent implements OnInit {
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      */
-    
+    let resourceWidget = document.getElementById('');
     switch(widget) {
-    
+      
       case "schoolWidget" :
         this.activeSchoolWidget = true;
-        return this.widgeteer.makeWidget(widget, this.currentStyle, this.editor.General);
-
-      case "CRMResource" :
-        break;
-      case "ListrakResource" : 
-        break;
-      case "BothResource" :
+      case "ResourceMonitor":
+        this.resourceMonitorOpen = true;
         break;
       default :
         return;
+
     }
+
+    return this.widgeteer.makeWidget(widget, this.currentStyle, this.editor.General);
+
   }
 
   copy2clip () {
@@ -620,6 +629,8 @@ export class RenderableItemComponent implements OnInit {
      *  therefore style specificity should be achieved via tag name or attribute.
      *  Note that every dynamic element is acquired as a <NodeList> even if there is only 1
      */
+
+
 
     let container   = document.getElementById('consult-form-container');
 
@@ -662,6 +673,7 @@ export class RenderableItemComponent implements OnInit {
 
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
+        
         // <moot> The loop implies that there could be more than one submit button to stylize </moot>
         allSubmits[i].setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
         allSubmits[i].setAttribute('value', submitText);
@@ -743,6 +755,12 @@ export class RenderableItemComponent implements OnInit {
     // Apply outer-most style
     container.setAttribute("style", this.currentStyle["container"]);
 
+    // Maintain resource monitor window styles
+    let resourceNodes = document.getElementById('res-form').children;
+    for (let i = 0; i < resourceNodes.length; i++)
+      resourceNodes[i].setAttribute("style", "");
+
+
     // target the previously active .active and remove the class
     deactivated.classList.remove("active");
 
@@ -795,7 +813,7 @@ export class RenderableItemComponent implements OnInit {
       for (let i = 0; i < isThereAwidget.length; i++)
         this.configureWidgets(<HTMLElement>isThereAwidget[i]);
 
-    this.finalHTML    = <string> document.getElementById('view-form').innerHTML;
+    this.finalHTML    = <string> document.getElementById('sub-view').innerHTML;
     // Display Modal and Dim the lights
     this.modal.style.display = "block";
 

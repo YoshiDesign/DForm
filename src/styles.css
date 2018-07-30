@@ -1,11 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 input { margin:10px 0; }
-body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
+body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; color:darkorange;}
 
 .active {
     border:1px solid rgb(13, 132, 201);
     color:rgb(13, 132, 201);
+}
+.hideme {
+    display : none;
+}
+
+.resource-options {
+    width: 100%;
+    border: 1px solid black;
+    padding:1.5em;
+
+}
+
+.resource-options-in {
+    width: 150px;
+}
+
+.resource-editor-field {
+    display:block;
+}
+.resource-labels {
+    margin:20px 20px;
 }
 #modal-html-view {
     display: none;
@@ -15,7 +36,10 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     left:0;
     right:0;
     background:rgba(0,0,0,0.3);
+}
 
+.bottom-text {
+    color:white;
 }
 .mus-color {
     background:#4e5a9c;
@@ -23,6 +47,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
 .sys-color {
     background:rgb(255, 245, 226);
 }
+
 .can-hide {
     background-color:white;
     position:relative;
@@ -89,7 +114,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default;}
     color:white;
     padding:35px;
 }
-#copy-btn {
+.copy-btn {
     font-variant: small-caps;
     width:20%;
     margin:auto 40%;
