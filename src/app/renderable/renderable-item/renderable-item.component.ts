@@ -236,7 +236,7 @@ export class RenderableItemComponent implements OnInit {
         
         return encaps;
 
-      case "AddressField":
+      case "addressField":
 
         if (otherOpt == 2) {
           label.textContent = "Address 2";

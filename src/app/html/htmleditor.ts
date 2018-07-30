@@ -72,7 +72,9 @@ export default class HTMLeditors {
                 || idBy == "dateField" 
                 || idBy == "selectField"
                 || idBy == "fileField"
-                || idBy == "passwdField")
+                || idBy == "passwdField"
+                || idBy == "zipField"
+                || idBy == "addressField")
                     this.isRequired.setAttribute("checked", "");
 
                 // If making these, start with disabled required field
