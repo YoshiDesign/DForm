@@ -30,6 +30,16 @@ export default class HTMLeditors {
                 this.container.appendChild(this.labelInput);
 
                 return this.container;
+            case "schoolWidget":
+                this.resetEditor();
+                console.log("IN");
+                this.container.setAttribute("id", "ngsubmit-els-editor");
+                this.labelInput.setAttribute("id", "nglabeling");
+                this.labelInput.setAttribute("type", "text");
+                this.labelInput.setAttribute("value", "Homeschool")
+                this.container.appendChild(this.labelInput);
+                console.log("OUT");
+                return this.container;
 
             case "noField" || null:
                 return null;
@@ -178,12 +188,13 @@ export default class HTMLeditors {
             width: 150px;
             border-radius: 0;
             border: none;
-            border-bottom: 2px solid #0054a5;
+            border-bottom: 2px solid #fff;
             height: 40px;
-            background-color: #f7f7f7;
-            color: #333;
+            background-color: rgba(255, 255, 255, .1);
+            color: #fff;
             padding: 0 0 0 5px;
             font-size: 25px;
+            text-align:right;
         `,
 
         "TextAreaStyle" : `
@@ -326,7 +337,7 @@ export default class HTMLeditors {
         `,
 
         "MinorInput" : `
-            width: 300px;
+            width: 150px;
             border-radius: 0;
             border: none;
             border-bottom: 2px solid #0054a5;
@@ -335,6 +346,7 @@ export default class HTMLeditors {
             color: #333;
             padding: 0 0 0 5px;
             font-size: 25px;
+            text-align: right;
         `,
 
         "MinorInputResp" : `
@@ -500,7 +512,8 @@ export default class HTMLeditors {
          // Checkbox for assigning requirement status
          this.isRequired = document.createElement('INPUT');
          this.isRequired.setAttribute('type', 'checkbox');
-         this.isRequired.setAttribute("id", "ngrequirement");
+         this.isRequired.setAttribute('id', "ngrequirement");
+
     }
 
 }

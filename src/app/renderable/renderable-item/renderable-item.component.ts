@@ -25,6 +25,7 @@ export class RenderableItemComponent implements OnInit {
   public sysStyle : Object;
   public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
   public history : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
+  public optLabel : HTMLElement;
   
   constructor() {
     this.history = [];
@@ -87,16 +88,20 @@ export class RenderableItemComponent implements OnInit {
   }
 
   toggleRemove(clearAll? : Boolean) : void {
-    let findMostRecentField = document.getElementById('lead-gen-form-input');
+
+    let findMostRecentField = document.getElementById('lead-gen-form-input'); // Acquires the <form>
     let isItaWidget = document.querySelectorAll('[data-widget-target]') || null;
     let widgetsLength = isItaWidget.length;
-    let allLength = findMostRecentField.children.length;
+    let allLength = findMostRecentField.children.length; // Length of all <form>'s children
+
+    console.log(this.history);
 
     if(clearAll)
     {
       this.history = [];
       this.openEditor("noField");
-
+      this.optLabel.innerText = "Options";
+      
       var allNewFields = document.querySelectorAll('div[data-dynaform]');
       for (let i  in allNewFields){
         if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
@@ -110,25 +115,35 @@ export class RenderableItemComponent implements OnInit {
       return;
     }
 
-    // Handle widgets here
+    /**
+     * Handle widget reduction
+     */
+
+    // If there is a widget and it is at the "front of the line"
     if (isItaWidget && 
       findMostRecentField.children[allLength - 1]
       .hasAttribute("data-widget-target"))
     {
+      
+      // Which widget is it?
       if (isItaWidget[widgetsLength - 1].id == "school-widget")
         this.activeSchoolWidget = false;
     }
 
+    // Update history
     this.history.pop();
+
+    // Display based on last history element
     this.openEditor(this.history[this.history.length - 1]);
     
-    let dontRemove = <HTMLElement>findMostRecentField.childNodes[allLength-1];
+    // Sanity check
+    // let dontRemove = <HTMLElement>findMostRecentField.childNodes[allLength-1];
+    // if (!(dontRemove.hasAttribute('data-dynaform')))
+    //   return;
+    // else  
 
-    if (!(dontRemove.hasAttribute('data-dynaform')))
-      return;
-    else  
-      findMostRecentField.removeChild(findMostRecentField.childNodes[allLength - 1]);
-    
+    // Remove most recently added form field
+    findMostRecentField.removeChild(findMostRecentField.childNodes[allLength - 1]);
   }
 
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
@@ -142,11 +157,16 @@ export class RenderableItemComponent implements OnInit {
      */
 
     // <HTMLElement> factory for the form to be generated
+    
+    if (elem == "widget")
+        return this.makeWidget(idBy);
+    else if (idBy == "heading")
+        return this.makeHeading(elem);
 
     var auxNodes : Object; // i.e. <option> units for select boxes
     let encaps   : Element = document.createElement("DIV");
     let label    : Element = document.createElement("LABEL");
-
+    
     // determine node
     if (elem == "select")
       var input : Element = document.createElement("SELECT");
@@ -178,10 +198,6 @@ export class RenderableItemComponent implements OnInit {
      */
 
     // If we need a widget, get the widget and exit.
-    if (elem == "widget")
-        return this.makeWidget(idBy);
-    else if (idBy == "heading")
-        return this.makeHeading(elem);
     
     // Factory
     switch (idBy) {
@@ -391,11 +407,10 @@ export class RenderableItemComponent implements OnInit {
     var newEditorEls : HTMLElement;
     var oldNode : HTMLElement;
     
+    console.log(this.history);
+
     // Populate Editor window accordingly
     if (this.history[0] == undefined)
-      newEditorEls = null;
-    // No editor for widgets : UPDATE when there are more widgets : if (idBy in [current widgets] )
-    else if (idBy == "schoolWidget")
       newEditorEls = null;
     else
       newEditorEls = <HTMLElement> this.editor
@@ -413,6 +428,7 @@ export class RenderableItemComponent implements OnInit {
       oldNode.remove();
     }
 
+    // Add 
     editorWindow.appendChild(newEditorEls);
 
     if (editorWindow.innerHTML)
@@ -421,12 +437,21 @@ export class RenderableItemComponent implements OnInit {
        * nglabeling is the EDITOR'S CURRENT INPUT FIELD.
        *
        */
-
-
+      
       let inField  = document.getElementById('nglabeling');
-      inField.setAttribute('data-default', '');
       let reqField = document.getElementById('ngrequirement') || null;
+      let optLabel = document.getElementById('editor-title');
 
+      inField.setAttribute('data-default', '');
+
+      if(idBy == "schoolWidget") {
+        optLabel.innerText = "Assign To ";
+      }
+      else
+        optLabel.innerText = "Options";
+
+      if (reqField != null)
+        reqField.setAttribute('data-default', '');
       /**
        * Things our editor can do
        */
@@ -444,18 +469,17 @@ export class RenderableItemComponent implements OnInit {
   }
 
   /** 
-  *   NOTE : Casting to an Event object is usually a bad idea. They are NOT polymorphic across events
+  *   NOTE : Casting to an Event object is usually a bad idea. They are NOT the same object for every event.
   */
 
   changeLabel(e,  idBy : string) : void {
 
     /**
     *   This is a keystroke listener for the editor
-     *  The event variable is of the next lower ordered functions stack frame
+    *   The event variable is of the next lower ordered functions stack frame
      */
 
     // Most recently added elem's <label>
-
     let lastFormLabel : Node;
     let formLabels : NodeList;
 
@@ -478,7 +502,10 @@ export class RenderableItemComponent implements OnInit {
 
       lastHeading.textContent = e.target.value;
     }
-
+    else if (idBy == "schoolWidget") {
+      var assignTo = document.getElementById("assign_to");
+      assignTo.setAttribute('value', e.target.value);
+    }
     else {
 
       // ng-anchor-label(s) exist on each of the rendering form's labels
@@ -503,16 +530,16 @@ export class RenderableItemComponent implements OnInit {
      * Control the checkedness of the editors requirement checkbox
      */
 
-
     // Every generated element on the screen. Sans submit btns
     let enabledItems = document.querySelectorAll('[data-ng-el]');
     // the most recent addition
     let currentItem = enabledItems[enabledItems.length - 1];
 
+    // Check the box in the editor on init
     if (currentItem.hasAttribute("required"))
       e.target.setAttribute("checked",'');
 
-    // Respond to editor's 'required' checkbox
+    // Response to editor's 'required' checkbox
     if (e.target.checked) {
       currentItem.setAttribute("required", "required");
     } else if (!e.target.checked) {
@@ -560,13 +587,19 @@ export class RenderableItemComponent implements OnInit {
       case "schoolWidget" :
         this.activeSchoolWidget = true;
         return this.widgeteer.makeWidget(widget, this.currentStyle, this.editor.General);
-        
+
+      case "CRMResource" :
+        break;
+      case "ListrakResource" : 
+        break;
+      case "BothResource" :
+        break;
       default :
         return;
     }
   }
 
-  copy2Clip () {
+  copy2clip () {
 
     let copyText = <HTMLTextAreaElement> document.getElementById("pretty-print");
     let copied = document.getElementById('copy-btn');
@@ -641,13 +674,19 @@ export class RenderableItemComponent implements OnInit {
           continue;
         if (allInputs[i].getAttribute('type') == "text" || "email" || "password" || "tel") 
         {
-          // Applies the style for the selected style
-          if(!(allInputs[i].hasAttribute('ng-sub')))
-            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
-
-          // Our option editor's input field.
+          // Relates to option editor
           if (allInputs[i].hasAttribute('data-default'))
-            allInputs[i].setAttribute('style', this.editor.General["DefaultInputStyle"]);
+            continue;
+
+          if (allInputs[i].getAttribute("name") == "zip_code") {
+            console.log("lol");
+            allInputs[i].setAttribute('style', this.currentStyle["MinorInput"]);
+            continue;
+          }
+
+          // Applies the style for the selected style
+          if (!(allInputs[i].hasAttribute('ng-sub')))
+            allInputs[i].setAttribute('style', this.currentStyle["MajorInput"]);
 
           // WIDGETS : POTENTIAL (easily mitigated) CONFLICT - Widgets are only effected when they contain an input of the above if(types) i.e. text || email...etc
           if (allInputs[i].parentElement.hasAttribute('data-widget-target'))
