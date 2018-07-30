@@ -760,7 +760,6 @@ export class RenderableItemComponent implements OnInit {
     for (let i = 0; i < resourceNodes.length; i++)
       resourceNodes[i].setAttribute("style", "");
 
-
     // target the previously active .active and remove the class
     deactivated.classList.remove("active");
 

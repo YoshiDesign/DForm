@@ -85,7 +85,6 @@ export default class HTMLeditors {
                 || idBy == "timeField" 
                 || idBy == "rangeField")
                     this.isRequired.removeAttribute("checked");
-
                 
                 this.container.setAttribute("id", "ngsubmit-els-editor");
 

@@ -13,7 +13,7 @@
           <textarea id="pretty-print"></textarea>
 
        
-          <button (click)="copy2clip()" class="btn btn-success" class="new-btn" id="copy-btn">COPY</button>
+          <button (click)="copy2clip()" class="btn btn-success" id="copy-btn">COPY</button>
       </div>
       
     </div>
@@ -71,44 +71,44 @@
         </div>
 
 
-
-          
       </div>
       <!-- Hidden Element Editor -->
       <div class="main-app" id="view-form" [class]="whichStyle ? 'mus-color' : 'sys-color'">
 
         <div id="res-form" [class.resource-options]="resourceMonitorOpen" [class.hideme]="!resourceMonitorOpen">
           <h3>Hidden Resource Meta Values</h3><hr>
+          <div class="inner-res-form">
+            <label class="resource-labels" for="">Description</label>
+            <select class="resource-editor-field" name="" id="both-resource-description">
+              <option value="Back to Homeschool">Back to Homeschool</option>
+              <option value="Addition Facts Lead Gen Form">Addition Facts Lead Gen Form</option>
+              <option value="Homeschool Sample Lead Gen Form">Homeschool Sample Lead Gen Form</option>
+              <option value="Placement Consultation for Alpha">Placement Consultation for Alpha</option>
+              <option value="SYS Homepage Lead Gen Form">SYS Homepage Lead Gen Form</option>
+              <option value="MUS Slider Lead Gen Form">MUS Slider Lead Gen Form</option>
+              <option value="MUS Main Contact Form">MUS Main Contact Form</option>
+            </select>
 
-          <label class="resource-labels" for="">Description</label>
-          <select class="resource-editor-field" name="" id="both-resource-description">
-            <option value="Back to Homeschool">Back to Homeschool</option>
-            <option value="Addition Facts Lead Gen Form">Addition Facts Lead Gen Form</option>
-            <option value="Homeschool Sample Lead Gen Form">Homeschool Sample Lead Gen Form</option>
-            <option value="Placement Consultation for Alpha">Placement Consultation for Alpha</option>
-            <option value="SYS Homepage Lead Gen Form">SYS Homepage Lead Gen Form</option>
-            <option value="MUS Slider Lead Gen Form">MUS Slider Lead Gen Form</option>
-            <option value="MUS Main Contact Form">MUS Main Contact Form</option>
-          </select>
+            <label class="resource-labels" for="">Lead Source</label>
+            <select class="resource-editor-field" name="" id="both-resource-lead-source">
+              <option value="Demme Learning Blog">Demme Learning Blog</option>
+              <option value="Math-U-See Website">Math-U-See Website</option>
+              <option value="Placement Tool">Placement Tool</option>
+              <option value="Spelling You-See Website">Spelling You-See Website</option>
+            </select>
 
-          <label class="resource-labels" for="">Lead Source</label>
-          <select class="resource-editor-field" name="" id="both-resource-lead-source">
-            <option value="Demme Learning Blog">Demme Learning Blog</option>
-            <option value="Math-U-See Website">Math-U-See Website</option>
-            <option value="Placement Tool">Placement Tool</option>
-            <option value="Spelling You-See Website">Spelling You-See Website</option>
-          </select>
+            <input type="checkbox" id="append-listrak">
+            <label class="resource-labels" for="">Enable Listrak Resource</label>
 
-          <input type="checkbox" id="append-listrak">
-          <label class="resource-labels" for="">Enable Listrak Resource</label>
-
-          <br>
-          <label class="resource-labels" for="">Listrak Source</label>
-          <input type="text" id="listrak-source-resource" placeholder="Edit" disabled>
-          <label class="resource-labels" for="">Listrak External Id.</label>
-          <input type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
-          <hr>
-          <button (click)="resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
+            <br>
+            <label class="resource-labels" for="">Listrak Source</label>
+            <input type="text" id="listrak-source-resource" placeholder="Edit" disabled>
+            <br>
+            <label class="resource-labels" for="">Listrak External Id.</label>
+            <input type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
+            <hr>
+            <button (click)="resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
+          </div>
         </div>
 
         <div id="sub-view">
