@@ -78,13 +78,13 @@ export default class HTMLeditors {
                     this.isRequired.setAttribute("checked", "");
 
                 // If making these, start with disabled required field
-                if (idBy == "textareaField" 
-                || idBy == "radioField" 
-                || idBy == "numberField" 
-                || idBy == "colorField" 
-                || idBy == "timeField" 
-                || idBy == "rangeField")
-                    this.isRequired.removeAttribute("checked");
+                // if (idBy == "textareaField" 
+                // || idBy == "radioField" 
+                // || idBy == "numberField" 
+                // || idBy == "colorField" 
+                // || idBy == "timeField" 
+                // || idBy == "rangeField")
+                //     this.isRequired.removeAttribute("checked");
                 
                 this.container.setAttribute("id", "ngsubmit-els-editor");
 

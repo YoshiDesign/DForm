@@ -92,17 +92,17 @@ export class RenderableItemComponent implements OnInit {
 
     // Send new input to the next available field
     form.appendChild(newInput);
-
+    this.updateRequired();
     event.stopPropagation();
   }
 
-  toggleRemove(clearAll? : Boolean) : void {
+  toggleRemove(clearAll? : Boolean, update? : Boolean) : void {
 
+    this.updateRequired();
     
     let isItaWidget = document.querySelectorAll('[data-widget-target]') || null;
     let widgetsLength = isItaWidget.length;
     let allLength = this.theForm.children.length; // Length of all <form>'s children
-    let reqBox = document.getElementById('ngrequirement') || null;
 
     console.log(this.history);
 
@@ -155,8 +155,18 @@ export class RenderableItemComponent implements OnInit {
     // Remove most recently added form field
     this.theForm.removeChild(this.theForm.childNodes[allLength - 1]);
 
-    let reqField = document.getElementById('ngrequirement');
-    let allInputs = document.querySelectorAll('input[data-ng-el]') || null;
+    this.updateRequired();
+    
+  }
+  updateRequired () {
+    
+    // This block of code checks the requirement status of the latest form field and updates the editors "required" checkbox
+    let reqField = document.getElementById('ngrequirement') || null;
+    let allInputs = document.querySelectorAll('[data-ng-el]');
+
+    if (reqField == null)
+      return;
+
       console.log("ALLINPUT" + allInputs);
       if (allInputs.length != 0) {
         console.log('step 1');
@@ -169,9 +179,8 @@ export class RenderableItemComponent implements OnInit {
           reqField.removeAttribute('checked');
         }
       }
-
+    
   }
-
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
 
     /** 
