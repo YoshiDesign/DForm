@@ -78,6 +78,7 @@
         <div id="res-form" [class.resource-options]="resourceMgr.resourceMonitorOpen" [class.hideme]="!resourceMgr.resourceMonitorOpen">
           <h3>Hidden Resources</h3><hr>
           <div class="inner-res-form">
+            <h4>CRM</h4>
             <label class="resource-labels" for="">Description</label>
             <select class="resource-editor-field" name="" id="both-resource-description">
               <option value="Back to Homeschool">Back to Homeschool</option>
@@ -99,6 +100,7 @@
             <input (click)="resourceMgr.activateListrak($event)" type="checkbox" id="append-listrak">
             <label class="resource-labels" for="">Enable Listrak Resource</label>
             <div id="listracking">
+              <h4 disabled>Listrak</h4>
             <br>
             <label class="resource-labels" for="">Listrak Source</label>
             <input (keyup)="changer()" class="listracker" type="text" id="listrak-source-resource" placeholder="Edit" disabled>
