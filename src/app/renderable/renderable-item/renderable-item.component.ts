@@ -158,6 +158,7 @@ export class RenderableItemComponent implements OnInit {
     this.updateRequired();
     
   }
+
   updateRequired () {
     
     // This block of code checks the requirement status of the latest form field and updates the editors "required" checkbox
@@ -623,6 +624,7 @@ export class RenderableItemComponent implements OnInit {
       
       case "schoolWidget" :
         this.activeSchoolWidget = true;
+        break;
       case "ResourceMonitor":
         this.resourceMgr.resourceMonitorOpen = true;
         break;
