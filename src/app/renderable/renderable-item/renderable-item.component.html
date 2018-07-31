@@ -28,7 +28,7 @@
 
         <div class="initial-bypass">
 
-          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMonitorOpen"       (click)="openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Resource Monitor</span> <span class="plus">&#8628;</span></button>
+          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Hidden Elements</span> <span class="plus">&#8628;</span></button>
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
@@ -75,8 +75,8 @@
       <!-- Hidden Element Editor -->
       <div class="main-app" id="view-form" [class]="whichStyle ? 'mus-color' : 'sys-color'">
 
-        <div id="res-form" [class.resource-options]="resourceMonitorOpen" [class.hideme]="!resourceMonitorOpen">
-          <h3>Hidden Resource Meta Values</h3><hr>
+        <div id="res-form" [class.resource-options]="resourceMgr.resourceMonitorOpen" [class.hideme]="!resourceMgr.resourceMonitorOpen">
+          <h3>Hidden Resources</h3><hr>
           <div class="inner-res-form">
             <label class="resource-labels" for="">Description</label>
             <select class="resource-editor-field" name="" id="both-resource-description">
@@ -96,18 +96,19 @@
               <option value="Placement Tool">Placement Tool</option>
               <option value="Spelling You-See Website">Spelling You-See Website</option>
             </select>
-
-            <input type="checkbox" id="append-listrak">
+            <input (click)="resourceMgr.activateListrak($event)" type="checkbox" id="append-listrak">
             <label class="resource-labels" for="">Enable Listrak Resource</label>
-
+            <div id="listracking">
             <br>
             <label class="resource-labels" for="">Listrak Source</label>
-            <input type="text" id="listrak-source-resource" placeholder="Edit" disabled>
+            <input (keyup)="changer()" class="listracker" type="text" id="listrak-source-resource" placeholder="Edit" disabled>
             <br>
             <label class="resource-labels" for="">Listrak External Id.</label>
-            <input type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
+            <input class="listracker" type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
+          </div> <!-- Listracking -->
+          
             <hr>
-            <button (click)="resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
+            <button (click)="resourceMgr.resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Editor from '../../html/htmleditor';
 import Widgeteer from '../../widgeteer/widgeteer';
+import { ResourceManager } from '../../resourceManager/resource-manager';
 import { Input } from '@angular/compiler/src/core';
 
 
@@ -12,9 +13,9 @@ import { Input } from '@angular/compiler/src/core';
 })
 export class RenderableItemComponent implements OnInit {
 
-  public editor : Editor;          // Custom class. Defines our styles, Option editor inputs and other static items.
-  public widgeteer : Widgeteer;
-  public modal  : HTMLElement;
+  public editor       : Editor;          // Custom class. Defines our styles, Option editor inputs and other static items.
+  public widgeteer    : Widgeteer;
+  public resourceMgr  : ResourceManager;
   public illegalInputEvent  : RegExp;
   public illegalInputScript : RegExp;
   public modalActive  : Boolean;
@@ -24,10 +25,11 @@ export class RenderableItemComponent implements OnInit {
   public musStyle     : Object;
   public sysStyle     : Object;
   public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
-  public history : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
+  public history  : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
   public optLabel : HTMLElement;
-  public resourceMonitorOpen : Boolean;
-  public resourceListrakCheck : Boolean;
+  public modal    : HTMLElement;
+  public theForm  : HTMLElement;
+  
   
   constructor() {
     this.history = [];
@@ -35,8 +37,7 @@ export class RenderableItemComponent implements OnInit {
   
   ngOnInit() {
     this.modalActive          = false;
-    this.resourceListrakCheck = false;
-    this.resourceMonitorOpen  = false;
+    this.resourceMgr = new ResourceManager;
     this.editor     = new Editor;
     this.widgeteer  = new Widgeteer;
     this.openEditor("noField");
@@ -46,14 +47,18 @@ export class RenderableItemComponent implements OnInit {
     this.sysStyle     = this.editor.SYS;
     this.currentStyle = this.musStyle;  
     this.optLabel = document.getElementById('editor-title');
-
+    this.theForm = document.getElementById('lead-gen-form-input'); // Acquires the <form>
     this.stylizer(this.currentStyle["title"], true);
     
     // currently all dynamic HTML is disabled by default so these are useless.
     // this.illegalInputEvent = /"\bon[A-Z]+"/;
     // this.illegalInputScript = /"\b<script>"/;
   }
-  
+
+  changer () {
+    console.log("hi");
+  }
+
   toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
     /** 
     *   otherOpt is a universal flag for optional behavior. See makeField()s docstring
@@ -93,10 +98,11 @@ export class RenderableItemComponent implements OnInit {
 
   toggleRemove(clearAll? : Boolean) : void {
 
-    let findMostRecentField = document.getElementById('lead-gen-form-input'); // Acquires the <form>
+    
     let isItaWidget = document.querySelectorAll('[data-widget-target]') || null;
     let widgetsLength = isItaWidget.length;
-    let allLength = findMostRecentField.children.length; // Length of all <form>'s children
+    let allLength = this.theForm.children.length; // Length of all <form>'s children
+    let reqBox = document.getElementById('ngrequirement') || null;
 
     console.log(this.history);
 
@@ -125,7 +131,7 @@ export class RenderableItemComponent implements OnInit {
 
     // If there is a widget and it is at the "front of the line"
     if (isItaWidget && 
-      findMostRecentField.children[allLength - 1]
+      this.theForm.children[allLength - 1]
       .hasAttribute("data-widget-target"))
     {
       
@@ -141,13 +147,29 @@ export class RenderableItemComponent implements OnInit {
     this.openEditor(this.history[this.history.length - 1]);
     
     // Sanity check
-    // let dontRemove = <HTMLElement>findMostRecentField.childNodes[allLength-1];
+    // let dontRemove = <HTMLElement>this.theForm.childNodes[allLength-1];
     // if (!(dontRemove.hasAttribute('data-dynaform')))
     //   return;
     // else  
 
     // Remove most recently added form field
-    findMostRecentField.removeChild(findMostRecentField.childNodes[allLength - 1]);
+    this.theForm.removeChild(this.theForm.childNodes[allLength - 1]);
+
+    let reqField = document.getElementById('ngrequirement');
+    let allInputs = document.querySelectorAll('input[data-ng-el]') || null;
+      console.log("ALLINPUT" + allInputs);
+      if (allInputs.length != 0) {
+        console.log('step 1');
+        if (allInputs[allInputs.length - 1].hasAttribute('required')) {
+          console.log("adding");
+          reqField.setAttribute('checked', '');
+        }
+        else {
+          console.log('removing');
+          reqField.removeAttribute('checked');
+        }
+      }
+
   }
 
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
@@ -260,6 +282,7 @@ export class RenderableItemComponent implements OnInit {
       case "checkboxField":
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["CheckBoxes"]);
+        input.setAttribute('required', 'required');
         encaps.appendChild(input);
         encaps.appendChild(label);
         return encaps;
@@ -406,7 +429,7 @@ export class RenderableItemComponent implements OnInit {
       }
     }
 
-  openEditor = (idBy : string) : void => {
+  openEditor (idBy : string) : void {
     
     // Acquire Editor space and get the corresponding editor from editor.editorNodes
     var editorWindow = document.getElementById('in-editor');
@@ -441,37 +464,36 @@ export class RenderableItemComponent implements OnInit {
     {
       /**
        * nglabeling is the EDITOR'S CURRENT INPUT FIELD.
-       *
        */
       
       let inField  = document.getElementById('nglabeling');
       let reqField = document.getElementById('ngrequirement') || null;
 
-
       inField.setAttribute('data-default', '');
 
-      if(idBy == "schoolWidget") {
+      // Large Editor Label
+      if(idBy == "schoolWidget") 
         this.optLabel.innerText = "Assign To ";
-      }
       else
         this.optLabel.innerText = "Options";
 
-      if (reqField != null)
-        reqField.setAttribute('data-default', '');
       /**
        * Things our editor can do
        */
 
-      // Live label editor
+      // Live label editing
       inField.addEventListener( 'input', (e)=>{this.changeLabel(e, idBy)} );
 
-      // Live requirement attribute checkbox
-      if (reqField != null)
+      // Add or remove [required]
+      if (reqField != null) {
+        reqField.setAttribute('data-default', '');
         reqField.addEventListener('input', (e)=>{this.changeRequirement(e, idBy)} );
-    } 
+      } else return;
 
-    else return;
-
+      // Check for requirement of new last field
+      
+      
+    }
   }
 
   /** 
@@ -579,11 +601,7 @@ export class RenderableItemComponent implements OnInit {
     return headingContainer;
 
   }
-  openResource(e : Event, type : string, IdBy : string) : void {
-
-    this.resourceMonitorOpen = true;
-
-  }
+ 
   makeWidget(widget : string) : HTMLElement {
     /**
      *  TODO : MOVE THIS TO A SEPARATE CLASS
@@ -597,7 +615,7 @@ export class RenderableItemComponent implements OnInit {
       case "schoolWidget" :
         this.activeSchoolWidget = true;
       case "ResourceMonitor":
-        this.resourceMonitorOpen = true;
+        this.resourceMgr.resourceMonitorOpen = true;
         break;
       default :
         return;

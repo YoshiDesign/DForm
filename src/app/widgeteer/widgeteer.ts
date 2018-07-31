@@ -96,15 +96,6 @@ export default class Widgeteer {
 
                 return outerContainer;
 
-            case "ListrakResource" : 
-
-                let lead_source;
-                let listrak_source;
-                let description;
-                break;
-        
-            case "CRMResource" : 
-                break;
         
         }
 

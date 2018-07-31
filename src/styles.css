@@ -12,12 +12,16 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; co
 }
 
 .resource-options {
-    width: 100%;
+    max-width: 1120px;
     border: 1px solid black;
     padding:1.5em;
+    transition: all 0.9s;
 
 }
-
+.listracker:disabled {
+    color:#F9F9F9;
+    background-color:#A8A8A8;
+}
 .resource-options-in {
     width: 150px;
 }
@@ -26,7 +30,11 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; co
     display:block;
 }
 .resource-labels {
+    width:auto;
     margin:15px 20px 2px 5px;
+}
+.resource-labels + input {
+
 }
 #modal-html-view {
     display: none;
