@@ -48,10 +48,6 @@ export class RenderableItemComponent implements OnInit {
     this.optLabel = document.getElementById('editor-title');
     this.theForm = document.getElementById('lead-gen-form-input'); // Acquires the <form>
     this.stylizer(this.currentStyle["title"], true);
-    
-    // currently all dynamic HTML is disabled by default so these are useless.
-    // this.illegalInputEvent = /"\bon[A-Z]+"/;
-    // this.illegalInputScript = /"\b<script>"/;
   }
 
   toggleAdd(
@@ -136,16 +132,16 @@ export class RenderableItemComponent implements OnInit {
       this.theForm.children[allLength - 1]
       .hasAttribute("data-widget-target"))
     {
-      
       // Which widget is it?
       if (isItaWidget[widgetsLength - 1].id == "school-widget")
         this.activeSchoolWidget = false;
+
     }
 
     // Update history
     this.history.pop();
 
-    // Display based on last history element
+    // Display based on last idBy in history
     this.openEditor(this.history[this.history.length - 1]);
     
     // Sanity check
@@ -153,7 +149,6 @@ export class RenderableItemComponent implements OnInit {
     // if (!(dontRemove.hasAttribute('data-dynaform')))
     //   return;
     // else  
-
     // Remove most recently added form field
     this.theForm.removeChild(this.theForm.childNodes[allLength - 1]);
 
@@ -193,14 +188,13 @@ export class RenderableItemComponent implements OnInit {
     // <HTMLElement> factory for the form to be generated
 
     /** 
-     * Other Option Values : 
+     *    Other Option Values : 
      * 
      *    0 == (null)
      *    1 == make a last name input instead of a first name input
      *    2 == make an address_2 field
      */
 
-    
     if (elem == "widget")
         return this.makeWidget(idBy);
     else if (idBy == "heading")
