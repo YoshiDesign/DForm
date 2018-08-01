@@ -109,7 +109,6 @@ export class ResourceManager {
         this.theForm.appendChild(leadSrcField);
         this.theForm.appendChild(referralUrlField);
         
-
         this.resourceMonitorOpen = false;
 
       }

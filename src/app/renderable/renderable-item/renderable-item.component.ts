@@ -473,10 +473,7 @@ export class RenderableItemComponent implements OnInit {
       inField.setAttribute('data-default', '');
 
       // Large Editor Label
-      if(idBy == "schoolWidget") 
-        this.optLabel.innerText = "Assign To ";
-      else
-        this.optLabel.innerText = "Options";
+      this.optLabel.innerText = "Options";
 
       /**
        * Things our editor can do
@@ -605,12 +602,10 @@ export class RenderableItemComponent implements OnInit {
  
   makeWidget(widget : string) : HTMLElement {
     /**
-     *  TODO : MOVE THIS TO A SEPARATE CLASS
-     *  Define the CONSTRUCTION of widgets here. 
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      */
-    let resourceWidget = document.getElementById('');
+
     switch(widget) {
       
       case "schoolWidget" :

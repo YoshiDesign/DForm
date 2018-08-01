@@ -6,6 +6,7 @@ export default class HTMLeditors {
     public labelInput : HTMLElement;
     public isRequired : HTMLElement;
     public anyLabel   : HTMLElement;
+    public labelSelect : HTMLElement;
 
     constructor(){
        this.resetEditor();
@@ -30,16 +31,10 @@ export default class HTMLeditors {
                 this.container.appendChild(this.labelInput);
 
                 return this.container;
+                
             case "schoolWidget":
                 this.resetEditor();
-                console.log("IN");
-                this.container.setAttribute("id", "ngsubmit-els-editor");
-                this.labelInput.setAttribute("id", "nglabeling");
-                this.labelInput.setAttribute("type", "text");
-                this.labelInput.setAttribute("value", "Homeschool")
-                this.container.appendChild(this.labelInput);
-                console.log("OUT");
-                return this.container;
+                return null;
 
             case "noField" || null:
                 return null;
@@ -508,6 +503,7 @@ export default class HTMLeditors {
          // Toolbox
          this.container  = document.createElement('DIV');
          this.labelInput = document.createElement('INPUT');
+         this.labelSelect = document.createElement('SELECT');
          this.anyLabel   = document.createElement('LABEL');
  
          // Checkbox for assigning requirement status
