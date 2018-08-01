@@ -23,7 +23,7 @@ export class RenderableItemComponent implements OnInit {
   public activeSchoolWidget : Boolean;
   public finalHTML    : String;
   public musStyle     : Object;
-  public sysStyle     : Object;
+  public sysStyle     : Object; 
   public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
   public history  : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
   public optLabel : HTMLElement;
@@ -55,7 +55,12 @@ export class RenderableItemComponent implements OnInit {
     // this.illegalInputScript = /"\b<script>"/;
   }
 
-  toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
+  toggleAdd(
+    event, 
+    elem : string, 
+    identifiedBy : string, 
+    otherOpt? : number
+  ) {
     /** 
     *   otherOpt is a universal flag for optional behavior. See makeField()s docstring
     */
@@ -92,7 +97,10 @@ export class RenderableItemComponent implements OnInit {
     event.stopPropagation();
   }
 
-  toggleRemove(clearAll? : Boolean, update? : Boolean) : void {
+  toggleRemove(
+    clearAll? : Boolean, 
+    update? : Boolean
+  ) : void {
 
     this.updateRequired();
     
@@ -178,7 +186,11 @@ export class RenderableItemComponent implements OnInit {
     
   }
 
-  makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
+  makeField (
+    elem : string, 
+    idBy : string, 
+    otherOpt? : number
+  ) : Element {
 
     /** 
      * Other Option Values : These values are determined by the function call in renderable-item-component.html
@@ -430,7 +442,9 @@ export class RenderableItemComponent implements OnInit {
       }
     }
 
-  openEditor (idBy : string) : void {
+  openEditor (
+    idBy : string
+  ) : void {
     
     // Acquire Editor space and get the corresponding editor from editor.editorNodes
     var editorWindow = document.getElementById('in-editor');
@@ -485,12 +499,9 @@ export class RenderableItemComponent implements OnInit {
       // Add or remove [required]
       if (reqField != null) {
         reqField.setAttribute('data-default', '');
-        reqField.addEventListener('input', (e)=>{this.changeRequirement(e, idBy)} );
+        reqField.addEventListener('input', (e)=>{this.changeRequirement(e)} );
       } else return;
 
-      // Check for requirement of new last field
-      
-      
     }
   }
 
@@ -498,7 +509,10 @@ export class RenderableItemComponent implements OnInit {
   *   NOTE : Casting to an Event object is usually a bad idea. They are NOT the same object for every event.
   */
 
-  changeLabel(e,  idBy : string) : void {
+  changeLabel (
+    e,  
+    idBy : string
+  ) : void {
 
     /**
     *   This is a keystroke listener for the editor
@@ -550,7 +564,9 @@ export class RenderableItemComponent implements OnInit {
 
   }
 
-  changeRequirement (e, idBy : string) {
+  changeRequirement (
+    e
+  ) : void {
 
     /**
      * Control the checkedness of the editors requirement checkbox
@@ -574,8 +590,9 @@ export class RenderableItemComponent implements OnInit {
 
   }
 
-  makeHeading(elem : string) : HTMLElement
-  {
+  makeHeading(
+    elem : string
+  ) : HTMLElement {
     /**
      * Create customizeable headings
      */
@@ -600,7 +617,9 @@ export class RenderableItemComponent implements OnInit {
 
   }
  
-  makeWidget(widget : string) : HTMLElement {
+  makeWidget(
+    widget : string
+  ) : HTMLElement {
     /**
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
@@ -623,19 +642,20 @@ export class RenderableItemComponent implements OnInit {
 
   }
 
-  copy2clip () {
+  copy2clip () : void {
 
     let copyText = <HTMLTextAreaElement> document.getElementById("pretty-print");
     let copied = document.getElementById('copy-btn');
-
     copyText.select();
     document.execCommand("copy");
-
     copied.innerHTML = "Copied &#x1f44d;";
 
   }
 
-  stylizer(style : string, bypass? : boolean) : void {
+  stylizer (
+    style : string, 
+    bypass? : boolean
+  ) : void {
 
     // Fires when toggling between MUS / SYS : Not from initialization
 
@@ -644,8 +664,6 @@ export class RenderableItemComponent implements OnInit {
      *  therefore style specificity should be achieved via tag name or attribute.
      *  Note that every dynamic element is acquired as a <NodeList> even if there is only 1
      */
-
-
 
     let container   = document.getElementById('consult-form-container');
 
@@ -767,7 +785,7 @@ export class RenderableItemComponent implements OnInit {
 
     }
 
-    // Apply outer-most style
+    // Apply encompassing style
     container.setAttribute("style", this.currentStyle["container"]);
 
     // Dont overwrite resource monitor window styles
@@ -787,7 +805,10 @@ export class RenderableItemComponent implements OnInit {
     return;
 
   }
-  configureWidgets (widget : HTMLElement, reset = false) : void {
+  configureWidgets (
+    widget : HTMLElement, 
+    reset = false
+  ) : void {
 
     /**
      *  Type of widget is the ID value of the outer-most div of the widget
