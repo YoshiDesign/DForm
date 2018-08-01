@@ -99,7 +99,6 @@ export class RenderableItemComponent implements OnInit {
 
   toggleRemove(
     clearAll? : Boolean, 
-    update? : Boolean
   ) : void {
 
     this.updateRequired();
@@ -506,11 +505,11 @@ export class RenderableItemComponent implements OnInit {
   }
 
   /** 
-  *   NOTE : Casting to an Event object is usually a bad idea. They are NOT the same object for every event.
+  *   NOTE : Casting to an Event object is a bad idea. They are NOT the same object for every event.
   */
 
   changeLabel (
-    e,  
+    evt,  
     idBy : string
   ) : void {
 
@@ -531,7 +530,7 @@ export class RenderableItemComponent implements OnInit {
 
       submitLabel = document.querySelectorAll('input[ng-sub]');
       lastSubValue = <HTMLElement> submitLabel[submitLabel.length - 1];
-      lastSubValue.setAttribute('value',e.target.value);
+      lastSubValue.setAttribute('value', evt.target.value);
 
     }
     else if (idBy == "heading")
@@ -540,11 +539,11 @@ export class RenderableItemComponent implements OnInit {
 
       var lastHeading  = <HTMLElement> headingLabel[headingLabel.length - 1];
 
-      lastHeading.textContent = e.target.value;
+      lastHeading.textContent = evt.target.value;
     }
     else if (idBy == "schoolWidget") {
       var assignTo = document.getElementById("assign_to");
-      assignTo.setAttribute('value', e.target.value);
+      assignTo.setAttribute('value', evt.target.value);
     }
     else {
 
@@ -558,14 +557,14 @@ export class RenderableItemComponent implements OnInit {
       if(!lastFormLabel)
         return;
 
-      lastFormLabel.textContent = e.target.value;
+      lastFormLabel.textContent = evt.target.value;
 
     }
 
   }
 
   changeRequirement (
-    e
+    evt
   ) : void {
 
     /**
@@ -579,12 +578,12 @@ export class RenderableItemComponent implements OnInit {
 
     // Check the box in the editor on init
     if (currentItem.hasAttribute("required"))
-      e.target.setAttribute("checked",'');
+      evt.target.setAttribute("checked",'');
 
     // Response to editor's 'required' checkbox
-    if (e.target.checked) {
+    if (evt.target.checked) {
       currentItem.setAttribute("required", "required");
-    } else if (!e.target.checked) {
+    } else if (!evt.target.checked) {
       currentItem.removeAttribute("required");
     }
 
