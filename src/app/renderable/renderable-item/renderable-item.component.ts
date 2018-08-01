@@ -191,15 +191,16 @@ export class RenderableItemComponent implements OnInit {
     otherOpt? : number
   ) : Element {
 
+    // <HTMLElement> factory for the form to be generated
+
     /** 
-     * Other Option Values : These values are determined by the function call in renderable-item-component.html
+     * Other Option Values : 
      * 
      *    0 == (null)
      *    1 == make a last name input instead of a first name input
      *    2 == make an address_2 field
      */
 
-    // <HTMLElement> factory for the form to be generated
     
     if (elem == "widget")
         return this.makeWidget(idBy);

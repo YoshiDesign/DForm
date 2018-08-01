@@ -41,7 +41,6 @@ export default class Widgeteer {
                 checkboxExpand.setAttribute('style', currentStyle["CheckBoxes"]);
                 checkboxExpand.setAttribute('type', 'checkbox');
 
-                positionField.setAttribute('required', 'required');
                 positionField.setAttribute('class', 'input-xxlarge');
                 positionField.setAttribute('id', 'position');
                 positionField.setAttribute('style', currentStyle["widgets"]["WidgetMajor"]);
@@ -49,14 +48,13 @@ export default class Widgeteer {
                 positionField.setAttribute('type', 'text');
                 positionField.setAttribute('position-from-widget', '');
 
-                schoolNameField.setAttribute('required', 'required');
+
                 schoolNameField.setAttribute('class', 'input-xxlarge');
                 schoolNameField.setAttribute('id', 'school_name');
                 schoolNameField.setAttribute('style', currentStyle["widgets"]["WidgetMajor"]);
                 schoolNameField.setAttribute('name', 'school_name');
                 schoolNameField.setAttribute('type', 'text');
                 
-                schoolDistField.setAttribute('required', 'required');
                 schoolDistField.setAttribute('class', 'input-xxlarge');
                 schoolDistField.setAttribute('id', 'school_district');
                 schoolDistField.setAttribute('style', currentStyle["widgets"]["WidgetMajor"]);
