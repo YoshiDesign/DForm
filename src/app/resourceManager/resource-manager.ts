@@ -46,7 +46,7 @@ export class ResourceManager {
         }
       }
 
-      applySettings (e) : void {
+      applySettings () : void {
 
         /**
          * When user clicks "Done"

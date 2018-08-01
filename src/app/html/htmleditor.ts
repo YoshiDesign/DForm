@@ -281,7 +281,6 @@ export default class HTMLeditors {
             background: #343E75;
             color : white;
             
-           
         `,
 
         "RangeStyle" : `
@@ -300,11 +299,11 @@ export default class HTMLeditors {
                 background-color: rgba(255, 255, 255, .1);
                 color: #fff;
                 padding: 0 0 0 5px;
-                font-size: 25px;`,
+                font-size: 25px;
+            `,
 
                 "WidgetMajorMid" : `
                     width: 83%;
-                
             `,
         }
         
@@ -343,10 +342,6 @@ export default class HTMLeditors {
             padding: 0 0 0 5px;
             font-size: 25px;
             text-align: right;
-        `,
-
-        "MinorInputResp" : `
-
         `,
 
         "TextAreaStyle" : `
@@ -500,13 +495,14 @@ export default class HTMLeditors {
     }
 
     resetEditor () {
-         // Toolbox
+
+         // Available fields
          this.container  = document.createElement('DIV');
          this.labelInput = document.createElement('INPUT');
          this.labelSelect = document.createElement('SELECT');
          this.anyLabel   = document.createElement('LABEL');
  
-         // Checkbox for assigning requirement status
+         // Set up checkbox for assigning requirement status
          this.isRequired = document.createElement('INPUT');
          this.isRequired.setAttribute('type', 'checkbox');
          this.isRequired.setAttribute('id', "ngrequirement");

@@ -30,7 +30,6 @@ export class RenderableItemComponent implements OnInit {
   public modal    : HTMLElement;
   public theForm  : HTMLElement;
   
-  
   constructor() {
     this.history = [];
   }
@@ -619,7 +618,7 @@ export class RenderableItemComponent implements OnInit {
  
   makeWidget(
     widget : string
-  ) : HTMLElement {
+  ) : Element {
     /**
      *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.

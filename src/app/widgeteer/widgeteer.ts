@@ -5,7 +5,11 @@ export default class Widgeteer {
 
     constructor(){}
 
-    makeWidget(widget : string, currentStyle : Object, generalStyles : Object) {
+    makeWidget(
+        widget : string,
+        currentStyle : Object, 
+        generalStyles : Object
+    ) : Element {
     
         switch(widget){
         
@@ -94,7 +98,6 @@ export default class Widgeteer {
 
                 return outerContainer;
 
-        
         }
 
     }
