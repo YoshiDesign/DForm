@@ -28,7 +28,7 @@
 
         <div class="initial-bypass">
 
-          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Hidden Elements</span> <span class="plus">&#8628;</span></button>
+          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Hidden Elements (Required)</span> <span class="plus">&#8628;</span></button>
           <label class="list-label">General</label>
                                                             <!-- toggleAdd(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
           <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
@@ -77,8 +77,9 @@
 
         <div id="res-form" [class.resource-options]="resourceMgr.resourceMonitorOpen" [class.hideme]="!resourceMgr.resourceMonitorOpen">
           <h3>Hidden Resources</h3><hr>
-          <div class="inner-res-form">
+          <div data-resource-field class="inner-res-form" id="ignore">
             <h4>CRM</h4>
+            <div data-resource-field class="expand-listrak">
             <label class="resource-labels" for="">Description</label>
             <select class="resource-editor-field" name="" id="both-resource-description">
               <option value="Back to Homeschool">Back to Homeschool</option>
@@ -89,7 +90,8 @@
               <option value="MUS Slider Lead Gen Form">MUS Slider Lead Gen Form</option>
               <option value="MUS Main Contact Form">MUS Main Contact Form</option>
             </select>
-
+            </div>
+            <div data-resource-field class="expand-listrak">
             <label class="resource-labels" for="">Lead Source</label>
             <select class="resource-editor-field" name="" id="both-resource-lead-source">
               <option value="Demme Learning Blog">Demme Learning Blog</option>
@@ -97,20 +99,27 @@
               <option value="Placement Tool">Placement Tool</option>
               <option value="Spelling You-See Website">Spelling You-See Website</option>
             </select>
+            </div>
+            <hr>
+            <h4 disabled>Listrak</h4>
             <input (click)="resourceMgr.activateListrak($event)" type="checkbox" id="append-listrak">
-            <label class="resource-labels" for="">Enable Listrak Resource</label>
-            <div id="listracking">
-              <h4 disabled>Listrak</h4>
-            <br>
-            <label class="resource-labels" for="">Listrak Source</label>
-            <input (keyup)="changer()" class="listracker" type="text" id="listrak-source-resource" placeholder="Edit" disabled>
-            <br>
-            <label class="resource-labels" for="">Listrak External Id.</label>
-            <input class="listracker" type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
-          </div> <!-- Listracking -->
+            <label class="resource-labels-b" for="">Enable Listrak Resource</label>
+            <!-- data-resource-field ignores style switches between sys/mus -->
+            <div data-resource-field id="listracking">
+              <br>
+              
+              <label class="resource-labels" for="">Listrak Source</label>
+              <input class="listracker" type="text" id="listrak-source-resource" placeholder="Edit" disabled>
+           
+              <br>
+             
+              <label class="resource-labels" for="">Listrak External Id.</label>
+              <input class="listracker" type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
+            
+            </div> <!-- Listracking -->
           
             <hr>
-            <button (click)="resourceMgr.resourceMonitorOpen = false" class="btn btn-success new-btn">Done</button>
+            <button (click)="resourceMgr.applySettings($event)" class="btn btn-success new-btn">Done</button>
           </div>
         </div>
 
@@ -118,11 +127,7 @@
           <div id="consult-form-container" style="background-color:#343e79;max-width:1120px;padding:15px 40px;color:#fff;">
             <!-- FORM START -->
             <form id="lead-gen-form-input" method="POST" action="/lead-gen-handler.php">
-              <input type="hidden" name="listrak_source" value="2403731" />
-              <input type="hidden" name="listrak_external_id" value="13064" />
-              <input type="hidden" name="description" value="Back to Homeschool" />
-              <input type="hidden" name="lead_source" value="Demme Learning Blog" />
-              <input type="hidden" id="referral_url" name="referral_url" value="">
+              
             </form>
           </div>
         </div>
@@ -156,7 +161,7 @@
     
   </div> <!-- Option Wrapper -->
   <div class="bottom-feed">
-    <p class="bottom-text">Current Resource: </p>
+    <p id="resource-anchor" class="bottom-text">Current Resource: </p>
 
   </div>
   <script src="https://www.google.com/recaptcha/api.js?onload=toCapcha&render=explicit" async defer></script>

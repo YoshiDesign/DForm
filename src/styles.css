@@ -26,16 +26,25 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; co
     width: 150px;
 }
 
+.expand-resource {
+    display:inline-block;
+    width:35%;
+}
 .resource-editor-field {
-    display:block;
+    display:inline-block;
 }
 .resource-labels {
-    width:auto;
+    width:140px;
     margin:15px 20px 2px 5px;
-}
-.resource-labels + input {
+    text-align:right;
 
 }
+.resource-labels-b {
+    width:220px;
+    text-align: left;
+    margin-left:10px;
+}
+
 #modal-html-view {
     display: none;
     position:absolute;

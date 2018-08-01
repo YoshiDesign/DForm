@@ -55,10 +55,6 @@ export class RenderableItemComponent implements OnInit {
     // this.illegalInputScript = /"\b<script>"/;
   }
 
-  changer () {
-    console.log("hi");
-  }
-
   toggleAdd(event, elem : string, identifiedBy : string, otherOpt? : number){
     /** 
     *   otherOpt is a universal flag for optional behavior. See makeField()s docstring
@@ -161,27 +157,27 @@ export class RenderableItemComponent implements OnInit {
 
   updateRequired () {
     
-    // This block of code checks the requirement status of the latest form field and updates the editors "required" checkbox
+    // This fn checks the requirement status of the latest form field and updates the editors "required" checkbox
     let reqField = document.getElementById('ngrequirement') || null;
     let allInputs = document.querySelectorAll('[data-ng-el]');
 
     if (reqField == null)
       return;
 
-      console.log("ALLINPUT" + allInputs);
       if (allInputs.length != 0) {
-        console.log('step 1');
+
         if (allInputs[allInputs.length - 1].hasAttribute('required')) {
-          console.log("adding");
+
           reqField.setAttribute('checked', '');
         }
         else {
-          console.log('removing');
+
           reqField.removeAttribute('checked');
         }
       }
     
   }
+
   makeField = (elem : string, idBy : string, otherOpt? : number) : Element => {
 
     /** 
@@ -198,8 +194,6 @@ export class RenderableItemComponent implements OnInit {
         return this.makeWidget(idBy);
     else if (idBy == "heading")
         return this.makeHeading(elem);
-    else if (idBy == "resourceMonitor")
-        return
 
     var auxNodes : Object; // i.e. <option> units for select boxes
     let encaps   : Element = document.createElement("DIV");
@@ -225,18 +219,15 @@ export class RenderableItemComponent implements OnInit {
     encaps.setAttribute('data-dynaform', '');
     encaps.classList.add("form-group");
 
-    // Apply Bootstrap Classes to proper nodes. Selectables require override
+    // Apply Bootstrap Classes to proper nodes. checkbox and radio are pre-styled
     if (idBy != "checkboxField" && idBy != "radioField")
       input.classList.add("form-control");
 
     /**
      *  This switch appends Elements and applies Attributes / Styles and allocates form units
-     *  It is 100% DOM management.
      *  [otherOpt] current flags are enumerated in the DocString at the top of the function.
      */
 
-    // If we need a widget, get the widget and exit.
-    
     // Factory
     switch (idBy) {
       // safety first.
@@ -681,6 +672,7 @@ export class RenderableItemComponent implements OnInit {
     let allDates    = document.querySelectorAll('input[type=date]');
     let allTimes    = document.querySelectorAll('input[type=time]');
     let allColor    = document.querySelectorAll('input[type=color]');
+    let ignore      = document.querySelectorAll('[data-resource-field]');
     let submitClass : string;
     let submitText  : string;
 
@@ -698,7 +690,7 @@ export class RenderableItemComponent implements OnInit {
       submitClass = "btn btn-primary form-control";
     }
 
-    if (!bypass){ // Will only bypass on initialization because nanoseconds are seconds too
+    if (!bypass){ // Will only bypass on initialization because nanoseconds ...
 
       // <Submit Buttons>
       for (let i = 0; i < allSubmits.length; i++){
@@ -720,7 +712,6 @@ export class RenderableItemComponent implements OnInit {
             continue;
 
           if (allInputs[i].getAttribute("name") == "zip_code") {
-            console.log("lol");
             allInputs[i].setAttribute('style', this.currentStyle["MinorInput"]);
             continue;
           }
@@ -784,10 +775,14 @@ export class RenderableItemComponent implements OnInit {
     // Apply outer-most style
     container.setAttribute("style", this.currentStyle["container"]);
 
-    // Maintain resource monitor window styles
-    let resourceNodes = document.getElementById('res-form').children;
-    for (let i = 0; i < resourceNodes.length; i++)
-      resourceNodes[i].setAttribute("style", "");
+    // Dont overwrite resource monitor window styles
+    for (var i = 0 ; i < ignore.length ; i++) 
+    {
+      for (var j = 0 ; j < ignore[i].children.length ; j++)
+      {
+        ignore[i].children[j].setAttribute('style', '');	
+      }
+    }
 
     // target the previously active .active and remove the class
     deactivated.classList.remove("active");
