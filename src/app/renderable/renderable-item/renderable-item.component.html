@@ -30,44 +30,44 @@
 
           <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Hidden Elements (Required)</span> <span class="plus">&#8628;</span></button>
           <label class="list-label">General</label>
-                                                            <!-- toggleAdd(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
-          <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="text"             (click)="toggleAdd($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>           <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="email"            (click)="toggleAdd($event, 'email', 'emailField')">         <span class="left">Email</span>               <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="tel"              (click)="toggleAdd($event,'tel', 'telField')">              <span class="left">Phone Number</span>        <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="select"           (click)="toggleAdd($event,'select', 'selectField')">        <span class="left">Select Location</span>     <span class="plus">&oplus;</span></button>
+                                                            <!-- createField(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
+          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>           <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="email"            (click)="createField($event, 'email', 'emailField')">         <span class="left">Email</span>               <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="tel"              (click)="createField($event,'tel', 'telField')">              <span class="left">Phone Number</span>        <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="select"           (click)="createField($event,'select', 'selectField')">        <span class="left">Select Location</span>     <span class="plus">&oplus;</span></button>
           
-          <button class="form-option-btn" id="textarea"         (click)="toggleAdd($event,'textarea', 'textareaField')">    <span class="left">Comment Area</span>        <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="recaptcha"        (click)="toggleAdd($event,'recaptcha', 'recaptchaField')">  <span class="left">Recaptcha</span>           <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="submit"           (click)="toggleAdd($event,'submit', 'subButtonField')">     <span class="left">Submit Button</span>       <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="textarea"         (click)="createField($event,'textarea', 'textareaField')">    <span class="left">Comment Area</span>        <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="recaptcha"        (click)="createField($event,'recaptcha', 'recaptchaField')">  <span class="left">Recaptcha</span>           <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="submit"           (click)="createField($event,'submit', 'subButtonField')">     <span class="left">Submit Button</span>       <span class="plus">&oplus;</span></button>
           <hr>
           <label for="" class="list-label">Titles</label>
-          <button class="form-option-btn" id="h2-heading"       (click)="toggleAdd($event, 'headingTwo', 'heading')">       <span class="left">H2 Title</span>       <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="h2-heading"       (click)="createField($event, 'headingTwo', 'heading')">       <span class="left">H2 Title</span>       <span class="plus">&oplus;</span></button>
 
           <hr>
           <label for="" class="list-label">Address</label>
-          <button class="form-option-btn" id="zip-code"         (click)="toggleAdd($event,'text', 'zipField')">             <span class="left">Zip Code</span>            <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="address_one"         (click)="toggleAdd($event,'text', 'addressField')">             <span class="left">Address_1</span>            <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="address_two"         (click)="toggleAdd($event,'text', 'addressField', 2)">             <span class="left">Address_2</span>            <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="zip-code"         (click)="createField($event,'text', 'zipField')">             <span class="left">Zip Code</span>            <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="address_one"         (click)="createField($event,'text', 'addressField')">             <span class="left">Address_1</span>            <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="address_two"         (click)="createField($event,'text', 'addressField', 2)">             <span class="left">Address_2</span>            <span class="plus">&oplus;</span></button>
           <hr>
           <label class="list-label" for="">Widgets<br><sup>Expanded until export</sup></label>
-          <button class="form-option-btn"  [disabled]="activeSchoolWidget" id="schools-widget"    (click)="toggleAdd($event, 'widget', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn"  [disabled]="activeSchoolWidget" id="schools-widget"    (click)="createField($event, 'widget', 'schoolWidget')">     <span class="left">Schools Widget</span>         <span class="plus">&oplus;</span></button>
           
           <hr>
 
           <label class="list-label">Selection</label>
-          <button class="form-option-btn" id="checkbox" (click)="toggleAdd($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="radio"    (click)="toggleAdd($event,'radio', 'radioField')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="checkbox" (click)="createField($event,'checkbox', 'checkboxField')">  <span class="left">Checkbox</span>    <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="radio"    (click)="createField($event,'radio', 'radioField')">     <span class="left">Radio</span>         <span class="plus">&oplus;</span></button>
           <hr>
 
           <label class="list-label">Misc.</label>
-          <button class="form-option-btn" id="file"     (click)="toggleAdd($event,'file', 'fileField')">          <span class="left">File</span>          <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="password" (click)="toggleAdd($event, 'password', 'passwdField')">   <span class="left">Password</span>      <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="color"    (click)="toggleAdd($event,'color', 'colorField')">        <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="date"     (click)="toggleAdd($event,'date', 'dateField')">          <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="range"    (click)="toggleAdd($event,'range', 'rangeField')">        <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="number"   (click)="toggleAdd($event,'number', 'numberField')">      <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="time"     (click)="toggleAdd($event,'time', 'timeField')">          <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="file"     (click)="createField($event,'file', 'fileField')">          <span class="left">File</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="password" (click)="createField($event, 'password', 'passwdField')">   <span class="left">Password</span>      <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="color"    (click)="createField($event,'color', 'colorField')">        <span class="left">Color</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="date"     (click)="createField($event,'date', 'dateField')">          <span class="left">Date</span>          <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="range"    (click)="createField($event,'range', 'rangeField')">        <span class="left">Range</span>         <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="number"   (click)="createField($event,'number', 'numberField')">      <span class="left">Number</span>        <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="time"     (click)="createField($event,'time', 'timeField')">          <span class="left">Time</span>          <span class="plus">&oplus;</span></button>
         </div>
 
 
@@ -153,8 +153,8 @@
               </ul>
         </span>
         <span id="execs">
-          <button type="button" [disabled]="modalActive" (click)="toggleRemove(true)" class="inline btn btn-outline-danger">Clear</button>
-          <button type="button" [disabled]="modalActive" (click)="toggleRemove()" class="inline btn btn-outline-dark">Remove</button>
+          <button type="button" [disabled]="modalActive" (click)="removeField(true)" class="inline btn btn-outline-danger">Clear</button>
+          <button type="button" [disabled]="modalActive" (click)="removeField()" class="inline btn btn-outline-dark">Remove</button>
           <button type="button" [disabled]="modalActive" (click)="displayHTML()" class="inline btn btn-outline-primary">&lsaquo; HTML &rsaquo;</button>
         </span>
         <hr>

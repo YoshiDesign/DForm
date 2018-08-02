@@ -25,7 +25,7 @@ export class RenderableItemComponent implements OnInit {
   public musStyle     : Object;
   public sysStyle     : Object; 
   public currentStyle : Object;    // Either "MUS" or "SYS". "MUS" as Default
-  public history  : Array <string>; // History does NOT sync via querying the page. It requires sync during toggleAdd & toggleRemove
+  public history  : Array <string>; // History does NOT sync via querying the page. It requires sync during createField & removeField
   public optLabel : HTMLElement;
   public modal    : HTMLElement;
   public theForm  : HTMLElement;
@@ -50,7 +50,7 @@ export class RenderableItemComponent implements OnInit {
     this.stylizer(this.currentStyle["title"], true);
   }
 
-  toggleAdd(
+  createField(
     event, 
     elem : string, 
     identifiedBy : string, 
@@ -92,7 +92,7 @@ export class RenderableItemComponent implements OnInit {
     event.stopPropagation();
   }
 
-  toggleRemove(
+  removeField(
     clearAll? : Boolean, 
   ) : void {
 
@@ -318,6 +318,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('required', 'required');
+        input.setAttribute('name', 'phone');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
