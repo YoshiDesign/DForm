@@ -5,8 +5,8 @@
  
       
     <div id="modal-html-view">
-        
-        <span (click)="closeModal()" class="exit">&otimes;</span>
+      
+        <span (click)="closeModal($event)" class="exit">&otimes;</span>
       <div id="html-container">
         <div *ngIf="getOutputDepth() > 345" class="content-message"><p class="message">This window may be edited</p></div>
 
@@ -15,7 +15,7 @@
        
           <button (click)="copy2clip()" class="btn btn-success" id="copy-btn">COPY</button>
       </div>
-      
+
     </div>
     <div class="main-window">
       <div class="selection-window" id="sidebar">

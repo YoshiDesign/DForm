@@ -342,6 +342,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('required', 'required');
         label.textContent = "Password";
         input.setAttribute('type', elem);
+        input.setAttribute('id', 'pass_word');
         input.setAttribute('name', 'password');
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -862,7 +863,8 @@ export class RenderableItemComponent implements OnInit {
     return;
   }
 
-  closeModal() : void {
+  closeModal(evt) : void {
+    evt.stopPropagation();
     let copied = document.getElementById("copy-btn");
     copied.innerHTML = "copy";
 
