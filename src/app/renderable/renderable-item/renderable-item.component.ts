@@ -345,7 +345,7 @@ export class RenderableItemComponent implements OnInit {
       case "fileField":
         input.setAttribute('style', this.currentStyle['FileStyle']);
         input.setAttribute('type', elem);
-        input.setAttribute('name', 'file-field');
+        input.setAttribute('name', 'file_field');
         input.setAttribute('required', 'required');
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -371,7 +371,7 @@ export class RenderableItemComponent implements OnInit {
         
       case "rangeField":
         input.setAttribute('type', elem);
-        input.setAttribute('name', 'in-range');
+        input.setAttribute('name', 'in_range');
         input.setAttribute('style', this.currentStyle["RangeStyle"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -403,6 +403,7 @@ export class RenderableItemComponent implements OnInit {
       case "timeField":
         input.setAttribute('style', this.currentStyle["TimeStyle"]);
         input.setAttribute('type', elem);
+        input.setAttribute('name', 'time');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -615,7 +616,7 @@ export class RenderableItemComponent implements OnInit {
     widget : string
   ) : Element {
     /**
-     *  See ./html/htmleditor.ts->[Obj widgets] for the DEFINITION of styles, attr's, etc...
+     *  See ./html/htmleditor.ts->[Obj widgets] for the definition of styles, attr's, etc...
      *  Widgets are visible in expanded state until the HTML is exported.
      */
 

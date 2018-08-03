@@ -69,10 +69,16 @@ export default class Widgeteer {
                 positionLabel.innerText   = "Position";
                 positionLabel.setAttribute("style", generalStyles['FullWidth']);
                 schoolNameLabel.innerText = "School Name";
+                schoolNameLabel.setAttribute("style", generalStyles['FullWidth']);
                 schoolDistLabel.innerText = "School District";
-                checkboxLabel.innerText   = "I’m interested in Math-U-See for schools.";
+                schoolDistLabel.setAttribute("style", generalStyles['FullWidth']);
 
+                if (currentStyle["title"] == "MUS")
+                    checkboxLabel.innerText   = "I’m interested in Math-U-See for schools.";
+                else if (currentStyle["title"] == "SYS")
+                    checkboxLabel.innerText   = "I’m interested in Spelling You See for schools.";
                 // Setup Structure
+
                 checkboxContainer.appendChild(checkboxExpand);
                 checkboxContainer.appendChild(checkboxLabel);
 
