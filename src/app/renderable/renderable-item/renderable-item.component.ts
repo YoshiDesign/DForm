@@ -299,6 +299,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('type', elem);
         input.setAttribute('name', 'email');
         input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('id', 'lead-gen-email');
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -308,6 +309,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'zip_code');
+        input.setAttribute('id', 'zip-code');
         input.setAttribute('style', this.currentStyle['MinorInput'] + this.editor.General["rightAlign"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -318,6 +320,8 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('type', elem);
         input.setAttribute('style', this.currentStyle["MajorInput"]);
         input.setAttribute('required', 'required');
+        input.setAttribute('pattern', '^\\d{3}-\\d{3}-\\d{4}$');
+        input.setAttribute('id', 'phone-number');
         input.setAttribute('name', 'phone');
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -327,6 +331,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('style', this.currentStyle["DateStyle"]);
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
+        input.setAttribute('id', 'get_date');
         input.setAttribute('name', 'date');
         encaps.appendChild(label);
         encaps.appendChild(input);
