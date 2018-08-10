@@ -96,11 +96,15 @@ export class RenderableItemComponent implements OnInit {
     clearAll? : Boolean, 
   ) : void {
 
+
     this.updateRequired();
     
     let isItaWidget = document.querySelectorAll('[data-widget-target]') || null;
     let widgetsLength = isItaWidget.length;
     let allLength = this.theForm.children.length; // Length of all <form>'s children
+    let allNewFields = document.querySelectorAll('div[data-dynaform]');
+    if (allNewFields.length == 0)
+      return;
 
     console.log(this.history);
 
@@ -110,7 +114,7 @@ export class RenderableItemComponent implements OnInit {
       this.openEditor("noField");
       this.optLabel.innerText = "Options";
       
-      var allNewFields = document.querySelectorAll('div[data-dynaform]');
+      
       for (let i  in allNewFields){
         if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
           break
@@ -158,7 +162,7 @@ export class RenderableItemComponent implements OnInit {
 
   updateRequired () {
     
-    // This fn checks the requirement status of the latest form field and updates the editors "required" checkbox
+    // This fn sync's the required checkbox in the editor with the fields required state
     let reqField = document.getElementById('ngrequirement') || null;
     let allInputs = document.querySelectorAll('[data-ng-el]');
 

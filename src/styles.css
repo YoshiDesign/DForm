@@ -43,6 +43,7 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; co
     width:220px;
     text-align: left;
     margin-left:10px;
+    display:inline-block;
 }
 
 #modal-html-view {
