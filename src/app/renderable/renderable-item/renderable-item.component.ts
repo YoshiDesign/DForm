@@ -114,10 +114,9 @@ export class RenderableItemComponent implements OnInit {
       this.openEditor("noField");
       this.optLabel.innerText = "Options";
       
-      
-      for (let i  in allNewFields){
-        if (i == "length") // moot : last element of a <NodeList> is its own length. This silences a pointless error.
-          break
+      for (let i in allNewFields){
+        if (i == "length") // moot : last property of a <NodeList> object is its own length. This silences a pointless error.
+          break;
         allNewFields[i].parentNode.removeChild(allNewFields[i]);
       }
 
@@ -128,18 +127,17 @@ export class RenderableItemComponent implements OnInit {
     }
 
     /**
-     * Handle widget reduction
+     * Handle widgets
      */
 
-    // If there is a widget and it is at the "front of the line"
+    // If there is a widget and it is the most recently added element
     if (isItaWidget && 
       this.theForm.children[allLength - 1]
       .hasAttribute("data-widget-target"))
     {
-      // Which widget is it?
+      // Which widget is it? And reset button disabled
       if (isItaWidget[widgetsLength - 1].id == "school-widget")
         this.activeSchoolWidget = false;
-
     }
 
     // Update history
