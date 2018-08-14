@@ -4,7 +4,8 @@ import Widgeteer from '../../widgeteer/widgeteer';
 import { ResourceManager } from '../../resourceManager/resource-manager';
 import { Input } from '@angular/compiler/src/core';
 
-
+// Recaptch SiteKey
+const recapKey = '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB';
 
 @Component({
   selector: 'app-renderable-item',
@@ -911,7 +912,7 @@ export class RenderableItemComponent implements OnInit {
     // Deploy attributes to recaptch DIV
     reCapchaElement.setAttribute('data-dynaform', '');
     reCapchaElement.setAttribute('class', 'g-recaptcha');
-    reCapchaElement.setAttribute('data-sitekey', '6Lc3HWQUAAAAAAmrhK6RI77MSoHAmRH__OxEDDeB');   // The sitekey goes here
+    reCapchaElement.setAttribute('data-sitekey', recapKey);   // The sitekey goes here
     reCapchaElement.setAttribute('data-callback', 'enableBtn');
     
     // append our completed captcha to the form
@@ -920,6 +921,7 @@ export class RenderableItemComponent implements OnInit {
     return 1;
 
   }
+
 
   getOutputDepth() : number {
     let outWindow = document.getElementById('pretty-print');

@@ -10,7 +10,30 @@ body  { margin:0 0 0 0; padding:0; background:rgb(6, 19, 61); cursor:default; co
 .hideme {
     display : none;
 }
+.inline-list {
+    width:45%;
+    display:inline-block;
+    list-style:none;
+}
+.right {
+    text-align:right;
+}
+.left {
+    text-align:left;
+}
 
+.list-hidden-fields {
+    margin-left:10%;
+    width:80%;
+}
+.h3-center {
+    position:relative;
+    bottom: 150px;
+    right: 80px;
+    color: white;
+    text-align:center;
+    width: 100%;
+}
 .resource-options {
     max-width: 1120px;
     border: 1px solid black;

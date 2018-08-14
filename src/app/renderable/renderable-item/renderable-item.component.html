@@ -135,6 +135,22 @@
   
   </div> <!-- MAIN WINDOW -->
 
+  <div class="list-hidden-fields">
+      <h3 class="h3-center">Hidden Elements</h3>
+    <ul class="inline-list right" *ngIf="resourceMgr.listHiddenFields()">
+
+        <li class="bottom-text" *ngFor="let thing of resourceMgr.arb['names']">{{ thing }} :  </li>
+      
+    </ul>
+    <ul class="inline-list left" *ngIf="resourceMgr.listHiddenFields()">
+
+        <li class="bottom-text" *ngFor="let thing of resourceMgr.arb['values']">{{ thing }}  </li>
+      
+    </ul>
+
+  </div>
+
+
   <div [class.can-show]="!modalActive"
   [class.can-hide]="modalActive"  class="option-wrapper">
     <div id="edit-Window">
