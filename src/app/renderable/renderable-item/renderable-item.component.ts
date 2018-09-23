@@ -841,6 +841,7 @@ export class RenderableItemComponent implements OnInit {
     /**
      * Modal
      */
+    window.scrollTo(0,0);
     this.modalActive  = true; 
     let theHTML       = document.getElementById('pretty-print');
     this.modal        = document.getElementById('modal-html-view');
@@ -848,7 +849,7 @@ export class RenderableItemComponent implements OnInit {
 
     /** 
      *  Widgets need 1 general identifier and 1 unique identifier
-     *  Respectively answering : Is there a widget? Which widget is it? <-- fun to say
+     *  Respectively answering : Is there a widget? Which widget is it?
      *  General Identifier = attr[data-widget-target]
      */
 
