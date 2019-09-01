@@ -4,7 +4,6 @@
 
 # Setup
 
-Just run `npm install` && `ng serve`
+`npm install` && `ng serve`
 
-Open from localhost:4200
 
