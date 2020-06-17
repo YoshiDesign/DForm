@@ -849,7 +849,7 @@ export class RenderableItemComponent implements OnInit {
 
     /** 
      *  Widgets need 1 general identifier and 1 unique identifier
-     *  Respectively answering : Is there a widget? Which widget is it?
+     *  Respectively answering : Is there a widget, and Which widget is it? <- fun to say
      *  General Identifier = attr[data-widget-target]
      */
 
