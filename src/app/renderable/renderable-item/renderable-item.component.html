@@ -28,12 +28,12 @@
 
         <div class="initial-bypass">
 
-          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left">Hidden Elements (Required)</span> <span class="plus">&#8628;</span></button>
+          <button class="form-option-btn" id="resourceListrak"   [disabled]="resourceMgr.resourceMonitorOpen"       (click)="resourceMgr.openResource($event, 'resourceMonitor', 'GeneralResources')">      <span class="left longer">Hidden Elements (Required)</span> <span class="plus">&#8628;</span></button>
           <label class="list-label">General</label>
                                                             <!-- createField(E, elem, identifiedBy [,OtherOpt]) *-* See renderable-item-component::makeField() for OtherOpt dictionary -->
-          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>           <span class="plus">&oplus;</span></button>
-          <button class="form-option-btn" id="email"            (click)="createField($event, 'email', 'emailField')">         <span class="left">Email</span>               <span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField')">           <span class="left">First Name</span>          <span class="mail">M</span><span class="crm">S</span><span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="text"             (click)="createField($event, 'text', 'nameField', 1)">        <span class="left">Last Name</span>           <span class="mail">M</span><span class="crm">S</span><span class="plus">&oplus;</span></button>
+          <button class="form-option-btn" id="email"            (click)="createField($event, 'email', 'emailField')">         <span class="left">Email</span>               <span class="mail">M</span><span class="crm">S</span><span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="tel"              (click)="createField($event,'tel', 'telField')">              <span class="left">Phone Number</span>        <span class="plus">&oplus;</span></button>
           <button class="form-option-btn" id="select"           (click)="createField($event,'select', 'selectField')">        <span class="left">Select Location</span>     <span class="plus">&oplus;</span></button>
           
@@ -76,10 +76,10 @@
         <div id="res-form" [class.resource-options]="resourceMgr.resourceMonitorOpen" [class.hideme]="!resourceMgr.resourceMonitorOpen">
           <h3>Hidden Resources</h3><hr>
           <div data-resource-field class="inner-res-form" id="ignore">
-            <h4>CRM</h4>
+            <h4>Sage CRM</h4>
             <div data-resource-field class="expand-listrak">
             <label class="resource-labels" for="">Description</label>
-            <input type="text" class="resource-editor-field" name="" id="both-resource-description"><span class="resource-labels-b"><i>(i.e. Back to Homeschool)</i></span>
+            <input type="text" class="resource-editor-field" name="" id="both-resource-description"><span class="resource-labels-b"><i>(Max. 40 characters)</i></span>
 
               <!-- <option value="Back to Homeschool">Back to Homeschool</option>
               <option value="Addition Facts Lead Gen Form">Addition Facts Lead Gen Form</option>
@@ -92,7 +92,7 @@
             </div>
             <div data-resource-field class="expand-listrak">
             <label class="resource-labels" for="">Lead Source</label>
-            <input type="text" class="resource-editor-field" name="" id="both-resource-lead-source"><span class="resource-labels-b"><i>(i.e. Demme Learning Blog)</i></span>
+            <input type="text" class="resource-editor-field" name="" id="both-resource-lead-source"><span class="resource-labels-b"><i>(Max. 40 characters)</i></span>
               <!-- <option value="Demme Learning Blog">Demme Learning Blog</option>
               <option value="Math-U-See Website">Math-U-See Website</option>
               <option value="Placement Tool">Placement Tool</option>
@@ -100,19 +100,19 @@
 
             </div>
             <hr>
-            <h4 disabled>Listrak</h4>
+            <h4 disabled>Mail-Chimp</h4>
             <input (click)="resourceMgr.activateListrak($event)" type="checkbox" id="append-listrak">
-            <label class="resource-labels-b" for="">Enable Listrak Resource</label>
+            <label class="resource-labels-b" for="">Enable Mail-Chimp Resource</label>
             <!-- data-resource-field ignores style switches between sys/mus -->
             <div data-resource-field id="listracking">
               <br>
               
-              <label class="resource-labels" for="">Listrak Source</label>
+              <label class="resource-labels" for="">Mail-Chimp Source</label>
               <input class="listracker" type="text" id="listrak-source-resource" placeholder="Edit" disabled>
            
               <br>
              
-              <label class="resource-labels" for="">Listrak External Id.</label>
+              <label class="resource-labels" for="">Mail-Chimp External Id.</label>
               <input class="listracker" type="text" id="listrak-externalid-resource" placeholder="Edit" disabled>
             
             </div> <!-- Listracking -->

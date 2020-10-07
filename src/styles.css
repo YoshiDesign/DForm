@@ -271,9 +271,11 @@ div>#html-container {
 .form-option-btn .left {
     text-align: left;
     float:left;
-
+    width:129px;
 }
-
+.longer {
+    width:100% !important;
+}
 .form-option-btn .plus {
     /* The plus symbol */
     text-align:right;
@@ -281,6 +283,22 @@ div>#html-container {
     outline: none;
     color: #2118a8;
     font-weight: 100;
+}
+.form-option-btn .mail {
+    /* The plus symbol */
+    text-align:center;
+    outline: none;
+    color: #daa71b;
+    font-weight: 800;
+    font-size:8px;
+}
+.form-option-btn .crm {
+    /* The plus symbol */
+    text-align:center;
+    outline: none;
+    color: #1c9b18;
+    font-weight: 800;
+    font-size:8px;
 }
 
 #oplus{
