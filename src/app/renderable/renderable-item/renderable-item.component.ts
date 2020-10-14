@@ -218,6 +218,7 @@ export class RenderableItemComponent implements OnInit {
     
     // Tracking Attribute for any input that is not a submit or in a widget
     input.setAttribute('data-ng-el', 'true');
+    input.classList.add('dform-input');
 
     // Tracking & class
     label.classList.add("ng-anchor-label");
@@ -228,8 +229,8 @@ export class RenderableItemComponent implements OnInit {
     encaps.classList.add("form-group");
 
     // Apply Bootstrap Classes to proper nodes. checkbox and radio are pre-styled
-    if (idBy != "checkboxField" && idBy != "radioField")
-      input.classList.add("form-control");
+    // if (idBy != "checkboxField" && idBy != "radioField")
+    //   input.classList.add("form-control");
 
     /**
      *  This switch appends Elements and applies Attributes / Styles and allocates form units
@@ -257,8 +258,9 @@ export class RenderableItemComponent implements OnInit {
           input.setAttribute('name', 'first_name');
         }
 
-        input.setAttribute('class', 'input-xxlarge form-control');
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.classList.add('input-xxlarge')
+        // input.classList.add('form-control')
+        input.setAttribute('style', this.currentStyle["MajorInput"] + this.editor.General["formControlOverride"]);
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
 
@@ -278,7 +280,7 @@ export class RenderableItemComponent implements OnInit {
         }
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"] + this.editor.General["formControlOverride"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -290,7 +292,7 @@ export class RenderableItemComponent implements OnInit {
 
       case "checkboxField":
         input.setAttribute('type', elem);
-        input.setAttribute('style', this.currentStyle["CheckBoxes"]);
+        input.setAttribute('style', this.currentStyle["CheckBoxes"] + this.editor.General["formControlOverride"]);
         input.setAttribute('required', 'required');
         encaps.appendChild(input);
         encaps.appendChild(label);
@@ -301,7 +303,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'email');
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"] + this.editor.General["formControlOverride"]);
         input.setAttribute('id', 'lead-gen-email');
         encaps.appendChild(label);
         encaps.appendChild(input);
@@ -313,7 +315,7 @@ export class RenderableItemComponent implements OnInit {
         input.setAttribute('type', elem);
         input.setAttribute('name', 'zip_code');
         input.setAttribute('id', 'zip-code');
-        input.setAttribute('style', this.currentStyle['MinorInput'] + this.editor.General["rightAlign"]);
+        input.setAttribute('style', this.currentStyle['MinorInput'] + this.editor.General["rightAlign"] + this.editor.General["formControlOverride"]);
         encaps.appendChild(label);
         encaps.appendChild(input);
         return encaps;
@@ -321,7 +323,7 @@ export class RenderableItemComponent implements OnInit {
       case "telField":
         label.textContent = "Phone Number (format: XXX-XXX-XXXX)";
         input.setAttribute('type', elem);
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"] + this.editor.General["formControlOverride"]);
         input.setAttribute('required', 'required');
         input.setAttribute('pattern', '^\\d{3}-\\d{3}-\\d{4}$');
         input.setAttribute('id', 'phone-number');
@@ -331,7 +333,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
         
       case "dateField":
-        input.setAttribute('style', this.currentStyle["DateStyle"]);
+        input.setAttribute('style', this.currentStyle["DateStyle"] + this.editor.General["formControlOverride"]);
         input.setAttribute('required', 'required');
         input.setAttribute('type', elem);
         input.setAttribute('id', 'get_date');
@@ -341,7 +343,7 @@ export class RenderableItemComponent implements OnInit {
         return encaps;
 
       case "passwdField":
-        input.setAttribute('style', this.currentStyle["MajorInput"]);
+        input.setAttribute('style', this.currentStyle["MajorInput"] + this.editor.General["formControlOverride"]);
         input.setAttribute('required', 'required');
         label.textContent = "Password";
         input.setAttribute('type', elem);
@@ -400,7 +402,7 @@ export class RenderableItemComponent implements OnInit {
           input.appendChild(newOption);
         }
         label.textContent = "State";
-        input.setAttribute('style', this.currentStyle["SelectBoxStyle"]);
+        input.setAttribute('style', this.currentStyle["SelectBoxStyle"] + this.editor.General["formControlOverride"]);
         input.setAttribute('type', elem);
         input.setAttribute('required', 'required');
         input.setAttribute('name', 'state');
@@ -430,7 +432,7 @@ export class RenderableItemComponent implements OnInit {
         // fix this please
         container.setAttribute('style', 'width:90%;')
         label.textContent = "How can we help?";
-        input.setAttribute('style', this.currentStyle['TextAreaStyle']);
+        input.setAttribute('style', this.currentStyle['TextAreaStyle'] + this.editor.General["formControlOverride"]);
         input.setAttribute('cols', '45');
         input.setAttribute('type', elem);
         input.setAttribute('name', 'comments');
@@ -444,6 +446,7 @@ export class RenderableItemComponent implements OnInit {
         console.log(`\n\nError : \n -- ${input} \n -- ${label} \n -- ${encaps} \n\n`);
         return null;
       }
+
     }
 
   openEditor (
@@ -704,7 +707,7 @@ export class RenderableItemComponent implements OnInit {
       this.whichStyle = false;
       this.currentStyle = this.sysStyle;
       submitText = "watch the webinar";
-      submitClass = "btn btn-primary form-control";
+      submitClass = "btn btn-primary";
     }
 
     if (!bypass){ // Will only bypass on initialization because nanoseconds ...
@@ -850,7 +853,7 @@ export class RenderableItemComponent implements OnInit {
     /** 
      *  Widgets need 1 general identifier and 1 unique identifier
      *  Respectively answering : Is there a widget, and Which widget is it? <- fun to say
-     *  General Identifier = attr[data-widget-target]
+     *  Identified by = attr[data-widget-target]
      */
 
     if (isThereAwidget)
@@ -889,7 +892,7 @@ export class RenderableItemComponent implements OnInit {
     let button = document.createElement('INPUT');
     button.setAttribute('id', 'leadGen');
     button.setAttribute('type', 'submit');
-    button.setAttribute('disabled', '');
+    // button.setAttribute('disabled', '');
     button.setAttribute('ng-sub', '');
     button.setAttribute('style', this.currentStyle["SubmitButtonStyles"]);
 
@@ -899,8 +902,9 @@ export class RenderableItemComponent implements OnInit {
     }
     else if (this.currentStyle['title'] == "SYS"){ // SYS Submit button flavor
       button.setAttribute('value', 'watch the webinar!');
-      button.setAttribute('class', 'btn btn-primary form-control');
+      button.setAttribute('class', 'btn btn-primary');
     }
+    button.classList.add('dform-input');
     return button;
   }
 
@@ -922,7 +926,6 @@ export class RenderableItemComponent implements OnInit {
     return 1;
 
   }
-
 
   getOutputDepth() : number {
     let outWindow = document.getElementById('pretty-print');

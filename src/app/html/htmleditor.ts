@@ -492,6 +492,11 @@ export default class HTMLeditors {
         "rightAlign" : `
             text-align: right;
         `,
+        "formControlOverride" : `
+            display:block;
+            background-clip: padding-box;
+            line-height: 1.5;
+        `
     }
 
     resetEditor () {

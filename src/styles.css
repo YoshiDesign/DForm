@@ -273,6 +273,9 @@ div>#html-container {
     float:left;
     width:129px;
 }
+.description {
+    width:325px;
+}
 .longer {
     width:100% !important;
 }
