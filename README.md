@@ -1,7 +1,9 @@
-# Easy setup
+## Web app for creating HTML forms with embedded marketing attributes
+### Styles may be injected via JSON following the form's conventions
+### HTML Output
 
-Just run `npm install` && `ng serve`
+# Setup
 
-Open from localhost:4200
+`npm install` && `ng serve`
 
-Will close source upon request!
+
